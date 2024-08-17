@@ -36,9 +36,9 @@ jobs:
 
           # Deploy based on branch
           if [ "${{ github.ref }}" == "refs/heads/prod" ]; then
-            firebase use prod
-            firebase deploy --only hosting
+            firebase use --add prod
+            firebase deploy --only hosting:prod
           elif [ "${{ github.ref }}" == "refs/heads/dev" ]; then
-            firebase use dev
-            firebase deploy --only hosting
+            firebase use --add dev
+            firebase deploy --only hosting:dev
           fi
