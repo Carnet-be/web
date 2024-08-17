@@ -4,6 +4,17 @@
     "prod": "okeyo-okeyo",
     "dev": "okeyo-dev"
   },
-  "targets": {},
+  "targets": {
+    "okeyo-dev": {
+      "hosting": {
+        "dev": [
+          "okeyo-dev"
+        ],
+        "prod": [
+          "okeyo-okeyo"
+        ]
+      }
+    }
+  },
   "etags": {}
 }
