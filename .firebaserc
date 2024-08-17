@@ -9,7 +9,11 @@
       "hosting": {
         "dev": [
           "okeyo-dev"
-        ],
+        ]
+      }
+    },
+    "okeyo-okeyo": {
+      "hosting": {
         "prod": [
           "okeyo-okeyo"
         ]
