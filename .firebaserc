@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "okeyo-okeyo"
-  }
+    "default": "okeyo-okeyo",
+    "prod": "okeyo-okeyo",
+    "dev": "okeyo-dev"
+  },
+  "targets": {},
+  "etags": {}
 }
