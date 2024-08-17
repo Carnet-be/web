@@ -1,10 +1,12 @@
-name: Deploy to Firebase Hosting
+name: (Development) Deploy to Firebase Hosting
 
 on:
   push:
     branches:
       - dev
-      - prod
+  pull_request:
+    branches:
+      - dev
 
 jobs:
   build-and-deploy:
@@ -33,12 +35,5 @@ jobs:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
         run: |
           npm install -g firebase-tools
-
-          # Deploy based on branch
-          if [ "${{ github.ref }}" == "refs/heads/prod" ]; then
-            firebase use --add prod
-            firebase deploy --only hosting:prod
-          elif [ "${{ github.ref }}" == "refs/heads/dev" ]; then
-            firebase use --add dev
-            firebase deploy --only hosting:dev
-          fi
+          firebase use --add dev
+          firebase deploy --only hosting:dev
