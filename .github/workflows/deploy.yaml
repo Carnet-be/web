@@ -19,11 +19,14 @@ jobs:
         with:
           node-version: "18" # Use the version of Node.js your project requires
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Build the project
-        run: npm run build
+        run: pnpm run build
 
       - name: Deploy to Firebase Hosting
         env:
