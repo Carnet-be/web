@@ -73,124 +73,157 @@
 //   );
 // }
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import clsx from "clsx";
+import { Button } from '@/components/ui/button';
 import {
-  Boxes,
-  CalendarClock,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+} from '@/components/ui/card';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import clsx from 'clsx';
+import {
+  BadgePercent,
+  ChartNoAxesColumn,
   CircleUser,
-  Home,
   Menu,
+  Package,
+  ReceiptText,
   Search,
-  SquareAsterisk,
-  UnfoldHorizontal,
-} from "lucide-react";
-import { NavLink as Link, Outlet, useLocation } from "react-router-dom";
-import { ModeToggle } from "./themeSwitcher";
+  Settings,
+  Shirt,
+  Store,
+  UsersRound,
+} from 'lucide-react';
+import { NavLink as Link, Outlet, useLocation } from 'react-router-dom';
+import { LanguageToggle } from './languageSwitcher';
+import ShopSwitcher from './shopSwitcher';
+import { ModeToggle } from './themeSwitcher';
 export const description =
-  "A products dashboard with a sidebar navigation and a main content area. The dashboard has a header with a search input and a user menu. The sidebar has a logo, navigation links, and a card with a call to action. The main content area shows an empty state with a call to action.";
+  'A products dashboard with a sidebar navigation and a main content area. The dashboard has a header with a search input and a user menu. The sidebar has a logo, navigation links, and a card with a call to action. The main content area shows an empty state with a call to action.';
 
-export const iframeHeight = "800px";
+export const iframeHeight = '800px';
 
-export const containerClassName = "w-full h-full";
+export const containerClassName = 'w-full h-full';
 
 export default function Dashboard() {
   const pathname = useLocation().pathname;
+
+  type Menu = {
+    groupLabel: string;
+    items: {
+      label: string;
+      icon: React.ReactNode;
+      route: string;
+    }[];
+  };
+  const menu: Menu[] = [
+    {
+      groupLabel: 'General',
+      items: [
+        {
+          label: 'Dashboard',
+          icon: <ChartNoAxesColumn className="h-4 w-4" />,
+          route: '/dashboard',
+        },
+        {
+          label: 'Shop',
+          icon: <Store className="h-4 w-4" />,
+          route: '/shop',
+        },
+      ],
+    },
+    {
+      groupLabel: 'Management',
+      items: [
+        {
+          label: 'Products',
+          icon: <Shirt className="h-4 w-4" />,
+          route: '/products',
+        },
+        {
+          label: 'Orders',
+          icon: <Package className="h-4 w-4" />,
+          route: '/orders',
+        },
+        {
+          label: 'Customers',
+          icon: <UsersRound className="h-4 w-4" />,
+          route: '/customers',
+        },
+        {
+          label: 'Offers',
+          icon: <BadgePercent className="h-4 w-4" />,
+          route: '/offers',
+        },
+      ],
+    },
+    {
+      groupLabel: 'Settings',
+      items: [
+        {
+          label: 'General',
+          icon: <Settings className="h-4 w-4" />,
+          route: '/settings/general',
+        },
+        {
+          label: 'Billing',
+          icon: <ReceiptText className="h-4 w-4" />,
+          route: '/settings/billing',
+        },
+      ],
+    },
+  ];
+
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
       <div className="hidden border-r bg-muted/40 md:block">
         <div className="flex h-full max-h-screen flex-col gap-2">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-            <Link to="/" className="flex items-center gap-2 font-semibold">
-              {/* <img src={imageUrl} alt="Stratagems" className="h-8 fill-black" /> */}
-              <svg
-                width="32"
-                height="31"
-                viewBox="0 0 32 31"
-                fill="000000"
-                className="fill-black dark:fill-white"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M0 15.4951C0 6.93382 6.90062 0 15.399 0C18.9865 0 22.2898 1.2329 24.9069 3.30417C22.9171 2.18963 20.6136 1.54852 18.1729 1.54852C10.5176 1.54852 4.31289 7.79192 4.31289 15.4951C4.31289 23.1982 10.5176 29.4416 18.1729 29.4416C20.6136 29.4416 22.9171 28.8104 24.9069 27.686C22.2898 29.7572 18.9865 30.9901 15.399 30.9901C6.90062 31 0 24.0563 0 15.4951ZM31.0626 15.4951C31.0626 22.3401 25.5441 27.8931 18.7415 27.8931C15.8695 27.8931 13.2327 26.9068 11.1351 25.2498C12.7328 26.1473 14.5658 26.6503 16.5262 26.6503C22.6525 26.6503 27.6123 21.6497 27.6123 15.4951C27.6123 9.34044 22.6525 4.3398 16.5262 4.3398C14.5756 4.3398 12.7328 4.85269 11.1351 5.74038C13.2327 4.08336 15.8695 3.09704 18.7415 3.09704C25.5441 3.09704 31.0626 8.65002 31.0626 15.4951ZM12.9583 17.7537C13.0367 19.3713 14.2423 20.0124 15.7126 20.0124C16.6438 20.0124 18.1141 19.7362 18.1141 18.5132C18.1141 15.8797 10.3215 17.5762 10.3215 12.5657C10.3215 9.77442 12.8995 8.45275 15.3598 8.45275C18.1337 8.45275 20.6332 9.69551 20.7313 12.7827H17.6632C17.5064 11.3723 16.487 11.0073 15.2421 11.0073C14.409 11.0073 13.3994 11.3131 13.3994 12.329C13.3994 14.7455 21.192 13.0095 21.192 18.1779C21.192 21.3735 18.3592 22.5472 15.6048 22.5472C12.625 22.5472 9.90984 21.0678 9.89023 17.7537H12.9681H12.9583Z"
-                />
-              </svg>
-              <span className="">Stratagems Tools</span>
-            </Link>
+            <ShopSwitcher />
           </div>
           <div className="flex-1">
-            <nav className="grid items-start px-2 text-sm font-medium lg:px-4 gap-2">
-              <Link
-                to="#"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
-              >
-                <Home className="h-4 w-4" />
-                Dashboard
-              </Link>
-              <Link
-                to="/tokens"
-                className={clsx(
-                  "flex items-center gap-3 rounded-lg px-3 py-2  transition-all hover:text-primary",
-                  {
-                    "bg-muted text-primary": pathname.includes("/tokens"),
-                    "text-muted-foreground": !pathname.includes("/tokens"),
-                  }
-                )}
-              >
-                <SquareAsterisk className="h-4 w-4" />
-                Tokens
-                {/* <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                  6
-                </Badge> */}
-              </Link>
-              <Link
-                to="/sets"
-                className={clsx(
-                  "flex items-center gap-3 rounded-lg px-3 py-2  transition-all hover:text-primary",
-                  {
-                    "bg-muted text-primary": pathname.includes("/sets"),
-                    "text-muted-foreground": !pathname.includes("/sets"),
-                  }
-                )}
-              >
-                <Boxes className="h-4 w-4" />
-                Sets{" "}
-              </Link>
-              <Link
-                to="/lookups"
-                className={clsx(
-                  "flex items-center gap-3 rounded-lg px-3 py-2  transition-all hover:text-primary",
-                  {
-                    "bg-muted text-primary": pathname.includes("/lookups"),
-                    "text-muted-foreground": !pathname.includes("/lookups"),
-                  }
-                )}
-              >
-                <UnfoldHorizontal className="h-4 w-4" />
-                Lookups
-              </Link>
-              <Link
-                to="/last-updates"
-                className={clsx(
-                  "flex items-center gap-3 rounded-lg px-3 py-2  transition-all hover:text-primary",
-                  {
-                    "bg-muted text-primary": pathname.includes("/last-updates"),
-                    "text-muted-foreground":
-                      !pathname.includes("/last-updates"),
-                  }
-                )}
-              >
-                <CalendarClock className="h-4 w-4" />
-                Last Updates
-              </Link>
+            <nav className="grid items-start p-4 px-7 text-sm font-medium  gap-2">
+              {menu.map((group) => (
+                <div key={group.groupLabel} className="mb-4 space-y-1">
+                  <h3 className="text-muted-foreground text-xs font-semibold uppercase tracking-wider">
+                    {group.groupLabel}
+                  </h3>
+                  {group.items.map((item) => (
+                    <Link
+                      key={item.label}
+                      to={item.route}
+                      className={clsx(
+                        'flex items-center gap-3 rounded-lg px-3 py-2  transition-all hover:text-primary',
+                        {
+                          'bg-muted text-primary': pathname.includes(
+                            item.route,
+                          ),
+                          'text-muted-foreground': !pathname.includes(
+                            item.route,
+                          ),
+                        },
+                      )}
+                    >
+                      {item.icon}
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              ))}
             </nav>
           </div>
+          <SupportCard />
         </div>
       </div>
       <div className="flex flex-col">
@@ -207,65 +240,44 @@ export default function Dashboard() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="flex flex-col">
-              <nav className="grid gap-2 text-lg font-medium">
-                <Link
-                  to="#"
-                  className="flex items-center gap-2 text-lg font-semibold"
-                >
-                  <svg
-                    width="32"
-                    height="31"
-                    viewBox="0 0 32 31"
-                    // fill="000000"
-                    className="fill-black dark:fill-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M0 15.4951C0 6.93382 6.90062 0 15.399 0C18.9865 0 22.2898 1.2329 24.9069 3.30417C22.9171 2.18963 20.6136 1.54852 18.1729 1.54852C10.5176 1.54852 4.31289 7.79192 4.31289 15.4951C4.31289 23.1982 10.5176 29.4416 18.1729 29.4416C20.6136 29.4416 22.9171 28.8104 24.9069 27.686C22.2898 29.7572 18.9865 30.9901 15.399 30.9901C6.90062 31 0 24.0563 0 15.4951ZM31.0626 15.4951C31.0626 22.3401 25.5441 27.8931 18.7415 27.8931C15.8695 27.8931 13.2327 26.9068 11.1351 25.2498C12.7328 26.1473 14.5658 26.6503 16.5262 26.6503C22.6525 26.6503 27.6123 21.6497 27.6123 15.4951C27.6123 9.34044 22.6525 4.3398 16.5262 4.3398C14.5756 4.3398 12.7328 4.85269 11.1351 5.74038C13.2327 4.08336 15.8695 3.09704 18.7415 3.09704C25.5441 3.09704 31.0626 8.65002 31.0626 15.4951ZM12.9583 17.7537C13.0367 19.3713 14.2423 20.0124 15.7126 20.0124C16.6438 20.0124 18.1141 19.7362 18.1141 18.5132C18.1141 15.8797 10.3215 17.5762 10.3215 12.5657C10.3215 9.77442 12.8995 8.45275 15.3598 8.45275C18.1337 8.45275 20.6332 9.69551 20.7313 12.7827H17.6632C17.5064 11.3723 16.487 11.0073 15.2421 11.0073C14.409 11.0073 13.3994 11.3131 13.3994 12.329C13.3994 14.7455 21.192 13.0095 21.192 18.1779C21.192 21.3735 18.3592 22.5472 15.6048 22.5472C12.625 22.5472 9.90984 21.0678 9.89023 17.7537H12.9681H12.9583Z"
-                    />
-                  </svg>
-                  <span className="sr-only">Stratagems Tools</span>
-                </Link>
-                <Link
-                  to="#"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <Home className="h-5 w-5" />
-                  Dashboard
-                </Link>
-                <Link
-                  to="/tokens"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
-                >
-                  <SquareAsterisk className="h-4 w-4" />
-                  Tokens
-                  <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-                    6
-                  </Badge>
-                </Link>
-                <Link
-                  to="/sets"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <Boxes className="h-5 w-5" />
-                  Sets
-                </Link>
-                <Link
-                  to="/lookups"
-                  className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                >
-                  <UnfoldHorizontal className="h-5 w-5" />
-                  Lookups
-                </Link>
+              <nav className="grid gap-2 text-lg font-medium space-y-2">
+                <ShopSwitcher />
+                {menu.map((group) => (
+                  <div key={group.groupLabel} className="mb-4 space-y-1">
+                    <h3 className="text-muted-foreground text-xs font-semibold uppercase tracking-wider">
+                      {group.groupLabel}
+                    </h3>
+                    {group.items.map((item) => (
+                      <Link
+                        key={item.label}
+                        to={item.route}
+                        className={clsx(
+                          'flex items-center gap-3 rounded-lg px-3 py-2  transition-all hover:text-primary',
+                          {
+                            'bg-muted text-primary': pathname.includes(
+                              item.route,
+                            ),
+                            'text-muted-foreground': !pathname.includes(
+                              item.route,
+                            ),
+                          },
+                        )}
+                      >
+                        {item.icon}
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                ))}
               </nav>
+              <div className="grow"></div>
+              <SupportCard />
             </SheetContent>
           </Sheet>
           <div className="w-full flex-1">
             <form>
               <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Search className="absolute left-2.5 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
                   type="search"
                   placeholder="Search ..."
@@ -274,14 +286,13 @@ export default function Dashboard() {
               </div>
             </form>
           </div>
-          {/* <DropdownMenu>
-            <DropdownMenuTrigger asChild> */}
-          <Button variant="secondary" size="icon" className="rounded-full">
-            <CircleUser className="h-5 w-5" />
-            <span className="sr-only">Toggle user menu</span>
-          </Button>
-          <ModeToggle />
-          {/* </DropdownMenuTrigger>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="secondary" size="icon" className="rounded-full">
+                <CircleUser className="h-5 w-5" />
+                <span className="sr-only">Toggle user menu</span>
+              </Button>
+            </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
@@ -290,7 +301,9 @@ export default function Dashboard() {
               <DropdownMenuSeparator />
               <DropdownMenuItem>Logout</DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu> */}
+          </DropdownMenu>
+          <ModeToggle />
+          <LanguageToggle />
         </header>
 
         <main className="flex flex-1 flex-col">
@@ -299,6 +312,25 @@ export default function Dashboard() {
           </ScrollArea>
         </main>
       </div>
+    </div>
+  );
+}
+
+function SupportCard() {
+  return (
+    <div className="p-5">
+      <Card>
+        <CardHeader className="pt-0 p-4">
+          <CardDescription>
+            Do you need help? Contact our support team.
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
+          <Button variant={'default'} size="sm" className="w-full">
+            Contact Support
+          </Button>
+        </CardContent>
+      </Card>
     </div>
   );
 }
