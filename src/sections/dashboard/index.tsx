@@ -105,6 +105,7 @@ import {
   Store,
   UsersRound,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { NavLink as Link, Outlet, useLocation } from 'react-router-dom';
 import { LanguageToggle } from './languageSwitcher';
 import ShopSwitcher from './shopSwitcher';
@@ -184,6 +185,8 @@ export default function Dashboard() {
       ],
     },
   ];
+
+  const { t } = useTranslation();
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
