@@ -26,6 +26,7 @@ import {
   ArrowUpIcon,
   ShoppingCartIcon,
   UsersIcon,
+  BellIcon,
 } from '@heroicons/react/24/outline';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -310,6 +311,33 @@ const Overview: React.FC = () => {
                       </Button>
                     </div>
                   </CardFooter>
+                </Card>
+              )}
+              {widget === 'notifications' && (
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between pb-2">
+                    <CardTitle className="text-sm font-medium">
+                      Notifications
+                    </CardTitle>
+                    <BellIcon className="w-4 h-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid gap-4">
+                      {staticData.notifications.map((notification, idx) => (
+                        <div
+                          key={idx}
+                          className="flex flex-col p-2 border-b border-muted-foreground/20 last:border-none"
+                        >
+                          <div className="text-sm font-medium">
+                            {notification.message}
+                          </div>
+                          <div className="text-xs text-muted-foreground">
+                            {notification.time}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
                 </Card>
               )}
             </div>
