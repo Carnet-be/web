@@ -193,6 +193,24 @@ const Overview: React.FC = () => {
                   </CardFooter>
                 </Card>
               )}
+               {widget === "customer_activity" && (
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between pb-2">
+                    <CardTitle className="text-sm font-medium">Customer Activity</CardTitle>
+                    <UsersIcon className="w-4 h-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid gap-4">
+                      {staticData.customerActivity.map((activity, idx) => (
+                        <div key={idx} className="flex items-center justify-between">
+                          <div className="text-lg">{activity.label}</div>
+                          <div className="text-lg font-bold">{activity.count}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
             </div>
           ))}
         </div>
