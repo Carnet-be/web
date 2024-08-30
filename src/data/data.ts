@@ -69,11 +69,14 @@ interface WidgetData {
       ],
     },
     customerActivity: [
-      { count: 1234, label: "Active" },
-      { count: 567, label: "Inactive" },
+      { label: "New Registrations", count: 2350 },
+      { label: "Active Customers", count: 15678 },
+      { label: "Retention Rate", count: 82 },
     ],
     productInventory: [
-      { quantity: 1234, name: "Items" },
+      { name: "In Stock", quantity: 1234 },
+      { name: "Low Stock", quantity: 78 },
+      { name: "Out of Stock", quantity: 12 },
     ],
     notifications: [
       { message: "New comment on your post", time: "2024-08-01T12:00:00Z" },
