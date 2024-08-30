@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
@@ -25,8 +25,6 @@ const Overview: React.FC = () => {
       setWidgets([...widgets, widget]);
     }
   };
-
-
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -94,6 +92,24 @@ const Overview: React.FC = () => {
                   </CardContent>
                   <CardFooter>
                     {/* Replace TimeseriesChart with a proper chart component */}
+                  </CardFooter>
+                </Card>
+              )}
+              {widget === "revenue" && (
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between pb-2">
+                    <CardTitle className="text-sm font-medium">Revenue</CardTitle>
+                    <DollarSignIcon className="w-4 h-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">{staticData.revenue.amount}</div>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <ArrowUpIcon className="w-3 h-3" />
+                      <span>{staticData.revenue.growth}</span>
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    {/* proper chart component */}
                   </CardFooter>
                 </Card>
               )}
