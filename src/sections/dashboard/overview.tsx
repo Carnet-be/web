@@ -119,10 +119,10 @@ const Overview: React.FC = () => {
                     <CardTitle className="text-sm font-medium">
                       Total Sales
                       <Button
-                      variant="link"
+                        variant="link"
                         onClick={() => handleWidgetRemove(widget)}
                       >
-                        <CircleMinus  className="w-4 h-4 text-muted-foreground" />
+                        <CircleMinus className="w-4 h-4 text-muted-foreground" />
                       </Button>
                     </CardTitle>
                     <DollarSignIcon className="w-4 h-4 text-muted-foreground" />
@@ -147,10 +147,10 @@ const Overview: React.FC = () => {
                     <CardTitle className="text-sm font-medium">
                       Revenue
                       <Button
-                      variant="link"
+                        variant="link"
                         onClick={() => handleWidgetRemove(widget)}
                       >
-                        <CircleMinus  className="w-4 h-4 text-muted-foreground" />
+                        <CircleMinus className="w-4 h-4 text-muted-foreground" />
                       </Button>
                     </CardTitle>
                     <DollarSignIcon className="w-4 h-4 text-muted-foreground" />
@@ -173,10 +173,10 @@ const Overview: React.FC = () => {
                     <CardTitle className="text-sm font-medium">
                       Orders
                       <Button
-                      variant="link"
+                        variant="link"
                         onClick={() => handleWidgetRemove(widget)}
                       >
-                        <CircleMinus  className="w-4 h-4 text-muted-foreground" />
+                        <CircleMinus className="w-4 h-4 text-muted-foreground" />
                       </Button>
                     </CardTitle>
                     <ShoppingCartIcon className="w-4 h-4 text-muted-foreground" />
@@ -199,10 +199,10 @@ const Overview: React.FC = () => {
                     <CardTitle className="text-sm font-medium">
                       New Customers
                       <Button
-                      variant="link"
+                        variant="link"
                         onClick={() => handleWidgetRemove(widget)}
                       >
-                        <CircleMinus  className="w-4 h-4 text-muted-foreground" />
+                        <CircleMinus className="w-4 h-4 text-muted-foreground" />
                       </Button>
                     </CardTitle>
                     <UsersIcon className="w-4 h-4 text-muted-foreground" />
@@ -225,10 +225,10 @@ const Overview: React.FC = () => {
                     <CardTitle className="text-sm font-medium">
                       Order Status
                       <Button
-                      variant="link"
+                        variant="link"
                         onClick={() => handleWidgetRemove(widget)}
                       >
-                        <CircleMinus  className="w-4 h-4 text-muted-foreground" />
+                        <CircleMinus className="w-4 h-4 text-muted-foreground" />
                       </Button>
                     </CardTitle>
                     <ShoppingCartIcon className="w-4 h-4 text-muted-foreground" />
@@ -285,10 +285,10 @@ const Overview: React.FC = () => {
                     <CardTitle className="text-sm font-medium">
                       Customer Activity
                       <Button
-                      variant="link"
+                        variant="link"
                         onClick={() => handleWidgetRemove(widget)}
                       >
-                        <CircleMinus  className="w-4 h-4 text-muted-foreground" />
+                        <CircleMinus className="w-4 h-4 text-muted-foreground" />
                       </Button>
                     </CardTitle>
                     <Users className="w-4 h-4 text-muted-foreground" />
@@ -319,10 +319,10 @@ const Overview: React.FC = () => {
                     <CardTitle className="text-sm font-medium">
                       Product Inventory
                       <Button
-                      variant="link"
+                        variant="link"
                         onClick={() => handleWidgetRemove(widget)}
                       >
-                        <CircleMinus  className="w-4 h-4 text-muted-foreground" />
+                        <CircleMinus className="w-4 h-4 text-muted-foreground" />
                       </Button>
                     </CardTitle>
                     <PackageIcon className="w-4 h-4 text-muted-foreground" />
@@ -363,12 +363,6 @@ const Overview: React.FC = () => {
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">
                       Notifications
-                      <Button
-                      variant="link"
-                        onClick={() => handleWidgetRemove(widget)}
-                      >
-                        <CircleMinus  className="w-4 h-4 text-muted-foreground" />
-                      </Button>
                     </CardTitle>
                     <BellIcon className="w-4 h-4 text-muted-foreground" />
                   </CardHeader>
