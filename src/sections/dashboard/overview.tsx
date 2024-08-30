@@ -4,6 +4,8 @@ import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
 import { CalendarDaysIcon, PlusIcon, ArrowUpIcon, ShoppingCartIcon, UsersIcon } from '@heroicons/react/24/outline'
+import { Badge } from "@/components/ui/badge"
+import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
 import {  DollarSignIcon} from "lucide-react"
 import staticData from "@/data/data"
 
@@ -147,6 +149,47 @@ const Overview: React.FC = () => {
                   </CardContent>
                   <CardFooter>
                     {/* proper chart component */}
+                  </CardFooter>
+                </Card>
+              )}
+              {widget === "order_status" && (
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between pb-2">
+                    <CardTitle className="text-sm font-medium">Order Status</CardTitle>
+                    <ShoppingCartIcon className="w-4 h-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-3 gap-4">
+                      {staticData.orderStatus.statuses.map((status, idx) => (
+                        <div key={idx} className="flex flex-col items-center gap-2">
+                          <div className="text-2xl font-bold">{status.count}</div>
+                          <Badge variant={status.status === "Pending" ? "secondary" : "outline"}>
+                            {status.status}
+                          </Badge>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Order</TableHead>
+                          <TableHead>Date</TableHead>
+                          <TableHead>Amount</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {staticData.orderStatus.table.map((order, idx) => (
+                          <TableRow key={idx}>
+                            <TableCell>{order.order}</TableCell>
+                            <TableCell>{order.status}</TableCell>
+                            <TableCell>{order.date}</TableCell>
+                            <TableCell>{order.amount}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
                   </CardFooter>
                 </Card>
               )}
