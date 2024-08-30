@@ -79,8 +79,9 @@ interface WidgetData {
       { name: "Out of Stock", quantity: 12 },
     ],
     notifications: [
-      { message: "New comment on your post", time: "2024-08-01T12:00:00Z" },
-      { message: "Order #1234 has been shipped", time: "2024-08-02T14:30:00Z" },
+      { message: "Your order has been shipped", time: "2 hours ago" },
+      { message: "New comment on your post", time: "1 day ago" },
+      { message: "Password changed successfully", time: "3 days ago" },
     ],
   };
   
