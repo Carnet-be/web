@@ -129,11 +129,11 @@ const Overview: React.FC = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
-                      {staticData.totalSales.amount}
+                    ${staticData.totalSales.amount.toLocaleString()}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <ArrowUpIcon className="w-3 h-3" />
-                      <span>{staticData.totalSales.growth}</span>
+                      <span>{staticData.totalSales.growth}% from last week</span>
                     </div>
                   </CardContent>
                   <CardFooter>
@@ -157,11 +157,11 @@ const Overview: React.FC = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
-                      {staticData.revenue.amount}
+                    ${staticData.revenue.amount.toLocaleString()}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <ArrowUpIcon className="w-3 h-3" />
-                      <span>{staticData.revenue.growth}</span>
+                      <span>{staticData.revenue.growth}% from last week</span>
                     </div>
                   </CardContent>
                   <CardFooter>{/* proper chart component */}</CardFooter>
@@ -183,11 +183,11 @@ const Overview: React.FC = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
-                      {staticData.orders.amount}
+                    {staticData.orders.amount.toLocaleString()}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <ArrowUpIcon className="w-3 h-3" />
-                      <span>{staticData.orders.growth}</span>
+                      <span>{staticData.orders.growth}% from last week</span>
                     </div>
                   </CardContent>
                   <CardFooter>{/* proper chart component */}</CardFooter>
@@ -209,11 +209,11 @@ const Overview: React.FC = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
-                      {staticData.newCustomers.amount}
+                    {staticData.newCustomers.amount.toLocaleString()}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <ArrowUpIcon className="w-3 h-3" />
-                      <span>{staticData.newCustomers.growth}</span>
+                      <span>{staticData.newCustomers.growth}% from last week</span>
                     </div>
                   </CardContent>
                   <CardFooter>{/* proper chart component */}</CardFooter>
@@ -241,7 +241,7 @@ const Overview: React.FC = () => {
                           className="flex flex-col items-center gap-2"
                         >
                           <div className="text-2xl font-bold">
-                            {status.count}
+                          {status.count.toLocaleString()}
                           </div>
                           <Badge
                             variant={
@@ -271,7 +271,7 @@ const Overview: React.FC = () => {
                             <TableCell>{order.order}</TableCell>
                             <TableCell>{order.status}</TableCell>
                             <TableCell>{order.date}</TableCell>
-                            <TableCell>{order.amount}</TableCell>
+                            <TableCell>${order.amount.toFixed(2)}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
@@ -301,7 +301,7 @@ const Overview: React.FC = () => {
                           className="flex flex-col items-center gap-2"
                         >
                           <div className="text-2xl font-bold">
-                            {activity.count}
+                          {activity.count.toLocaleString()}
                           </div>
                           <div className="text-sm text-muted-foreground">
                             {activity.label}
@@ -335,7 +335,7 @@ const Overview: React.FC = () => {
                           className="flex flex-col items-center gap-2"
                         >
                           <div className="text-2xl font-bold">
-                            {product.quantity}
+                          {product.quantity.toLocaleString()}
                           </div>
                           <div className="text-sm text-muted-foreground">
                             {product.name}
@@ -363,6 +363,12 @@ const Overview: React.FC = () => {
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">
                       Notifications
+                      <Button
+                        variant="link"
+                        onClick={() => handleWidgetRemove(widget)}
+                      >
+                        <CircleMinus className="w-4 h-4 text-muted-foreground" />
+                      </Button>
                     </CardTitle>
                     <BellIcon className="w-4 h-4 text-muted-foreground" />
                   </CardHeader>
