@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select";
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
+import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu"
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
-import { CalendarDaysIcon, PlusIcon, ArrowUpIcon } from '@heroicons/react/24/outline';
-import { DollarSignIcon } from "lucide-react";
-import staticData from "@/data/data";
+import { CalendarDaysIcon, PlusIcon, ArrowUpIcon, ShoppingCartIcon } from '@heroicons/react/24/outline'
+import {  DollarSignIcon } from "lucide-react"
+import staticData from "@/data/data"
 
 const Overview: React.FC = () => {
-  const [timeframe, setTimeframe] = useState("this_week");
+  const [timeframe, setTimeframe] = useState("this_week")
   const [widgets, setWidgets] = useState<string[]>([
     "total_sales",
     "revenue",
@@ -25,6 +25,7 @@ const Overview: React.FC = () => {
       setWidgets([...widgets, widget]);
     }
   };
+
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -106,6 +107,24 @@ const Overview: React.FC = () => {
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <ArrowUpIcon className="w-3 h-3" />
                       <span>{staticData.revenue.growth}</span>
+                    </div>
+                  </CardContent>
+                  <CardFooter>
+                    {/* proper chart component */}
+                  </CardFooter>
+                </Card>
+              )}
+              {widget === "orders" && (
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between pb-2">
+                    <CardTitle className="text-sm font-medium">Orders</CardTitle>
+                    <ShoppingCartIcon className="w-4 h-4 text-muted-foreground" />
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-2xl font-bold">{staticData.orders.amount}</div>
+                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                      <ArrowUpIcon className="w-3 h-3" />
+                      <span>{staticData.orders.growth}</span>
                     </div>
                   </CardContent>
                   <CardFooter>
