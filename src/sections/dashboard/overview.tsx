@@ -37,7 +37,7 @@ import {
   TableBody,
   TableCell,
 } from '@/components/ui/table';
-import { DollarSignIcon, PackageIcon, Users } from 'lucide-react';
+import { CircleMinus, DollarSignIcon, PackageIcon, Users } from 'lucide-react';
 import staticData from '@/data/data';
 
 const Overview: React.FC = () => {
@@ -57,6 +57,9 @@ const Overview: React.FC = () => {
     if (!widgets.includes(widget)) {
       setWidgets([...widgets, widget]);
     }
+  };
+  const handleWidgetRemove = (widget: string) => {
+    setWidgets(widgets.filter((w) => w !== widget));
   };
 
   return (
@@ -115,6 +118,12 @@ const Overview: React.FC = () => {
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">
                       Total Sales
+                      <Button
+                      variant="link"
+                        onClick={() => handleWidgetRemove(widget)}
+                      >
+                        <CircleMinus  className="w-4 h-4 text-muted-foreground" />
+                      </Button>
                     </CardTitle>
                     <DollarSignIcon className="w-4 h-4 text-muted-foreground" />
                   </CardHeader>
@@ -137,6 +146,12 @@ const Overview: React.FC = () => {
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">
                       Revenue
+                      <Button
+                      variant="link"
+                        onClick={() => handleWidgetRemove(widget)}
+                      >
+                        <CircleMinus  className="w-4 h-4 text-muted-foreground" />
+                      </Button>
                     </CardTitle>
                     <DollarSignIcon className="w-4 h-4 text-muted-foreground" />
                   </CardHeader>
@@ -157,6 +172,12 @@ const Overview: React.FC = () => {
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">
                       Orders
+                      <Button
+                      variant="link"
+                        onClick={() => handleWidgetRemove(widget)}
+                      >
+                        <CircleMinus  className="w-4 h-4 text-muted-foreground" />
+                      </Button>
                     </CardTitle>
                     <ShoppingCartIcon className="w-4 h-4 text-muted-foreground" />
                   </CardHeader>
@@ -177,6 +198,12 @@ const Overview: React.FC = () => {
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">
                       New Customers
+                      <Button
+                      variant="link"
+                        onClick={() => handleWidgetRemove(widget)}
+                      >
+                        <CircleMinus  className="w-4 h-4 text-muted-foreground" />
+                      </Button>
                     </CardTitle>
                     <UsersIcon className="w-4 h-4 text-muted-foreground" />
                   </CardHeader>
@@ -197,6 +224,12 @@ const Overview: React.FC = () => {
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">
                       Order Status
+                      <Button
+                      variant="link"
+                        onClick={() => handleWidgetRemove(widget)}
+                      >
+                        <CircleMinus  className="w-4 h-4 text-muted-foreground" />
+                      </Button>
                     </CardTitle>
                     <ShoppingCartIcon className="w-4 h-4 text-muted-foreground" />
                   </CardHeader>
@@ -251,6 +284,12 @@ const Overview: React.FC = () => {
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">
                       Customer Activity
+                      <Button
+                      variant="link"
+                        onClick={() => handleWidgetRemove(widget)}
+                      >
+                        <CircleMinus  className="w-4 h-4 text-muted-foreground" />
+                      </Button>
                     </CardTitle>
                     <Users className="w-4 h-4 text-muted-foreground" />
                   </CardHeader>
@@ -279,6 +318,12 @@ const Overview: React.FC = () => {
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">
                       Product Inventory
+                      <Button
+                      variant="link"
+                        onClick={() => handleWidgetRemove(widget)}
+                      >
+                        <CircleMinus  className="w-4 h-4 text-muted-foreground" />
+                      </Button>
                     </CardTitle>
                     <PackageIcon className="w-4 h-4 text-muted-foreground" />
                   </CardHeader>
@@ -318,6 +363,12 @@ const Overview: React.FC = () => {
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
                     <CardTitle className="text-sm font-medium">
                       Notifications
+                      <Button
+                      variant="link"
+                        onClick={() => handleWidgetRemove(widget)}
+                      >
+                        <CircleMinus  className="w-4 h-4 text-muted-foreground" />
+                      </Button>
                     </CardTitle>
                     <BellIcon className="w-4 h-4 text-muted-foreground" />
                   </CardHeader>
