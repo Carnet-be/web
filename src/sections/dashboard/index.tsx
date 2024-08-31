@@ -91,11 +91,16 @@ import {
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { useToast } from '@/components/ui/use-toast';
+import authService from '@/services/auth.service';
+import useAuthStore from '@/state/auth';
+import { useMutation } from '@tanstack/react-query';
 import clsx from 'clsx';
 import {
   BadgePercent,
   ChartNoAxesColumn,
   CircleUser,
+  LogOut,
   Menu,
   Package,
   ReceiptText,
@@ -184,6 +189,29 @@ export default function Dashboard() {
       ],
     },
   ];
+
+  const { clear } = useAuthStore();
+  const { toast, dismiss } = useToast();
+  const { mutate } = useMutation({
+    mutationFn: authService.seller.logout,
+    onMutate() {
+      toast({
+        title: 'Logging out',
+        description: 'You are about to log out',
+      });
+    },
+    onSuccess() {
+      clear();
+      dismiss();
+    },
+    onError() {
+      dismiss();
+      toast({
+        // title: 'Error',
+        description: 'Something went wrong, please try again',
+      });
+    },
+  });
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -299,7 +327,13 @@ export default function Dashboard() {
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => mutate()}
+                className="gap-2 text-destructive cursor-pointer"
+              >
+                <LogOut className="mr-2 h-4 w-4" />
+                Logout
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
           <ModeToggle />

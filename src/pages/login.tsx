@@ -1,10 +1,25 @@
-import { Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import AuthLayout from '@/sections/auth/authLayout.tsx';
 import EcommerceImageLogin from '@/assets/ecommerce-login.png';
-import OkeyoLogo from '@/assets/okeyo-logo.png'
+import OkeyoLogo from '@/assets/okeyo-logo.png';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { LoaderButton } from '@/components/ui/loader-button';
+import { PasswordInput } from '@/components/ui/password-input';
+import { useToast } from '@/components/ui/use-toast';
+import AuthLayout from '@/sections/auth/authLayout.tsx';
+import authService from '@/services/auth.service';
+import useAuthStore from '@/state/auth';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation } from '@tanstack/react-query';
+import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+import { z } from 'zod';
 
 export default function Login() {
   return (
@@ -29,8 +44,8 @@ export default function Login() {
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">
               <p className="text-lg text-center">
-                &ldquo; Welcome to your best e-commerce SaaS application where you can begin your business and manage
-                it &rdquo;
+                &ldquo; Welcome to your best e-commerce SaaS application where
+                you can begin your business and manage it &rdquo;
               </p>
             </blockquote>
           </div>
@@ -45,33 +60,7 @@ export default function Login() {
                 Enter your email and password below to sign in
               </p>
             </div>
-            <form className="space-y-4" action="#" method="POST">
-              <div>
-                <Label htmlFor="email">Email address</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  placeholder="Email address"
-                />
-              </div>
-              <div>
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  placeholder="Password"
-                />
-              </div>
-              <Button type="submit" className="w-full">
-                Sign In
-              </Button>
-            </form>
+            <LoginForm />
             <p className="px-8 text-center text-sm text-muted-foreground">
               Don't have an account?{' '}
               <Link
@@ -81,9 +70,125 @@ export default function Login() {
                 Sign Up
               </Link>
             </p>
+            <p className="px-8 text-center text-sm text-muted-foreground">
+              By continuing, you agree to our{' '}
+              <Link
+                to="/terms"
+                className="underline underline-offset-4 hover:text-primary"
+              >
+                Terms of Service
+              </Link>{' '}
+              and{' '}
+              <Link
+                to="/privacy"
+                className="underline underline-offset-4 hover:text-primary"
+              >
+                Privacy Policy
+              </Link>
+              .
+            </p>
           </div>
         </div>
       </div>
     </AuthLayout>
   );
 }
+
+const LoginForm = () => {
+  const schema = z.object({
+    email: z.string().email('Invalid email address'),
+    password: z.string().min(8, 'Too short, minimum 8 characters'),
+  });
+  const { setToken } = useAuthStore();
+  const { mutate, isPending } = useMutation({
+    mutationFn: authService.seller.login,
+    onSuccess: (data) => {
+      setToken(data);
+      toast({
+        title: 'Welcome',
+        description: 'You have successfully logged in',
+      });
+    },
+    onError: (error: any) => {
+      //error can be
+      //return res.status(409).json({ status: 'error', message: 'Email already exists' });
+      if (error.response?.data?.message === 'EMAIL_NOT_FOUND') {
+        toast({
+          title: 'Error',
+          description: 'Account not found',
+          variant: 'destructive',
+        });
+        return;
+      }
+      if (error.response?.data?.message === 'INVALID_PASSWORD') {
+        toast({
+          title: 'Error',
+          description: 'Invalid credentials',
+          variant: 'destructive',
+        });
+        return;
+      }
+      toast({
+        title: 'Error',
+        description: 'An error occurred, please try again or contact support',
+        variant: 'destructive',
+      });
+    },
+  });
+
+  const form = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+    resolver: zodResolver(schema),
+  });
+  const { toast } = useToast();
+  const onSubmit = (data: z.infer<typeof schema>) => {
+    mutate(data);
+  };
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="Type your email" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <PasswordInput placeholder="Type your password" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className="pt-4 flex items-center justify-center">
+          <LoaderButton
+            isLoading={isPending}
+            type="submit"
+            className="w-[250px]"
+          >
+            Login
+          </LoaderButton>
+        </div>
+      </form>
+    </Form>
+  );
+};
