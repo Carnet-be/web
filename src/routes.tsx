@@ -32,8 +32,8 @@ const RoutesWrapper = () => {
         <Route index element={<Navigate to="login" />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-        <Route path="/new-shop" element={<Shop />} />
       </Route>
+      <Route path="new-shop" element={<Shop />} />
       <Route
         path="*"
         element={
