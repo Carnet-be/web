@@ -39,6 +39,7 @@ import {
 } from '@/components/ui/table';
 import { CircleMinus, DollarSignIcon, PackageIcon, Users } from 'lucide-react';
 import staticData from '@/data/data';
+import TotalSalesChart from '@/components/charts/TotalSalesChart';
 
 const Overview: React.FC = () => {
   const [timeframe, setTimeframe] = useState('this_week');
@@ -116,7 +117,7 @@ const Overview: React.FC = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2">
           {widgets.map((widget, index) => (
             <div key={index}>
               {widget === 'total_sales' && (
@@ -145,7 +146,7 @@ const Overview: React.FC = () => {
                     </div>
                   </CardContent>
                   <CardFooter>
-                    {/*  proper chart component */}
+                  <TotalSalesChart timeframe={timeframe} />
                   </CardFooter>
                 </Card>
               )}
