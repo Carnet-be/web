@@ -45,6 +45,7 @@ import {
 import staticData from '@/data/data';
 import RevenueChart from '@/components/charts/RevenueChart';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import CustomerActivityChart from '@/components/charts/CustomerActivityChart';
 
 const Overview: React.FC = () => {
   const [timeframe, setTimeframe] = useState('this_week');
@@ -52,11 +53,11 @@ const Overview: React.FC = () => {
     'total_sales',
     'orders',
     'new_customers',
-    'revenue',
     'product_inventory',
-    'notifications',
-    'order_status',
+    'revenue',
     'customer_activity',
+    'order_status',
+    'notifications',
   ]);
 
   const handleWidgetAdd = (widget: string) => {
@@ -122,20 +123,18 @@ const Overview: React.FC = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 ">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4 ">
           {widgets.map((widget, index) => (
             <div
               key={index}
               className={
                 widget === 'revenue'
-                ? 'lg:col-span-2 lg:row-span-2 '
+                ? 'lg:col-span-2 lg:row-span-1 '
                 :   widget === 'order_status'
-                ? 'lg:col-span-2 '
-                  :   widget === 'notifications'
-                ? 'lg:col-span-1 lg: row-span-2 '
+                ? 'lg:col-span-3 lg:row-span-1 '
                 :  widget === 'customer_activity'
-                ? 'lg:col-span-3 '
-                : ''
+                ? 'lg:col-span-2 lg:row-span-1 '
+                : 'lg:row-span-1'
               }
             >
               {widget === 'total_sales' && (
@@ -339,7 +338,7 @@ const Overview: React.FC = () => {
                       ))}
                     </div>
                   </CardContent>
-                  <CardFooter>{/* proper chart component */}</CardFooter>
+                  <CardFooter ><CustomerActivityChart data={data} /></CardFooter>
                 </Card>
               )}
               {widget === 'product_inventory' && (
