@@ -102,8 +102,14 @@ const Overview: React.FC = () => {
                 <DropdownMenuItem
                   key={widget}
                   onSelect={() => handleWidgetAdd(widget)}
-                  className={widgets.includes(widget) ? 'line-through' : ''}
+                  className="flex items-center"
                 >
+                  <input
+                    type="checkbox"
+                    checked={widgets.includes(widget)}
+                    onChange={() => handleWidgetAdd(widget)}
+                    className="mr-2"
+                  />
                   {widget.replace(/_/g, ' ')}
                 </DropdownMenuItem>
               ))}
@@ -129,15 +135,17 @@ const Overview: React.FC = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
-                    ${staticData.totalSales.amount.toLocaleString()}
+                      ${staticData.totalSales.amount.toLocaleString()}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <ArrowUpIcon className="w-3 h-3" />
-                      <span>{staticData.totalSales.growth}% from last week</span>
+                      <span>
+                        {staticData.totalSales.growth}% from last week
+                      </span>
                     </div>
                   </CardContent>
                   <CardFooter>
-                    {/* Replace TimeseriesChart with a proper chart component */}
+                    {/*  proper chart component */}
                   </CardFooter>
                 </Card>
               )}
@@ -157,7 +165,7 @@ const Overview: React.FC = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
-                    ${staticData.revenue.amount.toLocaleString()}
+                      ${staticData.revenue.amount.toLocaleString()}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <ArrowUpIcon className="w-3 h-3" />
@@ -183,7 +191,7 @@ const Overview: React.FC = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
-                    {staticData.orders.amount.toLocaleString()}
+                      {staticData.orders.amount.toLocaleString()}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <ArrowUpIcon className="w-3 h-3" />
@@ -209,11 +217,13 @@ const Overview: React.FC = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
-                    {staticData.newCustomers.amount.toLocaleString()}
+                      {staticData.newCustomers.amount.toLocaleString()}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <ArrowUpIcon className="w-3 h-3" />
-                      <span>{staticData.newCustomers.growth}% from last week</span>
+                      <span>
+                        {staticData.newCustomers.growth}% from last week
+                      </span>
                     </div>
                   </CardContent>
                   <CardFooter>{/* proper chart component */}</CardFooter>
@@ -241,7 +251,7 @@ const Overview: React.FC = () => {
                           className="flex flex-col items-center gap-2"
                         >
                           <div className="text-2xl font-bold">
-                          {status.count.toLocaleString()}
+                            {status.count.toLocaleString()}
                           </div>
                           <Badge
                             variant={
@@ -301,7 +311,7 @@ const Overview: React.FC = () => {
                           className="flex flex-col items-center gap-2"
                         >
                           <div className="text-2xl font-bold">
-                          {activity.count.toLocaleString()}
+                            {activity.count.toLocaleString()}
                           </div>
                           <div className="text-sm text-muted-foreground">
                             {activity.label}
@@ -335,7 +345,7 @@ const Overview: React.FC = () => {
                           className="flex flex-col items-center gap-2"
                         >
                           <div className="text-2xl font-bold">
-                          {product.quantity.toLocaleString()}
+                            {product.quantity.toLocaleString()}
                           </div>
                           <div className="text-sm text-muted-foreground">
                             {product.name}
