@@ -20,14 +20,7 @@ import {
   CardContent,
   CardFooter,
 } from '@/components/ui/card';
-import {
-  CalendarDaysIcon,
-  PlusIcon,
-  ArrowUpIcon,
-  ShoppingCartIcon,
-  UsersIcon,
-  BellIcon,
-} from '@heroicons/react/24/outline';
+
 import { Badge } from '@/components/ui/badge';
 import {
   Table,
@@ -37,7 +30,7 @@ import {
   TableBody,
   TableCell,
 } from '@/components/ui/table';
-import { CircleMinus, DollarSignIcon, PackageIcon, Users } from 'lucide-react';
+import { ArrowUpIcon, BellIcon, CalendarDaysIcon, CircleMinus, DollarSignIcon, PackageIcon, PlusIcon, ShoppingCartIcon, Users, UsersIcon } from 'lucide-react';
 import staticData from '@/data/data';
 import TotalSalesChart from '@/components/charts/TotalSalesChart';
 
