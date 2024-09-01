@@ -30,21 +30,33 @@ import {
   TableBody,
   TableCell,
 } from '@/components/ui/table';
-import { ArrowUpIcon, BellIcon, CalendarDaysIcon, CircleMinus, DollarSignIcon, PackageIcon, PlusIcon, ShoppingCartIcon, Users, UsersIcon } from 'lucide-react';
+import {
+  ArrowUpIcon,
+  BellIcon,
+  CalendarDaysIcon,
+  CircleMinus,
+  DollarSignIcon,
+  PackageIcon,
+  PlusIcon,
+  ShoppingCartIcon,
+  Users,
+  UsersIcon,
+} from 'lucide-react';
 import staticData from '@/data/data';
-import TotalSalesChart from '@/components/charts/TotalSalesChart';
+import RevenueChart from '@/components/charts/RevenueChart';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 const Overview: React.FC = () => {
   const [timeframe, setTimeframe] = useState('this_week');
   const [widgets, setWidgets] = useState<string[]>([
     'total_sales',
-    'revenue',
     'orders',
     'new_customers',
-    'order_status',
-    'customer_activity',
+    'revenue',
     'product_inventory',
     'notifications',
+    'order_status',
+    'customer_activity',
   ]);
 
   const handleWidgetAdd = (widget: string) => {
@@ -58,9 +70,9 @@ const Overview: React.FC = () => {
   const data = staticData(timeframe);
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
-      <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
+       <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
         <div className="flex items-center justify-between w-full pt-4">
-          <div className="grid grid-cols-1 gap-4">
+        <div className="grid grid-cols-1 gap-4">
             <Button variant="secondary" className="flex items-center gap-2">
               <CalendarDaysIcon className="w-4 h-4" />
               <Select value={timeframe} onValueChange={setTimeframe}>
@@ -110,22 +122,35 @@ const Overview: React.FC = () => {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 ">
           {widgets.map((widget, index) => (
-            <div key={index}>
+            <div
+              key={index}
+              className={
+                widget === 'revenue'
+                ? 'lg:col-span-2 lg:row-span-2 '
+                :   widget === 'order_status'
+                ? 'lg:col-span-2 '
+                  :   widget === 'notifications'
+                ? 'lg:col-span-1 lg: row-span-2 '
+                :  widget === 'customer_activity'
+                ? 'lg:col-span-3 '
+                : ''
+              }
+            >
               {widget === 'total_sales' && (
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium">
+                  <CardTitle className="flex items-center text-sm font-medium gap-2">
+                      <DollarSignIcon className="w-4 h-4 text-muted-foreground " />
                       Total Sales
-                      <Button
-                        variant="link"
-                        onClick={() => handleWidgetRemove(widget)}
-                      >
-                        <CircleMinus className="w-4 h-4 text-muted-foreground" />
-                      </Button>
                     </CardTitle>
-                    <DollarSignIcon className="w-4 h-4 text-muted-foreground" />
+                    <Button
+                      variant="link"
+                      onClick={() => handleWidgetRemove(widget)}
+                    >
+                      <CircleMinus className="w-4 h-4 text-muted-foreground" />
+                    </Button>
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
@@ -133,29 +158,25 @@ const Overview: React.FC = () => {
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <ArrowUpIcon className="w-3 h-3" />
-                      <span>
-                        {data.totalSales.growth}% from last week
-                      </span>
+                      <span>{data.totalSales.growth}% from last week</span>
                     </div>
                   </CardContent>
-                  <CardFooter>
-                  <TotalSalesChart timeframe={timeframe} />
-                  </CardFooter>
+                  <CardFooter></CardFooter>
                 </Card>
               )}
               {widget === 'revenue' && (
-                <Card>
+                <Card >
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium">
+                  <CardTitle className="flex items-center text-sm font-medium gap-2">
+                  <DollarSignIcon className="w-4 h-4 text-muted-foreground" />
                       Revenue
-                      <Button
+                    </CardTitle>
+                    <Button
                         variant="link"
                         onClick={() => handleWidgetRemove(widget)}
                       >
                         <CircleMinus className="w-4 h-4 text-muted-foreground" />
                       </Button>
-                    </CardTitle>
-                    <DollarSignIcon className="w-4 h-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
@@ -166,22 +187,24 @@ const Overview: React.FC = () => {
                       <span>{data.revenue.growth}% from last week</span>
                     </div>
                   </CardContent>
-                  <CardFooter>{/* proper chart component */}</CardFooter>
+                  <CardFooter>
+                    <RevenueChart timeframe={timeframe} />
+                  </CardFooter>
                 </Card>
               )}
               {widget === 'orders' && (
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium">
+                  <CardTitle className="flex items-center text-sm font-medium gap-2">
+                      <ShoppingCartIcon className="w-4 h-4 text-muted-foreground" />
                       Orders
+                    </CardTitle>
                       <Button
                         variant="link"
                         onClick={() => handleWidgetRemove(widget)}
                       >
                         <CircleMinus className="w-4 h-4 text-muted-foreground" />
                       </Button>
-                    </CardTitle>
-                    <ShoppingCartIcon className="w-4 h-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
@@ -192,22 +215,22 @@ const Overview: React.FC = () => {
                       <span>{data.orders.growth}% from last week</span>
                     </div>
                   </CardContent>
-                  <CardFooter>{/* proper chart component */}</CardFooter>
+                  <CardFooter></CardFooter>
                 </Card>
               )}
               {widget === 'new_customers' && (
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium">
+                   <CardTitle className="flex items-center text-sm font-medium gap-2">
+                    <UsersIcon className="w-4 h-4 text-muted-foreground" />
                       New Customers
+                    </CardTitle>
                       <Button
                         variant="link"
                         onClick={() => handleWidgetRemove(widget)}
                       >
                         <CircleMinus className="w-4 h-4 text-muted-foreground" />
                       </Button>
-                    </CardTitle>
-                    <UsersIcon className="w-4 h-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
@@ -215,27 +238,26 @@ const Overview: React.FC = () => {
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <ArrowUpIcon className="w-3 h-3" />
-                      <span>
-                        {data.newCustomers.growth}% from last week
-                      </span>
+                      <span>{data.newCustomers.growth}% from last week</span>
                     </div>
                   </CardContent>
-                  <CardFooter>{/* proper chart component */}</CardFooter>
+                  <CardFooter></CardFooter>
                 </Card>
               )}
+             
               {widget === 'order_status' && (
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium">
+                   <CardTitle className="flex items-center text-sm font-medium gap-2">
+                    <ShoppingCartIcon className="w-4 h-4 text-muted-foreground" />
                       Order Status
+                    </CardTitle>
                       <Button
                         variant="link"
                         onClick={() => handleWidgetRemove(widget)}
                       >
                         <CircleMinus className="w-4 h-4 text-muted-foreground" />
                       </Button>
-                    </CardTitle>
-                    <ShoppingCartIcon className="w-4 h-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-3 gap-4">
@@ -261,10 +283,12 @@ const Overview: React.FC = () => {
                     </div>
                   </CardContent>
                   <CardFooter>
+                  <ScrollArea className='w-full h-52'>
                     <Table>
                       <TableHeader>
                         <TableRow>
                           <TableHead>Order</TableHead>
+                          <TableHead>Status</TableHead>
                           <TableHead>Date</TableHead>
                           <TableHead>Amount</TableHead>
                         </TableRow>
@@ -280,22 +304,23 @@ const Overview: React.FC = () => {
                         ))}
                       </TableBody>
                     </Table>
+                  </ScrollArea>
                   </CardFooter>
                 </Card>
               )}
               {widget === 'customer_activity' && (
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium">
+                   <CardTitle className="flex items-center text-sm font-medium gap-2">
+                    <Users className="w-4 h-4 text-muted-foreground" />
                       Customer Activity
+                    </CardTitle>
                       <Button
                         variant="link"
                         onClick={() => handleWidgetRemove(widget)}
                       >
                         <CircleMinus className="w-4 h-4 text-muted-foreground" />
                       </Button>
-                    </CardTitle>
-                    <Users className="w-4 h-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-3 gap-4">
@@ -320,16 +345,16 @@ const Overview: React.FC = () => {
               {widget === 'product_inventory' && (
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium">
+                   <CardTitle className="flex items-center text-sm font-medium gap-2">
+                    <PackageIcon className="w-4 h-4 text-muted-foreground" />
                       Product Inventory
+                    </CardTitle>
                       <Button
                         variant="link"
                         onClick={() => handleWidgetRemove(widget)}
                       >
                         <CircleMinus className="w-4 h-4 text-muted-foreground" />
                       </Button>
-                    </CardTitle>
-                    <PackageIcon className="w-4 h-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-3 gap-4">
@@ -362,22 +387,23 @@ const Overview: React.FC = () => {
                   </CardFooter>
                 </Card>
               )}
-              {widget === 'notifications' && (
+               {widget === 'notifications' && (
                 <Card>
                   <CardHeader className="flex flex-row items-center justify-between pb-2">
-                    <CardTitle className="text-sm font-medium">
+                   <CardTitle className="flex items-center text-sm font-medium gap-2">
+                    <BellIcon className="w-4 h-4 text-muted-foreground" />
                       Notifications
+                    </CardTitle>
                       <Button
                         variant="link"
                         onClick={() => handleWidgetRemove(widget)}
                       >
                         <CircleMinus className="w-4 h-4 text-muted-foreground" />
                       </Button>
-                    </CardTitle>
-                    <BellIcon className="w-4 h-4 text-muted-foreground" />
                   </CardHeader>
                   <CardContent>
-                    <div className="grid gap-4">
+                    <ScrollArea className='h-72'>
+                    <div className="grid gap-2">
                       {data.notifications.map((notification, idx) => (
                         <div
                           key={idx}
@@ -392,6 +418,7 @@ const Overview: React.FC = () => {
                         </div>
                       ))}
                     </div>
+                    </ScrollArea>
                   </CardContent>
                 </Card>
               )}

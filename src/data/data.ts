@@ -84,6 +84,18 @@ const staticData = (timeframe: string): StaticDataType => {
               date: '2024-08-10',
               amount: 345.67,
             },
+            {
+              order: 'Order #6151',
+              status: 'Pending',
+              date: '2024-08-10',
+              amount: 345.67,
+            },
+            {
+              order: 'Order #6151',
+              status: 'Pending',
+              date: '2024-08-10',
+              amount: 345.67,
+            },
           ],
         },
         customerActivity: [
