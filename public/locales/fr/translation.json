@@ -1,3 +1,26 @@
 {
-  "title": "Bonjour en français"
+  "title": "Bonjour en français",
+  "shopSection": {
+    "createShop": "Créer un Magasin",
+    "createShopDescription": "Créez votre nouveau magasin en un clic.",
+    "shopName": "Nom du Magasin",
+    "enterShopName": "Entrez le nom de votre magasin",
+    "description": "Description",
+    "enterShopDescription": "Entrez la description de votre magasin",
+    "emailShop": "Email du Magasin",
+    "enterEmailShop": "Entrez l'email de votre magasin",
+    "shopPhoneNumber": "Numéro de Téléphone du Magasin",
+    "enterShopPhoneNumber": "Entrez le numéro de téléphone de votre magasin",
+    "shopAddress": "Adresse du Magasin",
+    "enterShopAddress": "Entrez l'adresse de votre magasin",
+    "submit": "Soumettre",
+    "Submitting": "En cours de soumission",
+    "errors": {
+      "shopNameRequired": "Le nom du magasin est obligatoire",
+      "descriptionRequired": "La description est obligatoire",
+      "invalidEmail": "Adresse e-mail invalide",
+      "phoneNumberRequired": "Le numéro de téléphone est obligatoire",
+      "addressRequired": "L'adresse est obligatoire"
+    }
+  }
 }
