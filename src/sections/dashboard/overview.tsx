@@ -61,7 +61,7 @@ const Overview: React.FC = () => {
   const handleWidgetRemove = (widget: string) => {
     setWidgets(widgets.filter((w) => w !== widget));
   };
-
+  const data = staticData(timeframe);
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
@@ -135,12 +135,12 @@ const Overview: React.FC = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
-                      ${staticData.totalSales.amount.toLocaleString()}
+                      ${data.totalSales.amount.toLocaleString()}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <ArrowUpIcon className="w-3 h-3" />
                       <span>
-                        {staticData.totalSales.growth}% from last week
+                        {data.totalSales.growth}% from last week
                       </span>
                     </div>
                   </CardContent>
@@ -165,11 +165,11 @@ const Overview: React.FC = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
-                      ${staticData.revenue.amount.toLocaleString()}
+                      ${data.revenue.amount.toLocaleString()}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <ArrowUpIcon className="w-3 h-3" />
-                      <span>{staticData.revenue.growth}% from last week</span>
+                      <span>{data.revenue.growth}% from last week</span>
                     </div>
                   </CardContent>
                   <CardFooter>{/* proper chart component */}</CardFooter>
@@ -191,11 +191,11 @@ const Overview: React.FC = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
-                      {staticData.orders.amount.toLocaleString()}
+                      {data.orders.amount.toLocaleString()}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <ArrowUpIcon className="w-3 h-3" />
-                      <span>{staticData.orders.growth}% from last week</span>
+                      <span>{data.orders.growth}% from last week</span>
                     </div>
                   </CardContent>
                   <CardFooter>{/* proper chart component */}</CardFooter>
@@ -217,12 +217,12 @@ const Overview: React.FC = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="text-2xl font-bold">
-                      {staticData.newCustomers.amount.toLocaleString()}
+                      {data.newCustomers.amount.toLocaleString()}
                     </div>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <ArrowUpIcon className="w-3 h-3" />
                       <span>
-                        {staticData.newCustomers.growth}% from last week
+                        {data.newCustomers.growth}% from last week
                       </span>
                     </div>
                   </CardContent>
@@ -245,7 +245,7 @@ const Overview: React.FC = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-3 gap-4">
-                      {staticData.orderStatus.statuses.map((status, idx) => (
+                      {data.orderStatus.statuses.map((status, idx) => (
                         <div
                           key={idx}
                           className="flex flex-col items-center gap-2"
@@ -276,7 +276,7 @@ const Overview: React.FC = () => {
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {staticData.orderStatus.table.map((order, idx) => (
+                        {data.orderStatus.table.map((order, idx) => (
                           <TableRow key={idx}>
                             <TableCell>{order.order}</TableCell>
                             <TableCell>{order.status}</TableCell>
@@ -305,7 +305,7 @@ const Overview: React.FC = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-3 gap-4">
-                      {staticData.customerActivity.map((activity, idx) => (
+                      {data.customerActivity.map((activity, idx) => (
                         <div
                           key={idx}
                           className="flex flex-col items-center gap-2"
@@ -339,7 +339,7 @@ const Overview: React.FC = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="grid grid-cols-3 gap-4">
-                      {staticData.productInventory.map((product, idx) => (
+                      {data.productInventory.map((product, idx) => (
                         <div
                           key={idx}
                           className="flex flex-col items-center gap-2"
@@ -384,7 +384,7 @@ const Overview: React.FC = () => {
                   </CardHeader>
                   <CardContent>
                     <div className="grid gap-4">
-                      {staticData.notifications.map((notification, idx) => (
+                      {data.notifications.map((notification, idx) => (
                         <div
                           key={idx}
                           className="flex flex-col p-2 border-b border-muted-foreground/20 last:border-none"
