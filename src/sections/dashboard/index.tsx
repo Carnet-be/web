@@ -93,13 +93,15 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useToast } from '@/components/ui/use-toast';
 import authService from '@/services/auth.service';
+import sellerService from '@/services/seller.service';
 import useAuthStore from '@/state/auth';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
 import {
   BadgePercent,
   ChartNoAxesColumn,
   CircleUser,
+  Loader2,
   LogOut,
   Menu,
   Package,
@@ -110,6 +112,7 @@ import {
   Store,
   UsersRound,
 } from 'lucide-react';
+import { useEffect } from 'react';
 import { NavLink as Link, Outlet, useLocation } from 'react-router-dom';
 import { LanguageToggle } from './languageSwitcher';
 import ShopSwitcher from './shopSwitcher';
@@ -189,7 +192,15 @@ export default function Dashboard() {
       ],
     },
   ];
-
+  const {
+    data: user,
+    isPending,
+    isError,
+    refetch,
+  } = useQuery({
+    queryKey: ['seller-me'],
+    queryFn: () => sellerService.me(),
+  });
   const { clear } = useAuthStore();
   const { toast, dismiss } = useToast();
   const { mutate } = useMutation({
@@ -212,6 +223,28 @@ export default function Dashboard() {
       });
     },
   });
+
+  if (isPending) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center">
+        <Loader2 className="h-10 w-10 animate-spin" />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center">
+        <span className="text-destructive">
+          Something went wrong, please try again
+        </span>
+      </div>
+    );
+  }
+
+  // if (user?.isEmailVerified !== true) {
+  //   return <WaitingForEmailVerification onRefetch={() => refetch()} />;
+  // }
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -368,3 +401,25 @@ function SupportCard() {
     </div>
   );
 }
+
+const WaitingForEmailVerification = ({
+  onRefetch,
+}: {
+  onRefetch: () => void;
+}) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onRefetch();
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <div className="h-screen w-screen flex items-center justify-center">
+      <span className="font-semibold max-w-[300px] p-4 text-center">
+        Please verify your email to continue, check your email for the
+        verification link
+      </span>
+    </div>
+  );
+};

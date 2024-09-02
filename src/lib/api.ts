@@ -24,7 +24,7 @@ api.interceptors.response.use(
     if (error.response) {
       const status = error.response.status;
       if (status === 401) {
-        useAuthStore.setState({ token: null });
+        // useAuthStore.setState({ token: null });
         // toast.error('Unauthorized');
         console.error('Session expired');
       } else if (status === 403) {
