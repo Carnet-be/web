@@ -3,7 +3,7 @@ import { ModeToggle } from '@/sections/dashboard/themeSwitcher';
 
 interface AuthLayoutProps {
   children: React.ReactNode;
-  pageType: 'login' | 'register';
+  pageType: 'login' | 'register' | 'forget-password';
 }
 
 export default function AuthLayout({ children, pageType }: AuthLayoutProps) {
@@ -16,7 +16,9 @@ export default function AuthLayout({ children, pageType }: AuthLayoutProps) {
         className={`absolute z-10 w-16 ${
           pageType === 'login'
             ? 'lg:top-20 lg:right-[40%] md:top-12 md:right-[85%] sm:top-6 sm:right-[85%] top-4 right-[82%]'
-            : 'lg:top-14 lg:right-[91%] md:top-12 md:right-[85%] sm:top-6 sm:right-[85%] top-4 right-[82%]'
+            : pageType === 'register'
+            ? 'lg:top-14 lg:right-[91%] md:top-12 md:right-[85%] sm:top-6 sm:right-[85%] top-4 right-[82%]'
+            : 'lg:top-20 lg:right-[90%] md:top-12 md:right-[85%] sm:top-6 sm:right-[85%] top-4 right-[82%]'
         }`}
       >
         <svg width="100%" height="100%" viewBox="0 0 392 157" fill="none" xmlns="http://www.w3.org/2000/svg">
