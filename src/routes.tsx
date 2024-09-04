@@ -1,5 +1,6 @@
 import Login from '@/pages/login.tsx';
 import Register from '@/pages/register.tsx';
+import ForgetPassword from '@/pages/forget-password.tsx';
 import { ReactNode } from 'react';
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import Dashboard from './sections/dashboard';
@@ -32,6 +33,7 @@ const RoutesWrapper = () => {
         <Route index element={<Navigate to="login" />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
+        <Route path="forget-password" element={<ForgetPassword />} />
       </Route>
       <Route
         path="*"
