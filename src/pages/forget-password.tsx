@@ -6,6 +6,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { LoaderButton } from '@/components/ui/loader-button';
 import { useToast } from '@/components/ui/use-toast';
@@ -19,7 +20,6 @@ import { z } from 'zod';
 
 import Lottie from 'lottie-react';
 import forgotPasswordAnimation from '@/assets/ForgotPasswordAnimation.json';
-import { useState } from 'react';
 
 export default function ForgetPassword() {
   return (
@@ -41,7 +41,21 @@ export default function ForgetPassword() {
             </p>
             <ForgetPasswordForm />
             <p className="text-sm text-muted-foreground text-center">
-              <Link to={'/auth/login'} className="underline underline-offset-4 hover:text-primary font-medium">
+              <Link to={'/auth/login'} className="underline underline-offset-4 hover:text-primary font-medium flex items-center justify-center">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 mr-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
                 Back to Login
               </Link>
             </p>
@@ -57,8 +71,7 @@ const ForgetPasswordForm = () => {
     email: z.string().email('Invalid email address'),
   });
 
-  const [isSubmitted, setIsSubmitted] = useState(false); // State to handle form visibility
-
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const { toast } = useToast();
 
   const { mutate, isPending } = useMutation({
