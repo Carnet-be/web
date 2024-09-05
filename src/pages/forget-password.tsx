@@ -19,6 +19,7 @@ import { z } from 'zod';
 
 import Lottie from 'lottie-react';
 import forgotPasswordAnimation from '@/assets/ForgotPasswordAnimation.json';
+import { useState } from 'react';
 
 export default function ForgetPassword() {
   return (
@@ -56,13 +57,18 @@ const ForgetPasswordForm = () => {
     email: z.string().email('Invalid email address'),
   });
 
+  const [isSubmitted, setIsSubmitted] = useState(false); // State to handle form visibility
+
+  const { toast } = useToast();
+
   const { mutate, isPending } = useMutation({
     mutationFn: authService.seller.forgotPassword,
     onSuccess: () => {
-      toast({
-        title: 'Success',
-        description: 'Password reset request has been sent to your email',
-      });
+      setIsSubmitted(true);
+      // toast({
+      //   title: 'Success',
+      //   description: 'Password reset link has been sent to your email',
+      // });
     },
     onError: (error: any) => {
       if (error.response?.data?.message === 'INVALID_EMAIL') {
@@ -88,10 +94,18 @@ const ForgetPasswordForm = () => {
     resolver: zodResolver(schema),
   });
 
-  const { toast } = useToast();
   const onSubmit = (data: z.infer<typeof schema>) => {
     mutate(data);
   };
+
+  // Show success message when form is successfully submitted
+  if (isSubmitted) {
+    return (
+      <div className="flex items-center justify-center p-4 bg-green-100 rounded-lg text-green-700">
+        <p className="text-sm">Password reset link has been sent to your email!</p>
+      </div>
+    );
+  }
 
   return (
     <Form {...form}>
