@@ -19,7 +19,7 @@ export default function AuthLayout({ children, pageType }: AuthLayoutProps) {
             ? 'lg:top-20 lg:right-[40%] md:top-12 md:right-[85%] sm:top-6 sm:right-[85%] top-4 right-[82%]'
             : pageType === 'register'
             ? 'lg:top-14 lg:right-[91%] md:top-12 md:right-[85%] sm:top-6 sm:right-[85%] top-4 right-[82%]'
-            : 'lg:top-20 lg:right-[90%] md:top-12 md:right-[85%] sm:top-6 sm:right-[85%] top-4 right-[82%]'
+            : 'top-6 lg:right-[90%] md:right-[85%] sm:right-[85%] right-[82%]'
         }`}
       >
         <Link to={'/auth/login'}>
