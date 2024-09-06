@@ -98,11 +98,11 @@ const ResetPasswordForm = () => {
       // });
     },
     onError: (error: any) => {
-      if (error.response?.data?.message === 'INVALID_TOKEN' || error.response?.data?.message === 'EXPIRED_TOKEN') {
+      if (error.response?.data?.message === 'Invalid or expired token') {
         setShowErrorMessage(true);
         setTimeout(() => {
-          navigate('/auth/login');
-        }, 7000); // 5 seconds delay
+          navigate('/auth/forget-password');
+        }, 5000);
         return;
 
         // toast({
@@ -151,9 +151,8 @@ const ResetPasswordForm = () => {
 
   // Conditionally render either the form or the error message
   return showErrorMessage ? (
-    <div className="text-center">
-      <p className="text-red-600">There was a mistake in your request. Please try again.</p>
-      <p className="text-sm text-muted-foreground">Redirecting you to the login page...</p>
+    <div className="flex items-center justify-center p-4 bg-red-100 rounded-lg text-red-700">
+      <p className="text-md">There was a mistake in your request. Please try again.</p>
     </div>
   ) : (
     <Form {...form}>
