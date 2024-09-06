@@ -117,6 +117,9 @@ const ResetPasswordForm = () => {
         description: 'An error occurred. Please try again.',
         variant: 'destructive',
       });
+      setTimeout(() => {
+        navigate('/auth/forget-password');
+      }, 5000);
     },
   });
 
