@@ -84,10 +84,10 @@ const ForgetPasswordForm = () => {
       // });
     },
     onError: (error: any) => {
-      if (error.response?.data?.message === 'INVALID_EMAIL') {
+      if (error.response?.data?.message === 'Email_NOT_FOUND') {
         toast({
           title: 'Error',
-          description: 'Invalid email',
+          description: 'Email not found, Try again with an existing email.',
           variant: 'destructive',
         });
         return;
