@@ -33,7 +33,6 @@ const RoutesWrapper = () => {
       >
         <Route index element={<Navigate to="overview" />} />
         <Route path="overview" element={<Overview />} />
-
       </Route>
       <Route
         path="/auth"
