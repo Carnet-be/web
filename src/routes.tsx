@@ -1,6 +1,6 @@
+import ForgetPassword from '@/pages/forget-password.tsx';
 import Login from '@/pages/login.tsx';
 import Register from '@/pages/register.tsx';
-import ForgetPassword from '@/pages/forget-password.tsx';
 import ResetPassword from '@/pages/reset-password.tsx';
 import { ReactNode } from 'react';
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
