@@ -1,5 +1,4 @@
 import EcommerceImageLogin from '@/assets/ecommerce-login.png';
-import OkeyoLogo from '@/assets/okeyo-logo.png';
 import {
   Form,
   FormControl,
@@ -23,17 +22,11 @@ import { z } from 'zod';
 
 export default function Login() {
   return (
-    <AuthLayout>
-      <div className="container relative hidden h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+    <AuthLayout pageType="login">
+      <div
+        className="container relative flex flex-col items-center justify-center h-screen px-4 lg:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
           <div className="absolute inset-0 bg-black" />
-          <div className="relative z-20 flex items-center text-lg font-medium">
-            <img
-              src={OkeyoLogo}
-              alt="okeyo"
-              className="w-24 h-24 object-contain"
-            />
-          </div>
           <div className="relative z-20 flex-1 flex items-center justify-center">
             <img
               src={EcommerceImageLogin}
@@ -50,7 +43,7 @@ export default function Login() {
             </blockquote>
           </div>
         </div>
-        <div className="lg:p-8">
+        <div className="lg:px-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
@@ -178,6 +171,15 @@ const LoginForm = () => {
             </FormItem>
           )}
         />
+
+        <p className="text-end text-sm text-muted-foreground">
+          <Link
+            to={'/auth/forget-password'}
+            className="underline-offset-4 hover:text-primary font-medium"
+          >
+            Forget Password ?
+          </Link>
+        </p>
 
         <div className="pt-4 flex items-center justify-center">
           <LoaderButton

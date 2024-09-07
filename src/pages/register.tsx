@@ -1,5 +1,4 @@
 import EcommerceImageRegister from '@/assets/ecommerce-register.png';
-import OkeyoLogo from '@/assets/okeyo-logo.png';
 import {
   Form,
   FormControl,
@@ -23,8 +22,8 @@ import { Link } from 'react-router-dom';
 import { z } from 'zod';
 export default function Register() {
   return (
-    <AuthLayout>
-      <div className="container relative h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
+    <AuthLayout pageType="register">
+      <div className="container relative flex flex-col items-center justify-center h-screen px-4 lg:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
         <div className="lg:p-8 h-full">
           <div className="mx-auto flex w-full h-full flex-col justify-center space-y-6 sm:w-[450px]">
             <div className="flex flex-col space-y-2 text-center">
@@ -66,13 +65,6 @@ export default function Register() {
         </div>
         <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
           <div className="absolute inset-0 bg-black" />
-          <div className="relative z-20 flex items-center text-lg font-medium">
-            <img
-              src={OkeyoLogo}
-              alt="okeyo"
-              className="w-24 h-24 object-contain"
-            />
-          </div>
           <div className="relative z-20 flex-1 flex items-center justify-center">
             <img
               src={EcommerceImageRegister}
