@@ -7,7 +7,7 @@ import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import LandingPage from './pages/landing/LandingPage';
 import Dashboard from './sections/dashboard';
 import useAuthStore from './state/auth';
-
+import Shop from './sections/new-shop';
 const RoutesWrapper = () => {
   const { token } = useAuthStore();
 
@@ -38,6 +38,7 @@ const RoutesWrapper = () => {
         <Route path="forget-password" element={<ForgetPassword />} />
         <Route path="reset-password" element={<ResetPassword />} />
       </Route>
+      <Route path="new-shop" element={<Shop />} />
       <Route
         path="*"
         element={

@@ -1,3 +1,26 @@
 {
-  "title": "Hello in English"
+  "title": "Hello in English",
+  "shopSection": {
+    "createShop": "Create a Shop",
+    "createShopDescription": "Create your new Shop in one-click.",
+    "shopName": "Shop Name",
+    "enterShopName": "Enter your shop name",
+    "description": "Description",
+    "enterShopDescription": "Enter your shop description",
+    "emailShop": "Email Shop",
+    "enterEmailShop": "Enter your shop email",
+    "shopPhoneNumber": "Shop Phone Number",
+    "enterShopPhoneNumber": "Enter your shop phone number",
+    "shopAddress": "Shop Address",
+    "enterShopAddress": "Enter your shop address",
+    "submit": "Submit",
+    "Submitting": "Submitting",
+    "errors": {
+      "shopNameRequired": "Shop name is required",
+      "descriptionRequired": "Description is required",
+      "invalidEmail": "Invalid email address",
+      "phoneNumberRequired": "Phone number is required",
+      "addressRequired": "Address is required"
+    }
+  }
 }
