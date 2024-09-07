@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, type SyntheticEvent } from 'react';
+import React, { type SyntheticEvent } from 'react';
 
 import ReactCrop, {
   centerCrop,
@@ -28,8 +28,8 @@ export type FileWithPreview = FileWithPath & {
 interface ImageCropperProps {
   dialogOpen: boolean;
   setDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  selectedFile: File | null;
-  setSelectedFile: (file: File | null) => void;
+  selectedFile: FileWithPreview | null;
+  setSelectedFile: (file: FileWithPreview | null) => void;
   aspect?: number;
   className?: string;
 }
@@ -94,24 +94,11 @@ export function ImageCropper({
   async function onCrop() {
     try {
       setCroppedImage(croppedImageUrl);
-      //send the cropped to setSelectedFile
-      const croppedImage = new File([croppedImageUrl], `${Date.now()}.png`, {
-        type: 'image/png',
-      });
-
-      setSelectedFile(croppedImage);
       setDialogOpen(false);
     } catch (error) {
       alert('Something went wrong!');
     }
   }
-
-  useEffect(() => {
-    if (!croppedImage && selectedFile) {
-      const creatPreview = URL.createObjectURL(selectedFile);
-      setCroppedImage(creatPreview);
-    }
-  }, [selectedFile]);
 
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
@@ -126,7 +113,7 @@ export function ImageCropper({
           )}
         >
           <img
-            src={croppedImage}
+            src={croppedImage ? croppedImage : selectedFile?.preview}
             className="w-full h-full object-cover rounded-sm"
           />
         </div>
@@ -145,7 +132,7 @@ export function ImageCropper({
                 ref={imgRef}
                 className="object-contain w-full h-full"
                 alt="Image Cropper Shell"
-                src={croppedImage}
+                src={selectedFile?.preview}
                 onLoad={onImageLoad}
               />
             </div>

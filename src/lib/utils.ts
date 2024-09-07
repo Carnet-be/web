@@ -10,7 +10,7 @@ export const getImageUrl = (
   placeholder: string | undefined = '/images/placeholder.svg',
 ) =>
   key
-    ? `https://okeyo.ams3.cdn.digitaloceanspaces.com/seller/images/6592fc23-7e8d-4569-acc5-045c0eacd779${key}`
+    ? `https://okeyo.ams3.cdn.digitaloceanspaces.com/seller/${key}`
     : placeholder;
 export const getVideoUrl = (key?: string) =>
   key

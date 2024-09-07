@@ -12,6 +12,7 @@ import { LoaderButton } from '@/components/ui/loader-button';
 import { PasswordInput } from '@/components/ui/password-input';
 import { PhoneInput } from '@/components/ui/phone-input';
 import { useToast } from '@/components/ui/use-toast';
+import i18n from '@/i18n';
 import AuthLayout from '@/sections/auth/authLayout.tsx';
 import authService from '@/services/auth.service';
 import useAuthStore from '@/state/auth';
@@ -149,7 +150,11 @@ const RegisterForm = () => {
   });
   const { toast } = useToast();
   const onSubmit = (data: z.infer<typeof schema>) => {
-    mutate(data);
+    const language = i18n.language;
+    mutate({
+      ...data,
+      language,
+    });
   };
 
   return (

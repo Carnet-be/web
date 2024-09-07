@@ -67,14 +67,14 @@ export default function Dashboard() {
       groupLabel: 'General',
       items: [
         {
-          label: 'Dashboard',
+          label: 'Overview',
           icon: <ChartNoAxesColumn className="h-4 w-4" />,
-          route: '/dashboard',
+          route: '/dashboard/overview',
         },
         {
           label: 'Shop',
           icon: <Store className="h-4 w-4" />,
-          route: '/shop',
+          route: '/dashboard/shop',
         },
       ],
     },
@@ -84,22 +84,22 @@ export default function Dashboard() {
         {
           label: 'Products',
           icon: <Shirt className="h-4 w-4" />,
-          route: '/products',
+          route: '/dashboard/management/products',
         },
         {
           label: 'Orders',
           icon: <Package className="h-4 w-4" />,
-          route: '/orders',
+          route: '/dashboard/management/orders',
         },
         {
           label: 'Customers',
           icon: <UsersRound className="h-4 w-4" />,
-          route: '/customers',
+          route: '/dashboard/management/customers',
         },
         {
           label: 'Offers',
           icon: <BadgePercent className="h-4 w-4" />,
-          route: '/offers',
+          route: '/dashboard/management/offers',
         },
       ],
     },
@@ -109,12 +109,12 @@ export default function Dashboard() {
         {
           label: 'General',
           icon: <Settings className="h-4 w-4" />,
-          route: '/settings/general',
+          route: '/dashboard/settings/general',
         },
         {
           label: 'Billing',
           icon: <ReceiptText className="h-4 w-4" />,
-          route: '/settings/billing',
+          route: '/dashboard/settings/billing',
         },
       ],
     },
@@ -130,6 +130,9 @@ export default function Dashboard() {
   });
   const { clear } = useAuthStore();
   const { toast, dismiss } = useToast();
+  const { mutate: changeLanguage } = useMutation({
+    mutationFn: sellerService.updateSeller,
+  });
   const { mutate } = useMutation({
     mutationFn: authService.seller.logout,
     onMutate() {
@@ -300,7 +303,11 @@ export default function Dashboard() {
               </DropdownMenuContent>
             </DropdownMenu>
             <ModeToggle />
-            <LanguageToggle />
+            <LanguageToggle
+              onSelect={(lng: string) => {
+                changeLanguage({ language: lng });
+              }}
+            />
           </header>
 
           <main className="flex flex-1 flex-col">

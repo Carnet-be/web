@@ -7,9 +7,14 @@ import {
 } from '@/components/ui/dropdown-menu';
 import i18n from '@/i18n';
 
-export function LanguageToggle() {
+export function LanguageToggle({
+  onSelect,
+}: {
+  onSelect: (lang: string) => void;
+}) {
   function changeLanguage(lang: string) {
     i18n.changeLanguage(lang);
+    onSelect(lang);
   }
   return (
     <DropdownMenu>

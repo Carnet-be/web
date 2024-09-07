@@ -6,8 +6,8 @@ import { useToast } from './use-toast';
 
 interface UploaderProps {
   accept: Accept | undefined;
-  selectedFile: File | null;
-  setSelectedFile: (file: File | null) => void;
+  selectedFile: FileWithPath | null;
+  setSelectedFile: (file: FileWithPreview | null) => void;
   aspect?: number;
   className?: string;
   maxSize?: number;
