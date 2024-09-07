@@ -6,8 +6,11 @@ import { ReactNode } from 'react';
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import LandingPage from './pages/landing/LandingPage';
 import Dashboard from './sections/dashboard';
-import useAuthStore from './state/auth';
 import Shop from './sections/new-shop';
+import useAuthStore from './state/auth';
+// src/routes.tsx
+import Overview from './sections/dashboard/overview';
+
 const RoutesWrapper = () => {
   const { token } = useAuthStore();
 
@@ -27,7 +30,11 @@ const RoutesWrapper = () => {
             <Dashboard />
           </Protected>
         }
-      />
+      >
+        <Route index element={<Navigate to="overview" />} />
+        <Route path="overview" element={<Overview />} />
+
+      </Route>
       <Route
         path="/auth"
         element={token?.token ? <Navigate to={'/dashboard'} /> : <Outlet />}
