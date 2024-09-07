@@ -10,11 +10,11 @@ import i18n from '@/i18n';
 export function LanguageToggle({
   onSelect,
 }: {
-  onSelect: (lang: string) => void;
+  onSelect?: (lang: string) => void;
 }) {
   function changeLanguage(lang: string) {
     i18n.changeLanguage(lang);
-    onSelect(lang);
+    onSelect?.(lang);
   }
   return (
     <DropdownMenu>
