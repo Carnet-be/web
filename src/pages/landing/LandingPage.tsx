@@ -1,9 +1,9 @@
 import React from 'react';
-import { Header } from './Header';
 import Footer from './Footer';
+import { Header } from './Header';
 import { Main } from './Main';
 
-const LoadingPage: React.FC = () => {
+const LandingPage: React.FC = () => {
   return (
     <div>
       <Header />
@@ -11,6 +11,6 @@ const LoadingPage: React.FC = () => {
       <Footer />
     </div>
   );
-}
+};
 
-export default LoadingPage;
+export default LandingPage;

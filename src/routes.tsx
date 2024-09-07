@@ -4,6 +4,7 @@ import Register from '@/pages/register.tsx';
 import ResetPassword from '@/pages/reset-password.tsx';
 import { ReactNode } from 'react';
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
+import LandingPage from './pages/landing/LandingPage';
 import Dashboard from './sections/dashboard';
 import useAuthStore from './state/auth';
 
@@ -18,7 +19,7 @@ const RoutesWrapper = () => {
   };
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/dashboard" />} />
+      <Route path="/" element={<LandingPage />} />
       <Route
         path="/dashboard"
         element={
