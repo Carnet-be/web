@@ -151,7 +151,7 @@ export default function Dashboard() {
     },
   });
 
-  if (isPending) {
+  if (isPending || !user) {
     return <LoadingSection />;
   }
 
@@ -164,7 +164,11 @@ export default function Dashboard() {
   // }
 
   if (!user.shops || user.shops.length === 0) {
-    return <ShopFormPage user={user} />;
+    return (
+      <div className="relative flex items-center justify-center min-h-screen bg-background">
+        <ShopFormPage user={user} />
+      </div>
+    );
   }
 
   return (
@@ -173,7 +177,7 @@ export default function Dashboard() {
         <div className="hidden border-r bg-muted/40 md:block">
           <div className="flex h-full max-h-screen flex-col gap-2">
             <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-              <ShopSwitcher />
+              <ShopSwitcher user={user} />
             </div>
             <div className="flex-1">
               <nav className="grid items-start p-4 px-7 text-sm font-medium  gap-2">
@@ -224,7 +228,7 @@ export default function Dashboard() {
               </SheetTrigger>
               <SheetContent side="left" className="flex flex-col">
                 <nav className="grid gap-2 text-lg font-medium space-y-2">
-                  <ShopSwitcher />
+                  <ShopSwitcher user={user} />
                   {menu.map((group) => (
                     <div key={group.groupLabel} className="mb-4 space-y-1">
                       <h3 className="text-muted-foreground text-xs font-semibold uppercase tracking-wider">

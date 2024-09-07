@@ -6,7 +6,6 @@ const api = axios.create({
   timeout: 10000,
   headers: {
     'x-secret-key': import.meta.env.VITE_API_KEY,
-    'Content-Type': 'application/json',
   },
 });
 

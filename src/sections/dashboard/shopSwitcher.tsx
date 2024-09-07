@@ -1,11 +1,4 @@
-import {
-  CaretSortIcon,
-  CheckIcon,
-  PlusCircledIcon,
-} from '@radix-ui/react-icons';
-import * as React from 'react';
-
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
   Command,
@@ -16,70 +9,39 @@ import {
   CommandList,
   CommandSeparator,
 } from '@/components/ui/command';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import query from '@/lib/query';
+import { cn, getImageUrl } from '@/lib/utils';
+import sellerService from '@/services/seller.service';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { cn } from '@/lib/utils';
-
-const groups = [
-  {
-    label: 'Personal Account',
-    teams: [
-      {
-        label: 'Alicia Koch',
-        value: 'personal',
-      },
-    ],
-  },
-  {
-    label: 'Teams',
-    teams: [
-      {
-        label: 'Acme Inc.',
-        value: 'acme-inc',
-      },
-      {
-        label: 'Monsters Inc.',
-        value: 'monsters',
-      },
-    ],
-  },
-];
-
-type Team = (typeof groups)[number]['teams'][number];
+  CaretSortIcon,
+  CheckIcon,
+  PlusCircledIcon,
+} from '@radix-ui/react-icons';
+import { useMutation } from '@tanstack/react-query';
+import * as React from 'react';
+import ShopFormPage from './shopFormPage';
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<
   typeof PopoverTrigger
 >;
 
-interface TeamSwitcherProps extends PopoverTriggerProps {}
+interface TeamSwitcherProps extends PopoverTriggerProps {
+  user: Seller;
+}
 
-export default function ShopSwitcher({ className }: TeamSwitcherProps) {
+export default function ShopSwitcher({ className, user }: TeamSwitcherProps) {
   const [open, setOpen] = React.useState(false);
   const [showNewTeamDialog, setShowNewTeamDialog] = React.useState(false);
-  const [selectedTeam, setSelectedTeam] = React.useState<Team>(
-    groups[0].teams[0],
-  );
+
+  const { mutate: updateSeller } = useMutation({
+    mutationFn: sellerService.updateSeller,
+  });
 
   return (
     <Dialog open={showNewTeamDialog} onOpenChange={setShowNewTeamDialog}>
@@ -94,66 +56,73 @@ export default function ShopSwitcher({ className }: TeamSwitcherProps) {
           >
             <Avatar className="mr-2 h-5 w-5">
               <AvatarImage
-                src={`https://avatar.vercel.sh/${selectedTeam.value}.png`}
-                alt={selectedTeam.label}
+                src={getImageUrl(user.selectedShop?.logo)}
+                alt={user.selectedShop?.name}
                 className="grayscale"
               />
-              <AvatarFallback>SC</AvatarFallback>
             </Avatar>
-            {selectedTeam.label}
+            {user.selectedShop?.name}
             <CaretSortIcon className="ml-auto h-4 w-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-[200px] p-0">
           <Command>
-            <CommandInput placeholder="Search team..." />
+            <CommandInput placeholder="Search shop..." />
             <CommandList>
-              <CommandEmpty>No team found.</CommandEmpty>
-              {groups.map((group) => (
-                <CommandGroup key={group.label} heading={group.label}>
-                  {group.teams.map((team) => (
-                    <CommandItem
-                      key={team.value}
-                      onSelect={() => {
-                        setSelectedTeam(team);
-                        setOpen(false);
-                      }}
-                      className="text-sm"
-                    >
-                      <Avatar className="mr-2 h-5 w-5">
-                        <AvatarImage
-                          src={`https://avatar.vercel.sh/${team.value}.png`}
-                          alt={team.label}
-                          className="grayscale"
-                        />
-                        <AvatarFallback>SC</AvatarFallback>
-                      </Avatar>
-                      {team.label}
-                      <CheckIcon
-                        className={cn(
-                          'ml-auto h-4 w-4',
-                          selectedTeam.value === team.value
-                            ? 'opacity-100'
-                            : 'opacity-0',
-                        )}
+              <CommandEmpty>No shop found.</CommandEmpty>
+
+              <CommandGroup heading={'Active Shops'}>
+                {user.shops?.map((shop) => (
+                  <CommandItem
+                    key={shop.id}
+                    onSelect={() => {
+                      // setSelectedTeam(shop);
+                      setOpen(false);
+                      query.setQueryData(['seller-me'], (data: Seller) => {
+                        return {
+                          ...data,
+                          selectedShop: shop,
+                        };
+                      });
+                      updateSeller({
+                        selectedShopId: shop.id,
+                      });
+                    }}
+                    className="text-sm"
+                  >
+                    <Avatar className="mr-2 h-5 w-5">
+                      <AvatarImage
+                        src={getImageUrl(shop.logo, undefined)}
+                        alt={shop.name}
+                        className="grayscale"
                       />
-                    </CommandItem>
-                  ))}
-                </CommandGroup>
-              ))}
+                    </Avatar>
+                    {shop.name}
+                    <CheckIcon
+                      className={cn(
+                        'ml-auto h-4 w-4',
+                        user.selectedShop?.id === shop.id
+                          ? 'opacity-100'
+                          : 'opacity-0',
+                      )}
+                    />
+                  </CommandItem>
+                ))}
+              </CommandGroup>
             </CommandList>
             <CommandSeparator />
             <CommandList>
               <CommandGroup>
                 <DialogTrigger asChild>
                   <CommandItem
+                    className="cursor-pointer"
                     onSelect={() => {
                       setOpen(false);
                       setShowNewTeamDialog(true);
                     }}
                   >
                     <PlusCircledIcon className="mr-2 h-5 w-5" />
-                    Create Team
+                    Create Shop
                   </CommandItem>
                 </DialogTrigger>
               </CommandGroup>
@@ -162,48 +131,18 @@ export default function ShopSwitcher({ className }: TeamSwitcherProps) {
         </PopoverContent>
       </Popover>
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Create team</DialogTitle>
-          <DialogDescription>
-            Add a new team to manage products and customers.
-          </DialogDescription>
-        </DialogHeader>
-        <div>
+        {/* <div>
           <div className="space-y-4 py-2 pb-4">
             <div className="space-y-2">
-              <Label htmlFor="name">Team name</Label>
-              <Input id="name" placeholder="Acme Inc." />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="plan">Subscription plan</Label>
-              <Select>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select a plan" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="free">
-                    <span className="font-medium">Free</span> -{' '}
-                    <span className="text-muted-foreground">
-                      Trial for two weeks
-                    </span>
-                  </SelectItem>
-                  <SelectItem value="pro">
-                    <span className="font-medium">Pro</span> -{' '}
-                    <span className="text-muted-foreground">
-                      $9/month per user
-                    </span>
-                  </SelectItem>
-                </SelectContent>
-              </Select>
+              <Label htmlFor="name">Shop name</Label>
+              <Input id="name" placeholder="Type your shop name" />
             </div>
           </div>
-        </div>
-        <DialogFooter>
-          <Button variant="outline" onClick={() => setShowNewTeamDialog(false)}>
-            Cancel
-          </Button>
-          <Button type="submit">Continue</Button>
-        </DialogFooter>
+        </div> */}
+        <ShopFormPage
+          user={user}
+          onSuccess={() => setShowNewTeamDialog(false)}
+        />
       </DialogContent>
     </Dialog>
   );

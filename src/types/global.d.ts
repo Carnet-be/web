@@ -8,7 +8,7 @@ declare global {
   };
 
   type Seller = {
-    id: string;
+    id: number;
     uid: string;
     email: string;
     firstName: string;
@@ -25,7 +25,7 @@ declare global {
       uid: string;
       slug: string;
       logo: string;
-    } | null;
+    };
     shops: {
       id: string;
       name: string;
@@ -36,13 +36,13 @@ declare global {
   };
 
   type Country = {
-    id: string;
+    id: number;
     name: string;
     cities?: City[];
   };
 
   type City = {
-    id: string;
+    id: number;
     name: string;
   };
 
