@@ -6,6 +6,9 @@ name: (Development) Deploy on merge
   push:
     branches:
       - dev
+env: # <--- here
+  VITE_API_URL: ${{ vars.DEV_API_URL }}
+  VITE_API_KEY: ${{ vars.DEV_API_KEY }}
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
