@@ -28,6 +28,7 @@ import {
   BadgePercent,
   ChartNoAxesColumn,
   CircleUser,
+  List,
   LogOut,
   Menu,
   Package,
@@ -81,6 +82,11 @@ export default function Dashboard() {
     {
       groupLabel: 'Management',
       items: [
+        {
+          label: 'Categories',
+          icon: <List className="h-4 w-4" />,
+          route: '/dashboard/management/categories',
+        },
         {
           label: 'Products',
           icon: <Shirt className="h-4 w-4" />,

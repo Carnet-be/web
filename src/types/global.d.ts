@@ -53,4 +53,27 @@ declare global {
     slug: string;
     logo: string;
   };
+
+  type Product = {
+    id: string;
+    name: string;
+    price: number;
+    stock: number;
+    description: string;
+    images: string[];
+  };
+
+  type Category = {
+    id: number;
+    uid: string;
+    parentId?: number | null;
+    name: string;
+    image?: string | null;
+    description?: string | null;
+    createdAt: Date;
+    updatedAt?: Date | null;
+    products?: Product[];
+    items?: Category[];
+    productsCount?: number;
+  };
 }

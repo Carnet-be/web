@@ -1,8 +1,14 @@
+import { cn } from '@/lib/utils';
 import { Loader2 } from 'lucide-react';
 
-const LoadingSection = () => {
+const LoadingSection = ({ className }: { className?: string }) => {
   return (
-    <div className="h-screen w-screen flex items-center justify-center">
+    <div
+      className={cn(
+        'h-screen w-full flex items-center justify-center',
+        className,
+      )}
+    >
       <Loader2 className="h-10 w-10 animate-spin text-primary" />
     </div>
   );

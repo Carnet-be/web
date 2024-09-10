@@ -9,6 +9,8 @@ import Dashboard from './sections/dashboard';
 import Shop from './sections/new-shop';
 import useAuthStore from './state/auth';
 // src/routes.tsx
+import CategoryPage from './pages/dashboard/category';
+import ProductPage from './pages/dashboard/product';
 import Overview from './sections/dashboard/overview';
 
 const RoutesWrapper = () => {
@@ -32,6 +34,11 @@ const RoutesWrapper = () => {
         }
       >
         <Route index element={<Navigate to="overview" />} />
+        <Route path="management" element={<Outlet />}>
+          <Route index element={<Navigate to="products" />} />
+          <Route path="products" element={<ProductPage />} />
+          <Route path="categories" element={<CategoryPage />} />
+        </Route>
         <Route path="overview" element={<Overview />} />
         <Route
           path="*"
