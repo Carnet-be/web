@@ -49,7 +49,8 @@ const Step2 = ({
               label="Transmission"
               placeholder="Select transmission"
               isRequired
-              {...field}
+              selectedKeys={field.value ? [field.value] : []}
+              onSelectionChange={(keys) => field.onChange(Array.from(keys)[0])}
               errorMessage={error?.message}
               isInvalid={!!error?.message}
             >

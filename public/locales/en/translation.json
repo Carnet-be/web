@@ -1,26 +1,488 @@
 {
-  "title": "Hello in English",
-  "shopSection": {
-    "createShop": "Create a Shop",
-    "createShopDescription": "Create your new Shop in one-click.",
-    "shopName": "Shop Name",
-    "enterShopName": "Enter your shop name",
+  "common": {
+    "Company": "Business",
+    "about": "About",
+    "contact": "Contact",
+    "privacyPolicy": "Privacy Policy",
+    "phoneNumber": "Phone number",
+    "buy": "Buy",
+    "sell": "Sell",
+    "brand": "Brand",
+    "fuel": "Fuel",
+    "year": "Year",
+    "gasoline": "Gasoline",
+    "diesel": "Diesel",
+    "electric": "Electric",
+    "hybrid": "Hybrid",
+    "close": "Close",
+    "add": "Add",
+    "body": "Body",
+    "clear": "Clear",
+    "load more": "Load more",
+    "details": "Details",
+    "back": "Back",
+    "reload": "Try again",
     "description": "Description",
-    "enterShopDescription": "Enter your shop description",
-    "emailShop": "Email Shop",
-    "enterEmailShop": "Enter your shop email",
-    "shopPhoneNumber": "Shop Phone Number",
-    "enterShopPhoneNumber": "Enter your shop phone number",
-    "shopAddress": "Shop Address",
-    "enterShopAddress": "Enter your shop address",
-    "submit": "Submit",
-    "Submitting": "Submitting",
-    "errors": {
-      "shopNameRequired": "Shop name is required",
-      "descriptionRequired": "Description is required",
-      "invalidEmail": "Invalid email address",
-      "phoneNumberRequired": "Phone number is required",
-      "addressRequired": "Address is required"
+    "no description": "No description",
+    "options": "Possibilities",
+    "no options": "No options",
+    "rating": "Rating",
+    "no rating": "No rating",
+    "visit": "Visit",
+    "show contact": "Show contacts",
+    "horsePower": "Horsepower",
+    "color": "Color",
+    "transmission": "Transmission",
+    "mileage": "Mileage",
+    "co2": "CO2",
+    "doors": "Doors",
+    "engine size": "Engine size",
+    "search": "Research",
+    "my garage": "My garage",
+    "view": "See",
+    "edit garage": "Edit garage",
+    "analytics": "Analytical",
+    "overview": "Preview",
+    "cars": "Cars",
+    "garages": "Garage",
+    "users": "Users",
+    "my cars": "My cars",
+    "settings": "Settings",
+    "add car": "Add a car",
+    "retry": "Start again",
+    "pending": "On hold",
+    "published": "Published",
+    "paused": "On pause",
+    "finished": "Finished",
+    "completed": "Completed",
+    "sold": "Sold",
+    "new car": "New car",
+    "used car": "Used car",
+    "next": "Following",
+    "automatic": "Automatic",
+    "semi-automatic": "Semi-automatic",
+    "manual": "Manual",
+    "country": "Country",
+    "city": "City",
+    "update your car": "Update your car",
+    "price": "Price",
+    "publish your car": "Publish your car",
+    "save": "To safeguard",
+    "model": "Model",
+    "get started": " Get Started",
+    "login": "Login",
+    "dashboard": "Dashboard",
+    "marketplace": "Marketplace",
+    "profile": "Profile",
+    "logout": "Logout",
+    "home": "Home"
+  },
+  "text": {
+    "contactInformation": "Contact details",
+    "contactInformation desc": " Before you can sell a car, you must add contact information.",
+    "contactInformation button": "Add contact information"
+  },
+  "form": {
+    "name": "Name",
+    "email": "E-mail",
+    "message": "Message",
+    "send": "Send"
+  },
+  "pages": {
+    "landing": {
+      "home": "Welcome",
+      "about": "About",
+      "cars": "Cars",
+      "contact": "Contact",
+      "howItWorks": "How it works",
+      "garages": "Garages",
+      "heroTitle1": "Your favorite Used Car Platform in Belgium",
+      "heroTitle2": "",
+      "heroTitle3": "",
+      "heroDescription": "Welcome to Carnet, the essential site for buying and selling used cars in Belgium. ",
+      "form": {
+        "placeholderBrand": "Search for a brand",
+        "placeholderModel": "Search model",
+        "placeholderYear": "Select year",
+        "placeholderFuel": "Select fuel",
+        "searchCarButton": "Search for a car",
+        "sellCarButton": "Sell ​​a car"
+      },
+      "sections": {
+        "garage": {
+          "1": {
+            "title": "Targeted Traffic",
+            "description": "Attract more visitors interested in your vehicles"
+          },
+          "2": {
+            "title": "Long Term Partnership",
+            "description": "Establish a lasting presence on our platform"
+          },
+          "3": {
+            "title": "Online Visibility",
+            "description": "Create a profile for your garage and offer a virtual tour to attract even more customers"
+          },
+          "title": "Benefits for Garages",
+          "description": "Discover our exclusive service designed to boost your garage! "
+        },
+        "howItWorks": {
+          "title": "Buy/Sell your car with ease",
+          "description": "What we offer",
+          "buyer": {
+            "1": {
+              "title": "Explore Cars",
+              "description": "Browse our online inventory to find the car that's right for you."
+            },
+            "2": {
+              "title": "Get in touch / Request a test",
+              "description": "Contact the seller directly to arrange a trial."
+            },
+            "3": {
+              "title": "Buy Your Car",
+              "description": "Complete the purchase safely and hit the road."
+            },
+            "title": "3 Simple Steps to Buying Your Car"
+          },
+          "seller": {
+            "1": {
+              "title": "List Your Car",
+              "description": "Add your vehicle to our site in just a few minutes."
+            },
+            "2": {
+              "title": "Receive Offers",
+              "description": "Receive proposals from interested buyers."
+            },
+            "3": {
+              "title": "Sell ​​Your Car",
+              "description": "Close the sale quickly and hassle-free."
+            },
+            "title": "3 Easy Steps to Selling Your Car"
+          }
+        },
+        "message": {
+          "tag": "For garages",
+          "title": "Boost your business today",
+          "description": "Create your garage profile on Carnet and maintain a strong online presence. "
+        },
+        "about": {
+          "title": "Get the Most Out of Buying a Car",
+          "description": " Carnet is a marketplace for selling and buying cars, as well as auctioning cars.",
+          "button": "To start"
+        },
+        "footer": {
+          "description": "Carnet is a marketplace for selling and buying cars, as well as auctioning cars.",
+          "quickLinks": "Quick links",
+          "premiumSupport": "Premium Support",
+          "ourServices": "Our services",
+          "followUs": "Follow us"
+        },
+        "pricing": {
+          "1": {
+            "title": "Basic",
+            "price": "Free",
+            "description": "A plan for small businesses",
+            "button": "To start",
+            "feature1": "Unlimited products",
+            "feature2": "Unlimited storage",
+            "feature3": "24/7 support"
+          },
+          "2": {
+            "title": "Pro",
+            "price": "$15",
+            "description": "A plan for medium-sized businesses",
+            "button": "To start",
+            "feature1": "Unlimited products",
+            "feature2": "Unlimited storage",
+            "feature3": "24/7 support"
+          },
+          "3": {
+            "title": "Business",
+            "price": "$29",
+            "description": "A plan for large businesses",
+            "button": "To start",
+            "feature1": "Unlimited products",
+            "feature2": "Unlimited storage",
+            "feature3": "24/7 support"
+          },
+          "title": "Prices",
+          "description": " Choose the right plan for your business. "
+        },
+        "contact": {
+          "title": "Contact us",
+          "description": "If you have any questions, please do not hesitate to contact us",
+          "button": "Contact us",
+          "form": {
+            "name": "your name",
+            "email": "Your email",
+            "message": "Your message",
+            "send": "Send",
+            "phone": "Phone number"
+          }
+        },
+        "carSection": {
+          "title": "Our recent cars",
+          "description": "We have the best cars for you. "
+        },
+        "services": {
+          "1": {
+            "title": "Walk",
+            "description": "We offer you the best deal. ",
+            "image": "/images/img_bidder_1.png"
+          },
+          "2": {
+            "title": "Auction",
+            "description": "We offer you the best auction. ",
+            "image": "/images/img_bidder_2.png"
+          },
+          "3": {
+            "title": "Sell",
+            "description": "We offer you the best sale. ",
+            "image": "/images/img_bidder_3.png"
+          },
+          "4": {
+            "title": "Buy",
+            "description": "We offer you the best purchase. ",
+            "image": "/images/img_bidder_4.png"
+          },
+          "5": {
+            "title": "To rent out",
+            "description": "We offer you the best rent. ",
+            "image": "/images/img_bidder_5.png"
+          },
+          "6": {
+            "title": "Rental",
+            "description": "We offer you the best lease. ",
+            "image": "/images/img_bidder_6.png"
+          },
+          "title": "Our services",
+          "description": "We offer you the best services. "
+        },
+        "carsSection": {
+          "title": "Our recent cars",
+          "description": "We have the best cars for you. "
+        }
+      }
+    },
+    "error": {
+      "noCar": "Car not found",
+      "noCar description": "The car you are looking for is not found"
     }
+  },
+  "components": {
+    "header": {
+      "home": "Home",
+      "about": "About",
+      "cars": "Cars",
+      "contact": "Contact"
+    }
+  },
+  "dashboard": {
+    "my garage": "My garage",
+    "nav": {
+      "placeholderSearch": "Are you looking for a car?",
+      "search": "Research"
+    },
+    "sideBar": {
+      "overview": "Preview",
+      "cars": "Cars",
+      "garages": "Garage",
+      "users": "Users"
+    },
+    "text": {
+      "create garage page": "Create a garage page",
+      "sellYourCar title": "A new way to sell modern and classic cars",
+      "sellYourCar": "Sell ​​your car",
+      "noGarages": "No garage found",
+      "bannerText": "Join the excitement: create your own auction or post your car and watch the bids roll in!",
+      "add another car": "Add another car",
+      "view cars": "Visualize your cars",
+      "contact title": "Contact details",
+      "contact description": "Contact information is important for users to contact you.",
+      "primary email": "Primary Email",
+      "primary phone": "Primary telephone",
+      "secondary email": "Secondary email",
+      "secondary phone": "Secondary phone",
+      "address": "Address",
+      "profile updated": "Profile updated successfully"
+    },
+    "garages": {
+      "title": "Garage",
+      "description": "  Find a garage near you, for all your automotive needs.",
+      "placeholderSearch": "Do you know a garage name?"
+    },
+    "my cars": {
+      "no cars": "You don't have a car yet"
+    },
+    "home": {
+      "title": " Find your next car",
+      "description": "Search thousands of cars, trucks and SUVs",
+      "filter": {
+        "placeholderBody": "Select the body",
+        "placeholderBrand": "Select the brand",
+        "placeholderModel": "Select model"
+      },
+      "noResults": "No cars found, try another search"
+    }
+  },
+  "car": {
+    "handling": "Handling",
+    "interior": "Interior",
+    "exterior": "Outside",
+    "tires": "Tires",
+    "step1": {
+      "title": "Start by giving us some information about your car",
+      "placeholderBrand": "Select a brand (required)",
+      "placeholderModel": "Select a template (required)",
+      "placeholderFuel": "Select a fuel (required)",
+      "placeholderColor": "Select a color (required)",
+      "placeholderYear": "Select a year (required)",
+      "placeholderState": "Condition of the car"
+    },
+    "step2": {
+      "title": "Additional information about your car",
+      "placeholderTransmission": "Select a transmission (required)",
+      "placeholderVersion": "What version is your car?",
+      "version": "Version (Optional)",
+      "placeholderDoors": "Doors (Optional)",
+      "mileageLabel": "Mileage (km) (required)",
+      "mileagePlaceholder": "How many kilometers has your car traveled?",
+      "engineSizeLabel": "Engine displacement (cc) (required)",
+      "engineSizePlaceholder": "What is the engine size of your car?",
+      "horsePawerLabel": "Horsepower (optional)",
+      "horsePowerPlaceholder": "How powerful is your car?",
+      "co2Label": "CO2 (g/km) (Optional)",
+      "co2Placeholder": "What is the CO2 emission of your car?",
+      "placeholderBody": "Select the body type of your car (required)"
+    },
+    "step3": {
+      "title": "Select all the options your car has"
+    },
+    "step4": {
+      "title": "Evaluate Every Part of Your Car",
+      "handling": {
+        "1": "Does not start or drive",
+        "2": "Starts but won't drive",
+        "3": "One or more faults are lit on the dashboard",
+        "4": "Only required a little maintenance",
+        "5": "Everything still works perfectly!"
+      },
+      "exterior": {
+        "1": "Involved in a (serious) accident",
+        "2": "Only tinplate damage, no structural issues",
+        "3": "Scratches or dents",
+        "4": "Light scratches",
+        "5": "Perfect condition"
+      },
+      "interior": {
+        "1": "Very poor condition",
+        "2": "Seats in very poor condition",
+        "3": "Visible stains or damage to fabric",
+        "4": "Good condition",
+        "5": "Excellent condition"
+      },
+      "tires": {
+        "1": "Replacement required ASAP",
+        "2": "They have little to no tread, but can still be inflated",
+        "3": "Risk of receiving an inspection warning",
+        "4": "They have miles of experience on the track",
+        "5": "Less than 5000 kms and still in perfect condition!"
+      }
+    },
+    "step5": {
+      "title": "Add some photos of your car and tell us where it is",
+      "placeholderCountry": "Select a country (required)",
+      "placeholderCity": "Select a city (required)",
+      "placeholderImages": "Upload at least 2 images",
+
+      "placeholderPhoneNumber": "Enter your phone number",
+      "phoneNumberDescription": "This number will be visible to the buyer."
+    },
+    "step6": {
+      "title": " Describe your car and finally choose the type of sale",
+      "descriptionLabel": "Describe your car",
+      "placeholderDescription": "What characterizes your car? "
+    }
+  },
+  "error": {
+    "car images": "Please upload at least 2 images",
+    "unknown": "Something went wrong",
+    "car not found": "Car not found",
+    "brand": "Please select a brand",
+    "model": "Please select a model",
+    "fuel": "Please select a fuel",
+    "color": "Please select a color",
+    "year": "Please select a year",
+    "body": "Please select a body",
+    "mileage": "Please enter mileage",
+    "transmission": "Please select a transmission",
+    "engine size": "Please enter engine displacement",
+    "rating": "Please complete the rating",
+    "title": "Evaluate Every Part of Your Car",
+    "country": "Please select a country",
+    "city": "Please select a city",
+    "images": "Please upload at least 2 images",
+    "price": "Please enter a price",
+    "description": "Please enter a description of 50 characters or less",
+    "exterior": "Please complete the rating of the exterior",
+    "interior": "Please complete the rating of the interior",
+    "tires": "Please complete the rating of the tires",
+    "handling": "Please complete the rating of the handling"
+  },
+  "notifications": {
+    "create garage": {
+      "loading": "Creation of the garage page...",
+      "success": "The car has been added to the garage",
+      "error": "Error creating page"
+    },
+    "insert car": {
+      "error": "Error adding car",
+      "success": "Car added successfully",
+      "loading": "Publish your car..."
+    },
+    "update car": {
+      "error": "Error updating car",
+      "success": "Car updated successfully"
+    },
+    "upload image": {
+      "error": "Error sending image",
+      "loading": "Uploading your images..."
+    }
+  },
+  "bodyCar": {
+    "Convertible": "Convertible",
+    "Coupe": "Coupe",
+    "Hatchback": "Hatchback",
+    "Limousine": "Limousine",
+    "Minivan": "Minivan",
+    "Roadster": "Roadster",
+    "SUV": "SUV",
+    "Truck": "Truck",
+    "Van": "Van",
+    "Wagon": "Wagon",
+    "Minibus": "Minibus",
+    "Offroad": "Offroad",
+    "Sedan": "Sedan"
+  },
+  "optionCar": {
+    "360-Degree Camera": "360-Degree Camera",
+    "Adaptive Cruise Control": "Adaptive Cruise Control",
+    "Android Auto": "Android Auto",
+    "Apple CarPlay": "Apple CarPlay",
+    "Automatic Emergency Braking": "Automatic Emergency Braking",
+    "Backup Camera": "Backup Camera",
+    "Blind Spot Monitoring": "Blind Spot Monitoring",
+    "Bluetooth": "Bluetooth",
+    "Electric Windows": "Electric Windows",
+    "Heads-Up Display": "Heads-Up Display",
+    "Heated Seats": "Heated Seats",
+    "Keyless Entry": "Keyless Entry",
+    "Lane Departure Warning": "Lane Departure Warning",
+    "Leather Seats": "Leather Seats",
+    "Navigation System": "Navigation System",
+    "Parking Sensors": "Parking Sensors",
+    "Rain-Sensing Wipers": "Rain-Sensing Wipers",
+    "Satellite Radio": "Satellite Radio",
+    "Sunroof": "Sunroof",
+    "Wireless Charging": "Wireless Charging"
   }
 }

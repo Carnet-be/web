@@ -1,7 +1,7 @@
 export {};
 
 declare global {
-  type Role = 'seller' | 'customer';
+  type Role = 'admin' | undefined | null;
   type AuthToken = {
     role: Role;
     token: string;
@@ -11,15 +11,30 @@ declare global {
     id: number;
     uid: string;
     email: string;
-    firstName: string;
-    lastName: string;
+    firstName: string | null;
+    lastName: string | null;
+    provider: 'email' | 'google' | 'facebook' | 'apple'; // Assuming these are the login providers
     username?: string;
-    phoneNumber?: string;
-    isEmailVerified?: boolean;
     state: 'active' | 'inactive' | 'banned' | 'deleted';
-    createdAt: Date;
-    updatedAt: Date;
-    isGarage?: boolean;
+    avatar?: string;
+    phoneNumber?: string;
+    birthday?: string;
+    gender?: number;
+    language?: string;
+    isGarage: boolean;
+    isEmailVerified: boolean;
+    isPhoneNumberVerified: boolean;
+    cityId?: number;
+    countryId?: number;
+    registeredAt: Date;
+    updatedAt?: Date;
+    lastLoginAt?: Date;
+    stateChangedAt?: Date;
+    agreedTerms: boolean;
+    address?: string;
+    zipCode?: string;
+    newsletter: boolean;
+    // password and providerId are not included as they shouldn't be exposed to the client
     garage: Garage | null;
   };
 
@@ -72,6 +87,7 @@ declare global {
     isNew: boolean;
     price: number;
     countryId: number;
+    inRange?: boolean | null;
     cityId: number;
     address?: string;
     lat?: number;
@@ -95,9 +111,16 @@ declare global {
     maxPrice?: number;
     createdAt: Date;
     updatedAt: Date;
-    state: 'active' | 'draft' | 'deleted';
+    status: 'pending' | 'published' | 'sold' | 'deleted';
     images?: string[];
     options?: CarOption[];
+    body?: Bodies;
+    brand?: Brand;
+    model?: Model;
+    userId?: number;
+    user?: user;
+    garageId?: number;
+    garage?: Garage;
   };
 
   type CarOption = {
@@ -130,5 +153,12 @@ declare global {
     countryId?: number;
     logo?: string;
     createdAt: Date;
+  };
+
+  type ResponseData<T> = {
+    data: T[];
+    total: number;
+    limit: number;
+    page: number;
   };
 }

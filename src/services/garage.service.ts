@@ -97,4 +97,8 @@ export default {
   },
   deleteShop: (id: string) =>
     api.delete(`${resource}/${id}`).then((res) => res.data),
+  getGarages: (query: string) =>
+    api
+      .get<ResponseData<Garage>>(`${resource}/search?query=${query}`)
+      .then((res) => res.data),
 };

@@ -1,8 +1,6 @@
-import LoadingSection from '@/components/section/loadingSection';
 import { Form } from '@/components/ui/form';
 import { useToast } from '@/components/ui/use-toast';
 import carService from '@/services/car.service';
-import dataService from '@/services/data.service';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Button,
@@ -12,9 +10,9 @@ import {
   ModalFooter,
   Spinner,
 } from '@nextui-org/react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { AnimatePresence, motion } from 'framer-motion';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, CheckIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -67,7 +65,7 @@ export const formCarSchema = z.object({
     message: 'Transmission is required',
   }),
   inRange: z.boolean().default(false),
-  doors: z.enum(['2', '3', '4', '5', '6', '7', '8']),
+  doors: z.enum(['2', '3', '4', '5', '6', '7', '8']).optional(),
   cv: z.coerce.number().positive().optional(),
   cc: z.coerce.number().positive().optional(),
   co2: z.coerce.number().nonnegative().optional(),
@@ -89,11 +87,19 @@ export const formCarSchema = z.object({
 
 export default function CreateCar({
   car,
-
+  data,
   onSuccess,
 }: {
   car?: Car;
   onSuccess?: () => void;
+  data: {
+    brands: Brand[];
+    models: Model[];
+    bodies: Bodies[];
+    carOptions: CarOption[];
+    countries: Country[];
+    cities: City[];
+  };
 }) {
   const [step, setStep] = useState(1);
 
@@ -102,15 +108,43 @@ export default function CreateCar({
   const form = useForm<z.infer<typeof formCarSchema>>({
     resolver: zodResolver(formCarSchema),
     defaultValues: {
-      countryId: 1,
+      countryId: car?.countryId,
+      cityId: car?.cityId,
+      address: car?.address,
+      phoneNumber: car?.phoneNumber,
+      zipCode: car?.zipCode,
+      handling: car?.handling,
+      tires: car?.tires,
+      exterior: car?.exterior,
+      interior: car?.interior,
+      transmission: car?.transmission,
+      inRange: car?.inRange ?? false,
+      doors: car?.doors,
+      cv: car?.cv,
+      cc: car?.cc,
+      co2: car?.co2,
+      kilometrage: car?.kilometrage,
+      version: car?.version,
+      images: car?.images,
+      isAuction: car?.isAuction,
+      minPrice: car?.minPrice,
+      maxPrice: car?.maxPrice,
+      options: car?.options?.map((option) => option.id),
+      isNew: car?.isNew ?? false,
+      price: car?.price,
+      description: car?.description,
+      brandId: car?.brandId,
+      modelId: car?.modelId,
+      bodyId: car?.bodyId,
+      fuel: car?.fuel,
+      year: car?.year,
+      color: car?.color,
+
       // phoneNumber: user.phoneNumber,
     },
   });
 
-  const { data, isPending: isDataLoading } = useQuery({
-    queryKey: ['data'],
-    queryFn: () => dataService.getAllData(),
-  });
+  console.log(car);
   const { mutate, isPending: isCreatingCar } = useMutation({
     mutationFn: carService.createCar,
     onSuccess: () => {
@@ -136,10 +170,38 @@ export default function CreateCar({
     },
   });
 
+  const { mutate: mutateUpdate, isPending: isUpdatingCar } = useMutation({
+    mutationFn: carService.updateCar,
+    onSuccess: () => {
+      toast({ title: 'Car updated successfully' });
+      // query.setQueryData(['me'], (data: User) => {
+      //   return {
+      //     ...data,
+      //     selectedShop: shop,
+      //     shops: [...data.shops, shop],
+      //   };
+      // });
+      // setPublishSuccess(true);
+      onSuccess?.();
+      nav(-1);
+    },
+    onError: (err) => {
+      console.log(err);
+      toast({
+        title: 'Error updating car',
+        description: 'Something went wrong',
+        variant: 'destructive',
+      });
+    },
+  });
+
   const onSubmit = (values: z.infer<typeof formCarSchema>) => {
-    console.log(values);
     const { images, ...data } = values;
-    mutate({ data: data as any, images });
+    if (car) {
+      mutateUpdate({ data: data as any, images, id: car.id });
+    } else {
+      mutate({ data: data as any, images });
+    }
     //  createShopMutation.mutate({ ...values });
   };
 
@@ -189,21 +251,32 @@ export default function CreateCar({
   };
   const nav = useNavigate();
 
-  if (isDataLoading) return <LoadingSection className="min-h-screen w-full" />;
+  const steps = [
+    'Car Details',
+    'Specifications',
+    'Features',
+    'Condition',
+    'Location',
+    'Description',
+  ];
 
   return (
     <>
       <Modal
-        isOpen={isCreatingCar || publishSuccess}
+        isOpen={isCreatingCar || isUpdatingCar || publishSuccess}
         closeButton={false}
         hideCloseButton={true}
       >
         <ModalContent>
           {() => (
             <>
-              {isCreatingCar ? (
+              {isCreatingCar || isUpdatingCar ? (
                 <ModalBody className="flex flex-col gap-5 text-center justify-center items-center py-20">
-                  <p>Please wait while your car is being published</p>
+                  {isUpdatingCar ? (
+                    <p>Please wait while your car is being updated</p>
+                  ) : (
+                    <p>Please wait while your car is being published</p>
+                  )}
                   <Spinner />
                 </ModalBody>
               ) : (
@@ -241,6 +314,35 @@ export default function CreateCar({
           <p className="text-sm text-center">
             Please fill in the following information to add your car
           </p>
+        </div>
+
+        {/* Updated stepper component */}
+        <div className="flex flex-wrap justify-between pb-14 relative">
+          {steps.map((stepName, index) => (
+            <div
+              key={index}
+              className="flex flex-col items-center w-1/3 sm:w-auto mb-4 sm:mb-0"
+            >
+              <div
+                className={`w-8 h-8 rounded-full flex items-center justify-center z-10 ${
+                  step > index + 1
+                    ? 'bg-primary text-primary-foreground'
+                    : step === index + 1
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-muted text-muted-foreground'
+                }`}
+              >
+                {step > index + 1 ? (
+                  <CheckIcon className="w-4 h-4" />
+                ) : (
+                  index + 1
+                )}
+              </div>
+              <span className="text-xs mt-1 text-center">{stepName}</span>
+            </div>
+          ))}
+          {/* Line connecting steps */}
+          <div className="absolute top-4 left-0 w-full h-[2px] bg-muted -z-10 hidden sm:block" />
         </div>
 
         <Form {...form}>
@@ -368,7 +470,7 @@ export default function CreateCar({
                 </>
               ) : (
                 <Button type="submit" color="primary" isLoading={isCreatingCar}>
-                  Publish Car
+                  {car ? 'Update Car' : 'Publish Car'}
                 </Button>
               )}
             </div>

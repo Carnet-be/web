@@ -1,11 +1,14 @@
+import LoadingSection from '@/components/section/loadingSection';
+import { Suspense } from 'react';
 import { BannierAddAuction } from './bannerAddCar';
-import MyCarList from './myCarsList';
+import { CarsSection } from './myCarsList';
 
 const MyCarsPage = () => {
   return (
-    <div className="space-y-10">
-      <BannierAddAuction />
-      {/* <CarTypeSwitch
+    <Suspense fallback={<LoadingSection />}>
+      <div className="space-y-10">
+        <BannierAddAuction />
+        {/* <CarTypeSwitch
     counts={{ direct: count?.direct ?? 0, auction: count?.auction ?? 0 }}
   />
   <TabsSection
@@ -13,8 +16,9 @@ const MyCarsPage = () => {
       belongsTo: orgId ?? userId ?? undefined,
     }}
   /> */}
-      <MyCarList />
-    </div>
+        <CarsSection />
+      </div>
+    </Suspense>
   );
 };
 

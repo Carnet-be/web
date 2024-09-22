@@ -127,7 +127,11 @@ const Uploader = ({
                 className="w-full h-full object-cover rounded-sm"
                 onClick={(e) => {
                   e.stopPropagation();
-                  setIsPopoverOpen(true);
+                  if (!preview && !selectedFile) {
+                    handleReplace();
+                  } else {
+                    setIsPopoverOpen(true);
+                  }
                 }}
               />
               <input {...getInputProps()} />

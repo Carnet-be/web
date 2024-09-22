@@ -43,11 +43,11 @@ export function LanguageToggle({
           Français
         </DropdownMenuItem>
         <DropdownMenuItem
-          onClick={() => changeLanguage('ar')}
+          onClick={() => changeLanguage('nl')}
           className="gap-3"
         >
-          <span className="fi fi-ma"></span>
-          العربية
+          <span className="fi fi-nl"></span>
+          Dutch
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

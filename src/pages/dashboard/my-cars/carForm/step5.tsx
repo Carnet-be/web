@@ -44,8 +44,10 @@ const Step5 = ({
             <Autocomplete
               isRequired
               label="Select a country"
-              selectedKey={field.value}
-              onSelectionChange={(e) => field.onChange(e)}
+              selectedKey={field.value?.toString()}
+              onSelectionChange={(e) =>
+                field.onChange(e ? parseInt(e.toString()) : null)
+              }
               errorMessage={errors.countryId?.message}
               isInvalid={!!errors.countryId}
             >
@@ -66,8 +68,10 @@ const Step5 = ({
               isRequired
               label="Select a city"
               isDisabled={!form.watch('countryId')}
-              selectedKey={field.value}
-              onSelectionChange={(e) => field.onChange(e)}
+              selectedKey={field.value?.toString()}
+              onSelectionChange={(e) =>
+                field.onChange(e ? parseInt(e.toString()) : null)
+              }
               errorMessage={errors.cityId?.message}
               isInvalid={!!errors.cityId}
             >

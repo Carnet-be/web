@@ -23,7 +23,7 @@ import { useToast } from '@/components/ui/use-toast';
 import authService from '@/services/auth.service';
 import userService from '@/services/user.service';
 import useAuthStore from '@/state/auth';
-import { Button, Modal, ModalContent } from '@nextui-org/react';
+import { Avatar, Button, Modal, ModalContent } from '@nextui-org/react';
 import { PersonIcon } from '@radix-ui/react-icons';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
@@ -31,7 +31,6 @@ import {
   Building,
   Building2,
   Car,
-  CircleUser,
   List,
   LogOut,
   Menu,
@@ -45,6 +44,7 @@ import {
   useNavigate,
 } from 'react-router-dom';
 
+import { getImageUrl } from '@/lib/utils';
 import dataService from '@/services/data.service';
 import GarageForm from './GarageForm';
 import { LanguageToggle } from './languageSwitcher';
@@ -57,7 +57,7 @@ export const iframeHeight = '800px';
 
 export const containerClassName = 'w-full h-full';
 
-export default function Dashboard() {
+export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
   const pathname = useLocation().pathname;
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
@@ -69,6 +69,28 @@ export default function Dashboard() {
       route: string;
     }[];
   };
+  const menuAdmin: Menu[] = [
+    {
+      groupLabel: 'Management',
+      items: [
+        {
+          label: 'Cars',
+          icon: <List className="h-4 w-4" />,
+          route: '/dashboard/admin/cars',
+        },
+        {
+          label: 'Users',
+          icon: <Car className="h-4 w-4" />,
+          route: '/dashboard/admin/users',
+        },
+        {
+          label: 'Garages',
+          icon: <Building className="h-4 w-4" />,
+          route: '/dashboard/admin/garages',
+        },
+      ],
+    },
+  ];
   const menu: Menu[] = [
     {
       groupLabel: 'General',
@@ -183,7 +205,11 @@ export default function Dashboard() {
   const [isOpenNewGarage, setIsOpenNewGarage] = useState(false);
   const [isUserOpen, setIsUserOpen] = useState(false);
 
+  const navigator = useNavigate();
   const getMenu = () => {
+    if (isAdmin) {
+      return menuAdmin;
+    }
     if (user?.isGarage) {
       return menuGarage;
     }
@@ -248,7 +274,7 @@ export default function Dashboard() {
                     ))}
                   </div>
                 ))}
-                <SellYourCarCard />
+                {!isAdmin && <SellYourCarCard />}
               </nav>
             </div>
           </div>
@@ -272,7 +298,7 @@ export default function Dashboard() {
                   <ModeToggle />
                   <LanguageToggle
                     onSelect={(lng: string) => {
-                      changeLanguage({ language: lng });
+                      changeLanguage({ user: { language: lng }, id: user.id });
                     }}
                   />
                 </div>
@@ -306,7 +332,7 @@ export default function Dashboard() {
                     </div>
                   ))}
                 </nav>
-                <SellYourCarCard />
+                {!isAdmin && <SellYourCarCard />}
                 <div className="grow"></div>
               </SheetContent>
             </Sheet>
@@ -325,7 +351,7 @@ export default function Dashboard() {
                 </div>
               </form>
             </div>
-            {!user.isGarage && (
+            {!user.isGarage && !isAdmin && (
               <Button
                 size="sm"
                 onClick={() => {
@@ -345,14 +371,23 @@ export default function Dashboard() {
                   onClick={() => setIsUserOpen(true)}
                   className="rounded-full"
                 >
-                  <CircleUser className="h-5 w-5" />
+                  <Avatar src={getImageUrl(user.avatar)} />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent align="end" className="w-[140px]">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>Support</DropdownMenuItem>
+                {!isAdmin && (
+                  <DropdownMenuItem
+                    onClick={() => {
+                      navigator('/dashboard/settings/profile');
+                    }}
+                  >
+                    <PersonIcon className="mr-2 h-4 w-4" />
+                    Profile
+                  </DropdownMenuItem>
+                )}
+                {/* <DropdownMenuItem>Support</DropdownMenuItem> */}
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={() => mutate()}
@@ -367,7 +402,7 @@ export default function Dashboard() {
               <ModeToggle />
               <LanguageToggle
                 onSelect={(lng: string) => {
-                  changeLanguage({ language: lng });
+                  changeLanguage({ user: { language: lng }, id: user.id });
                 }}
               />
             </div>

@@ -36,18 +36,21 @@ const Step1 = ({
             isRequired
             label="Select a brand"
             className="md:col-span-2 col-span-4"
-            selectedKey={field.value}
+            selectedKey={field.value?.toString()}
             onSelectionChange={(e) => {
-              field.onChange(e);
+              field.onChange(e ? parseInt(e.toString()) : null);
+              //  form.setValue('modelId', undefined);
             }}
+            defaultSelectedKey={field.value}
+            defaultItems={data.brands}
             errorMessage={errors.brandId?.message}
             isInvalid={!!errors.brandId}
           >
-            {data.brands.map((brand) => (
-              <AutocompleteItem key={brand.id} value={brand.id}>
+            {(brand) => (
+              <AutocompleteItem key={brand.id} value={brand.id?.toString()}>
                 {brand.name}
               </AutocompleteItem>
-            ))}
+            )}
           </Autocomplete>
         )}
       />
@@ -60,9 +63,9 @@ const Step1 = ({
             label="Select a model"
             className="md:col-span-2 col-span-4"
             isDisabled={!form.watch('brandId')}
-            selectedKey={field.value}
+            selectedKey={field.value?.toString()}
             onSelectionChange={(e) => {
-              field.onChange(e);
+              field.onChange(e ? parseInt(e.toString()) : null);
             }}
             errorMessage={errors.modelId?.message}
             isInvalid={!!errors.modelId}
@@ -85,8 +88,10 @@ const Step1 = ({
             <Autocomplete
               isRequired
               label="Year"
-              selectedKey={field.value}
-              onSelectionChange={(e) => field.onChange(e)}
+              selectedKey={field.value?.toString()}
+              onSelectionChange={(e) =>
+                field.onChange(e ? parseInt(e.toString()) : null)
+              }
               errorMessage={errors.year?.message}
               isInvalid={!!errors.year}
             >

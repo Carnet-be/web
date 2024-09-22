@@ -13,14 +13,25 @@ const Step6 = ({
     <div className="space-y-4">
       <div className="space-y-3">
         <div id="textarea-wrapper">
-          <Textarea
-            labelPlacement="outside"
-            minRows={6}
-            isRequired
-            label={'description'}
-            classNames={{
-              input: ['placeholder:text-default-700/40'],
-            }}
+          <Controller
+            name="description"
+            control={form.control}
+            rules={{ required: true }}
+            render={({ field, fieldState: { error } }) => (
+              <Textarea
+                {...field}
+                labelPlacement="outside"
+                minRows={6}
+                isRequired
+                placeholder="Tell us about your car"
+                label="Description"
+                classNames={{
+                  input: ['placeholder:text-default-700/40'],
+                }}
+                isInvalid={!!error}
+                errorMessage={error?.message}
+              />
+            )}
           />
         </div>
 

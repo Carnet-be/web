@@ -12,5 +12,7 @@ export default {
     resetPassword: (data: { password: string; token: string }) =>
       api.post('/auth/reset-password', data),
     sendEmailVerification: () => api.post('/auth/send-verification-email'),
+    adminLogin: (data: { email: string; password: string }) =>
+      api.post<AuthToken>('/auth/admin/login', data).then((res) => res.data),
   },
 };
