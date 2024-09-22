@@ -6,13 +6,9 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const getImageUrl = (
-  key?: string,
+  key?: string | null,
   placeholder: string | undefined = '/images/placeholder.svg',
 ) =>
   key
-    ? `https://okeyo.ams3.cdn.digitaloceanspaces.com/seller/${key}`
+    ? `https://fitrack.blr1.cdn.digitaloceanspaces.com/carnet/${key}`
     : placeholder;
-export const getVideoUrl = (key?: string) =>
-  key
-    ? `https://okeyo.ams3.cdn.digitaloceanspaces.com/seller/${key}`
-    : undefined;

@@ -1,65 +1,36 @@
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { LoaderButton } from '@/components/ui/loader-button';
 import { useToast } from '@/components/ui/use-toast';
 import AuthLayout from '@/sections/auth/authLayout.tsx';
 import authService from '@/services/auth.service';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
 import { z } from 'zod';
 
-import Lottie from 'lottie-react';
 import forgotPasswordAnimation from '@/assets/ForgotPasswordAnimation.json';
+import { Button, Input } from '@nextui-org/react';
+import Lottie from 'lottie-react';
 
 export default function ForgetPassword() {
   return (
     <AuthLayout pageType="forget-password">
-      <div className="container relative flex flex-col items-center justify-center h-[85vh] px-4 lg:max-w-none lg:grid-cols-1 lg:px-0">
-        <div className="flex justify-center mb-6">
-          <div className="w-96 h-60">
-            <Lottie animationData={forgotPasswordAnimation} loop={true} />
-          </div>
+      <div className="flex justify-center mb-6">
+        <div className="w-full">
+          <Lottie animationData={forgotPasswordAnimation} loop={true} />
         </div>
+      </div>
 
-        <div className="lg:px-8">
-          <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px] text-center">
-            <h1 className="text-2xl font-semibold tracking-tight">
+      <div className="lg:px-8">
+        <div className="mx-auto flex w-full flex-col justify-center space-y-6  text-center">
+          <div className="flex flex-col space-y-2">
+            <h1 className="text-2xl my-0 font-semibold tracking-tight">
               Reset your password
             </h1>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground my-0">
               Enter your email to receive a password reset link
             </p>
-            <ForgetPasswordForm />
-            <p className="text-sm text-muted-foreground text-center">
-              <Link to={'/auth/login'} className="underline underline-offset-4 hover:text-primary font-medium flex items-center justify-center">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4 mr-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15 19l-7-7 7-7"
-                  />
-                </svg>
-                Back to Login
-              </Link>
-            </p>
           </div>
+          <ForgetPasswordForm />
         </div>
       </div>
     </AuthLayout>
@@ -115,34 +86,37 @@ const ForgetPasswordForm = () => {
   if (isSubmitted) {
     return (
       <div className="flex items-center justify-center p-4 bg-green-100 rounded-lg text-green-700">
-        <p className="text-sm">Password reset link has been sent to your email!</p>
+        <p className="text-sm">
+          Password reset link has been sent to your email!
+        </p>
       </div>
     );
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 text-left">
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="pl-2">Email</FormLabel>
-              <FormControl>
-                <Input placeholder="Type your email" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+    <form
+      onSubmit={form.handleSubmit(onSubmit)}
+      className="space-y-3 text-left"
+    >
+      <div>
+        <Input
+          label="Email"
+          placeholder="Type your email"
+          {...form.register('email')}
+          errorMessage={form.formState.errors.email?.message}
         />
+      </div>
 
-        <div className="pt-4 flex items-center justify-center">
-          <LoaderButton isLoading={isPending} type="submit" className="w-[250px]">
-            Send Reset Link
-          </LoaderButton>
-        </div>
-      </form>
-    </Form>
+      <div className="pt-4 flex items-center justify-center">
+        <Button
+          color="primary"
+          isLoading={isPending}
+          type="submit"
+          className="w-[250px]"
+        >
+          Send Reset Link
+        </Button>
+      </div>
+    </form>
   );
 };

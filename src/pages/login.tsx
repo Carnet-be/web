@@ -1,82 +1,51 @@
-import EcommerceImageLogin from '@/assets/ecommerce-login.png';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { LoaderButton } from '@/components/ui/loader-button';
-import { PasswordInput } from '@/components/ui/password-input';
+// Assuming you have a custom useToast hook
 import { useToast } from '@/components/ui/use-toast';
+import validator from '@/lib/validator';
 import AuthLayout from '@/sections/auth/authLayout.tsx';
 import authService from '@/services/auth.service';
 import useAuthStore from '@/state/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Button, Input, Link as NextUILink } from '@nextui-org/react';
 import { useMutation } from '@tanstack/react-query';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { z } from 'zod';
 
 export default function Login() {
   return (
     <AuthLayout pageType="login">
-      <div className="container relative flex flex-col items-center justify-center h-screen px-4 lg:grid lg:max-w-none lg:grid-cols-2 lg:px-0">
-        <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-          <div className="absolute inset-0 bg-black" />
-          <div className="relative z-20 flex-1 flex items-center justify-center">
-            <img
-              src={EcommerceImageLogin}
-              alt="Ecommerce"
-              className="w-11/12 h-11/12 object-contain"
-            />
-          </div>
-          <div className="relative z-20 mt-auto">
-            <blockquote className="space-y-2">
-              <p className="text-lg text-center">
-                &ldquo; Welcome to your best e-commerce SaaS application where
-                you can begin your business and manage it &rdquo;
-              </p>
-            </blockquote>
-          </div>
-        </div>
-        <div className="lg:px-8">
-          <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px]">
+      <div className="container relative flex items-center justify-center px-4">
+        <div className="w-full max-w-[350px]">
+          <div className="flex flex-col space-y-6">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
                 Sign in to your account
               </h1>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-gray-500">
                 Enter your email and password below to sign in
               </p>
             </div>
             <LoginForm />
-            <p className="px-8 text-center text-sm text-muted-foreground">
+            <p className="text-center text-sm text-gray-500">
               Don't have an account?{' '}
-              <Link
-                to={'/auth/register'}
-                className="underline underline-offset-4 hover:text-primary font-medium"
+              <NextUILink
+                size="sm"
+                as={Link}
+                to="/auth/register"
+                color="primary"
               >
                 Sign Up
-              </Link>
+              </NextUILink>
             </p>
-            <p className="px-8 text-center text-sm text-muted-foreground">
+            <p className="text-center text-sm text-gray-500">
               By continuing, you agree to our{' '}
-              <Link
-                to="/terms"
-                className="underline underline-offset-4 hover:text-primary"
-              >
+              <NextUILink size="sm" as={Link} to="/terms" color="primary">
                 Terms of Service
-              </Link>{' '}
+              </NextUILink>{' '}
               and{' '}
-              <Link
-                to="/privacy"
-                className="underline underline-offset-4 hover:text-primary"
-              >
+              <NextUILink as={Link} size="sm" to="/privacy" color="primary">
                 Privacy Policy
-              </Link>
+              </NextUILink>
               .
             </p>
           </div>
@@ -88,8 +57,8 @@ export default function Login() {
 
 const LoginForm = () => {
   const schema = z.object({
-    email: z.string().email('Invalid email address'),
-    password: z.string().min(8, 'Too short, minimum 8 characters'),
+    email: validator.email,
+    password: validator.password,
   });
   const { setToken } = useAuthStore();
   const { mutate, isPending } = useMutation({
@@ -141,55 +110,57 @@ const LoginForm = () => {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="Type your email" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+      <Controller
+        control={form.control}
+        name="email"
+        render={({ field, fieldState: { error } }) => (
+          <Input
+            {...field}
+            label="Email"
+            type="email"
+            isInvalid={!!error}
+            errorMessage={error?.message}
+            //  startContent={<Mail className="text-default-400" size={16} />}
+          />
+        )}
+      />
+      <Controller
+        control={form.control}
+        name="password"
+        render={({ field, fieldState: { error } }) => (
+          <Input
+            {...field}
+            label="Password"
+            type="password"
+            isInvalid={!!error}
+            errorMessage={error?.message}
+            // startContent={<Lock className="text-default-400" size={16} />}
+          />
+        )}
+      />
 
-        <FormField
-          control={form.control}
-          name="password"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Password</FormLabel>
-              <FormControl>
-                <PasswordInput placeholder="Type your password" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+      <div className="text-end">
+        <NextUILink
+          size="sm"
+          as={Link}
+          to="/auth/forget-password"
+          color="primary"
+        >
+          Forget Password?
+        </NextUILink>
+      </div>
 
-        <p className="text-end text-sm text-muted-foreground">
-          <Link
-            to={'/auth/forget-password'}
-            className="underline-offset-4 hover:text-primary font-medium"
-          >
-            Forget Password ?
-          </Link>
-        </p>
-
-        <div className="pt-4 flex items-center justify-center">
-          <LoaderButton
-            isLoading={isPending}
-            type="submit"
-            className="w-[250px]"
-          >
-            Login
-          </LoaderButton>
-        </div>
-      </form>
-    </Form>
+      <div className="pt-4 flex items-center justify-center">
+        <Button
+          type="submit"
+          color="primary"
+          isLoading={isPending}
+          className="w-[250px]"
+        >
+          Login
+        </Button>
+      </div>
+    </form>
   );
 };

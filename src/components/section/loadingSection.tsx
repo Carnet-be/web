@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { Loader2 } from 'lucide-react';
+import { Spinner } from '@nextui-org/react';
 
 const LoadingSection = ({ className }: { className?: string }) => {
   return (
@@ -9,7 +9,7 @@ const LoadingSection = ({ className }: { className?: string }) => {
         className,
       )}
     >
-      <Loader2 className="h-10 w-10 animate-spin text-primary" />
+      <Spinner size="lg" />
     </div>
   );
 };

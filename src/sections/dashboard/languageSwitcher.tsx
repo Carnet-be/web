@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -6,6 +5,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import i18n from '@/i18n';
+import { Button } from '@nextui-org/react';
+import { useState } from 'react';
 
 export function LanguageToggle({
   onSelect,
@@ -15,11 +16,13 @@ export function LanguageToggle({
   function changeLanguage(lang: string) {
     i18n.changeLanguage(lang);
     onSelect?.(lang);
+    setIsOpen(false);
   }
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <DropdownMenu>
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size={'icon'}>
+        <Button isIconOnly size={'sm'} onClick={() => setIsOpen(!isOpen)}>
           {i18n.language.toUpperCase()}
         </Button>
       </DropdownMenuTrigger>

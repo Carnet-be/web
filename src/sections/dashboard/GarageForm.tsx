@@ -1,4 +1,3 @@
-import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -9,8 +8,6 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { LoaderButton } from '@/components/ui/loader-button';
-import { PhoneInput } from '@/components/ui/phone-input';
 import {
   Select,
   SelectContent,
@@ -22,10 +19,14 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import Uploader from '@/components/ui/uploader';
 import { useToast } from '@/components/ui/use-toast';
-import query from '@/lib/query';
+import validator from '@/lib/validator';
 import dataService from '@/services/data.service';
-import shopService from '@/services/shop.service';
+import {
+  default as garageService,
+  default as shopService,
+} from '@/services/garage.service';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Button } from '@nextui-org/react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { AnimatePresence, motion } from 'framer-motion';
 import debounce from 'lodash/debounce';
@@ -35,23 +36,14 @@ import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 
 const formSchema = z.object({
-  name: z
-    .string({
-      message: 'Name is required',
-    })
-    .min(3, { message: 'Name must be at least 3 characters' })
-    .max(255, { message: 'Name must be at most 255 characters' }),
-  slug: z
-    .string()
-    .min(3, { message: 'Slug must be at least 3 characters' })
-    .max(255, { message: 'Slug must be at most 255 characters' })
-    .transform((val) =>
-      val
-        .toLowerCase()
-        .replace(/\s+/g, '_')
-        .replace(/-/g, '_')
-        .replace(/[^a-z0-9_]/g, ''),
-    ),
+  name: validator.stringMinMax,
+  slug: validator.stringMinMax.transform((val) =>
+    val
+      .toLowerCase()
+      .replace(/\s+/g, '_')
+      .replace(/-/g, '_')
+      .replace(/[^a-z0-9_]/g, ''),
+  ),
   description: z.string().optional(),
   logo: z.instanceof(File).optional(),
   cover: z.instanceof(File).optional(),
@@ -62,23 +54,15 @@ const formSchema = z.object({
     message: 'City is required',
   }),
   address: z.string().optional(),
-  zipCode: z
-    .string()
-    .optional()
-    .refine((val) => {
-      if (!val) return true;
-      const cleaned = val.replace(/\s/g, '');
-      const pattern = /^\d{5}$/;
-      return pattern.test(cleaned);
-    }, 'Zip code must be a 5-digit number'),
-  phoneNumber: z.string(),
+  zipCode: z.string().optional(),
+  phoneNumber: validator.phoneNumber,
 });
 
-export default function CreateShop({
+export default function CreateGarage({
   user,
   onSuccess,
 }: {
-  user: Seller;
+  user: User;
   onSuccess?: () => void;
 }) {
   const [step, setStep] = useState(1);
@@ -102,21 +86,21 @@ export default function CreateShop({
     enabled: !!form.watch('countryId'),
   });
   const createShopMutation = useMutation({
-    mutationFn: shopService.createShop,
-    onSuccess: (shop) => {
-      toast({ title: 'Shop created successfully' });
-      query.setQueryData(['seller-me'], (data: Seller) => {
-        return {
-          ...data,
-          selectedShop: shop,
-          shops: [...data.shops, shop],
-        };
-      });
+    mutationFn: garageService.createShop,
+    onSuccess: () => {
+      toast({ title: 'Garage created successfully' });
+      // query.setQueryData(['me'], (data: User) => {
+      //   return {
+      //     ...data,
+      //     selectedShop: shop,
+      //     shops: [...data.shops, shop],
+      //   };
+      // });
       onSuccess?.();
     },
     onError: () => {
       toast({
-        title: 'Error creating shop',
+        title: 'Error creating garage',
         description: 'Something went wrong',
         variant: 'destructive',
       });
@@ -124,6 +108,7 @@ export default function CreateShop({
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
+    console.log(values);
     createShopMutation.mutate({ ...values });
   };
 
@@ -174,9 +159,9 @@ export default function CreateShop({
   return (
     <div className="w-full max-w-xl p-4 space-y-3 bg-card/80 backdrop-blur-sm rounded-lg">
       <div className="py-5">
-        <h1 className="text-2xl font-bold text-center">Create Your Shop</h1>
+        <h1 className="text-2xl font-bold text-center">Create Your Garage</h1>
         <p className="text-sm text-center">
-          Please fill in the following information to create your shop.
+          Please fill in the following information to create your garage.
         </p>
       </div>
 
@@ -198,14 +183,10 @@ export default function CreateShop({
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Shop Name</FormLabel>
+                      <FormLabel>Garage Name</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
-                      <FormDescription>
-                        This is the name of your shop that will be displayed to
-                        the public.
-                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -264,10 +245,8 @@ export default function CreateShop({
                         </p>
                       )}
                       <FormDescription>
-                        This is the slug of your shop that will be used in the
-                        URL. It should be lowercase, with spaces and dashes
-                        replaced by underscores. Once you create your shop, you
-                        will not be able to change it.
+                        This is the slug of your garage that will be used in the
+                        URL.
                       </FormDescription>
 
                       <FormMessage />
@@ -283,12 +262,6 @@ export default function CreateShop({
                       <FormControl>
                         <Textarea {...field} />
                       </FormControl>
-                      <FormDescription>
-                        This is the description of your shop that will be
-                        displayed to the public. Be creative and write a
-                        description that will attract the attention of your
-                        customers.
-                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -323,10 +296,6 @@ export default function CreateShop({
                           setSelectedFile={field.onChange}
                         />
                       </FormControl>
-                      <FormDescription>
-                        This is the cover of your shop. Make sure it has a good
-                        resolution and good quality.
-                      </FormDescription>
 
                       <FormMessage />
                     </FormItem>
@@ -349,11 +318,6 @@ export default function CreateShop({
                           setSelectedFile={field.onChange}
                         />
                       </FormControl>
-                      <FormDescription>
-                        This is the logo of your shop that will be displayed
-                        almost everywhere. Make sure to have a good logo that
-                        represents your shop.
-                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -474,12 +438,17 @@ export default function CreateShop({
                     <FormItem>
                       <FormLabel>Phone Number</FormLabel>
                       <FormControl>
-                        <PhoneInput {...field} />
+                        <Input
+                          {...field}
+                          onChange={(e) => {
+                            let value = e.target.value.replace(/[^0-9+]/g, '');
+                            if (value && !value.startsWith('+')) {
+                              value = '+' + value;
+                            }
+                            field.onChange(value);
+                          }}
+                        />
                       </FormControl>
-                      <FormDescription>
-                        This is the phone number of your shop that will be
-                        displayed to the public.
-                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
@@ -488,30 +457,35 @@ export default function CreateShop({
             )}
           </AnimatePresence>
 
-          <div className="flex justify-between py-6">
+          <div className="flex justify-between py-6 gap-2">
+            <Button type="button" variant="light" onClick={() => onSuccess?.()}>
+              Cancel
+            </Button>
+            <div className="grow"></div>
             {step > 1 && (
-              <Button type="button" variant="outline" onClick={prevStep}>
+              <Button type="button" variant="ghost" onClick={prevStep}>
                 Previous
               </Button>
             )}
             {step < 3 ? (
               <>
-                <div className="grow"></div>
                 <Button
-                  disabled={slugAvailability !== 'available'}
+                  isDisabled={slugAvailability !== 'available'}
                   type="button"
+                  color="primary"
                   onClick={nextStep}
                 >
                   Next
                 </Button>
               </>
             ) : (
-              <LoaderButton
+              <Button
                 type="submit"
+                color="primary"
                 isLoading={createShopMutation.isPending}
               >
-                Create Shop
-              </LoaderButton>
+                Create Garage
+              </Button>
             )}
           </div>
         </form>

@@ -1,6 +1,6 @@
 import ErrorSection from '@/components/section/errorSection';
 import LoadingSection from '@/components/section/loadingSection';
-import { Button } from '@/components/ui/button';
+
 import {
   Card,
   CardContent,
@@ -16,33 +16,38 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
+import Logo from '@/components/ui/logo';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useToast } from '@/components/ui/use-toast';
 import authService from '@/services/auth.service';
-import sellerService from '@/services/seller.service';
+import userService from '@/services/user.service';
 import useAuthStore from '@/state/auth';
+import { Button, Modal, ModalContent } from '@nextui-org/react';
+import { PersonIcon } from '@radix-ui/react-icons';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
 import {
-  BadgePercent,
-  ChartNoAxesColumn,
+  Building,
+  Building2,
+  Car,
   CircleUser,
   List,
   LogOut,
   Menu,
-  Package,
-  ReceiptText,
   Search,
-  Settings,
-  Shirt,
-  Store,
-  UsersRound,
 } from 'lucide-react';
-import { NavLink as Link, Outlet, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import {
+  NavLink as Link,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
+
+import dataService from '@/services/data.service';
+import GarageForm from './GarageForm';
 import { LanguageToggle } from './languageSwitcher';
-import ShopFormPage from './shopFormPage';
-import ShopSwitcher from './shopSwitcher';
 import { ModeToggle } from './themeSwitcher';
 
 export const description =
@@ -54,6 +59,7 @@ export const containerClassName = 'w-full h-full';
 
 export default function Dashboard() {
   const pathname = useLocation().pathname;
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
 
   type Menu = {
     groupLabel: string;
@@ -68,59 +74,68 @@ export default function Dashboard() {
       groupLabel: 'General',
       items: [
         {
-          label: 'Overview',
-          icon: <ChartNoAxesColumn className="h-4 w-4" />,
-          route: '/dashboard/overview',
+          label: 'Marketplace',
+          icon: <Car className="h-4 w-4" />,
+          route: '/dashboard/marketplace',
         },
         {
-          label: 'Shop',
-          icon: <Store className="h-4 w-4" />,
-          route: '/dashboard/shop',
+          label: 'Garages',
+          icon: <Building className="h-4 w-4" />,
+          route: '/dashboard/garages',
         },
-      ],
-    },
-    {
-      groupLabel: 'Management',
-      items: [
         {
-          label: 'Categories',
+          label: 'My cars',
           icon: <List className="h-4 w-4" />,
-          route: '/dashboard/management/categories',
-        },
-        {
-          label: 'Products',
-          icon: <Shirt className="h-4 w-4" />,
-          route: '/dashboard/management/products',
-        },
-        {
-          label: 'Orders',
-          icon: <Package className="h-4 w-4" />,
-          route: '/dashboard/management/orders',
-        },
-        {
-          label: 'Customers',
-          icon: <UsersRound className="h-4 w-4" />,
-          route: '/dashboard/management/customers',
-        },
-        {
-          label: 'Offers',
-          icon: <BadgePercent className="h-4 w-4" />,
-          route: '/dashboard/management/offers',
+          route: '/dashboard/my-cars',
         },
       ],
     },
+
     {
       groupLabel: 'Settings',
       items: [
         {
-          label: 'General',
-          icon: <Settings className="h-4 w-4" />,
-          route: '/dashboard/settings/general',
+          label: 'Profile',
+          icon: <PersonIcon className="h-4 w-4" />,
+          route: '/dashboard/settings/profile',
+        },
+      ],
+    },
+  ];
+  const menuGarage: Menu[] = [
+    {
+      groupLabel: 'General',
+      items: [
+        {
+          label: 'Marketplace',
+          icon: <Car className="h-4 w-4" />,
+          route: '/dashboard/marketplace',
         },
         {
-          label: 'Billing',
-          icon: <ReceiptText className="h-4 w-4" />,
-          route: '/dashboard/settings/billing',
+          label: 'Garages',
+          icon: <Building2 className="h-4 w-4" />,
+          route: '/dashboard/garages',
+        },
+        {
+          label: 'My Cars',
+          icon: <List className="h-4 w-4" />,
+          route: '/dashboard/my-cars',
+        },
+        {
+          label: 'My Garage',
+          icon: <Building className="h-4 w-4" />,
+          route: '/dashboard/my-garage',
+        },
+      ],
+    },
+
+    {
+      groupLabel: 'Settings',
+      items: [
+        {
+          label: 'Profile',
+          icon: <PersonIcon className="h-4 w-4" />,
+          route: '/dashboard/settings/profile',
         },
       ],
     },
@@ -131,13 +146,17 @@ export default function Dashboard() {
     isError,
     refetch,
   } = useQuery({
-    queryKey: ['seller-me'],
-    queryFn: () => sellerService.me(),
+    queryKey: ['me'],
+    queryFn: () => userService.me(),
+  });
+  useQuery({
+    queryKey: ['data'],
+    queryFn: () => dataService.getAllData(),
   });
   const { clear } = useAuthStore();
   const { toast, dismiss } = useToast();
   const { mutate: changeLanguage } = useMutation({
-    mutationFn: sellerService.updateSeller,
+    mutationFn: userService.updateUser,
   });
   const { mutate } = useMutation({
     mutationFn: authService.seller.logout,
@@ -160,6 +179,17 @@ export default function Dashboard() {
     },
   });
 
+  const closeSheet = () => setIsSheetOpen(false);
+  const [isOpenNewGarage, setIsOpenNewGarage] = useState(false);
+  const [isUserOpen, setIsUserOpen] = useState(false);
+
+  const getMenu = () => {
+    if (user?.isGarage) {
+      return menuGarage;
+    }
+    return menu;
+  };
+
   if (isPending || !user) {
     return <LoadingSection />;
   }
@@ -172,25 +202,25 @@ export default function Dashboard() {
   //   return <WaitingForEmailVerification onRefetch={() => refetch()} />;
   // }
 
-  if (!user.shops || user.shops.length === 0) {
-    return (
-      <div className="relative flex items-center justify-center min-h-screen bg-background">
-        <ShopFormPage user={user} />
-      </div>
-    );
-  }
+  // if (!user.shops || user.shops.length === 0) {
+  //   return (
+  //     <div className="relative flex items-center justify-center min-h-screen bg-background">
+  //       <ShopFormPage user={user} />
+  //     </div>
+  //   );
+  // }
 
   return (
     <>
       <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-        <div className="hidden border-r bg-muted/40 md:block">
+        <div className="hidden border-r dark:border-r-muted/40 bg-muted/40 md:block">
           <div className="flex h-full max-h-screen flex-col gap-2">
-            <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-              <ShopSwitcher user={user} />
+            <div className="flex h-14 items-center border-b dark:border-b-muted/40 bg-muted/40 px-4 lg:h-[60px] lg:px-6 justify-center">
+              <Logo />
             </div>
             <div className="flex-1">
               <nav className="grid items-start p-4 px-7 text-sm font-medium  gap-2">
-                {menu.map((group) => (
+                {getMenu().map((group) => (
                   <div key={group.groupLabel} className="mb-4 space-y-1">
                     <h3 className="text-muted-foreground text-xs font-semibold uppercase tracking-wider">
                       {group.groupLabel}
@@ -210,6 +240,7 @@ export default function Dashboard() {
                             ),
                           },
                         )}
+                        onClick={closeSheet}
                       >
                         {item.icon}
                         {item.label}
@@ -217,28 +248,36 @@ export default function Dashboard() {
                     ))}
                   </div>
                 ))}
+                <SellYourCarCard />
               </nav>
             </div>
-            <SupportCard />
           </div>
         </div>
         <div className="flex flex-col">
-          <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
-            <Sheet>
+          <header className="flex h-14 items-center gap-4 border-b dark:border-b-muted/40 bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+            <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
               <SheetTrigger asChild>
                 <Button
-                  variant="outline"
-                  size="icon"
-                  className="shrink-0 md:hidden"
+                  color="secondary"
+                  size="sm"
+                  isIconOnly
+                  className="rounded-full md:hidden"
+                  onClick={() => setIsSheetOpen(true)}
                 >
                   <Menu className="h-5 w-5" />
-                  <span className="sr-only">Toggle navigation menu</span>
                 </Button>
               </SheetTrigger>
               <SheetContent side="left" className="flex flex-col">
+                <div className="flex  gap-2">
+                  <ModeToggle />
+                  <LanguageToggle
+                    onSelect={(lng: string) => {
+                      changeLanguage({ language: lng });
+                    }}
+                  />
+                </div>
                 <nav className="grid gap-2 text-lg font-medium space-y-2">
-                  <ShopSwitcher user={user} />
-                  {menu.map((group) => (
+                  {getMenu().map((group) => (
                     <div key={group.groupLabel} className="mb-4 space-y-1">
                       <h3 className="text-muted-foreground text-xs font-semibold uppercase tracking-wider">
                         {group.groupLabel}
@@ -258,6 +297,7 @@ export default function Dashboard() {
                               ),
                             },
                           )}
+                          onClick={closeSheet}
                         >
                           {item.icon}
                           {item.label}
@@ -266,13 +306,16 @@ export default function Dashboard() {
                     </div>
                   ))}
                 </nav>
+                <SellYourCarCard />
                 <div className="grow"></div>
-                <SupportCard />
               </SheetContent>
             </Sheet>
-            <div className="w-full flex-1">
+            <div className=" w-full flex-1">
+              <div className="flex md:hidden">
+                <Logo className="h-6" />
+              </div>
               <form>
-                <div className="relative">
+                <div className="relative hidden md:flex w-full">
                   <Search className="absolute left-2.5 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
                     type="search"
@@ -282,15 +325,27 @@ export default function Dashboard() {
                 </div>
               </form>
             </div>
-            <DropdownMenu>
+            {!user.isGarage && (
+              <Button
+                size="sm"
+                onClick={() => {
+                  setIsOpenNewGarage(true);
+                }}
+                color="primary"
+              >
+                Create a garage
+              </Button>
+            )}
+            <DropdownMenu open={isUserOpen} onOpenChange={setIsUserOpen}>
               <DropdownMenuTrigger asChild>
                 <Button
-                  variant="secondary"
-                  size="icon"
+                  // color="secondary"
+                  size="sm"
+                  isIconOnly
+                  onClick={() => setIsUserOpen(true)}
                   className="rounded-full"
                 >
                   <CircleUser className="h-5 w-5" />
-                  <span className="sr-only">Toggle user menu</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
@@ -308,37 +363,58 @@ export default function Dashboard() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <ModeToggle />
-            <LanguageToggle
-              onSelect={(lng: string) => {
-                changeLanguage({ language: lng });
-              }}
-            />
+            <div className="md:flex gap-4 hidden">
+              <ModeToggle />
+              <LanguageToggle
+                onSelect={(lng: string) => {
+                  changeLanguage({ language: lng });
+                }}
+              />
+            </div>
           </header>
 
-          <main className="flex flex-1 flex-col">
-            <ScrollArea className="h-[calc(100vh-70px)] m-1  p-4  gap-4 lg:gap-6 lg:p-6">
-              <Outlet />
+          <main className="flex-1 overflow-hidden">
+            <ScrollArea className="h-[calc(100vh-60px)]">
+              <div className="p-4 lg:p-6">
+                <Outlet />
+              </div>
             </ScrollArea>
           </main>
         </div>
       </div>
+      <Modal
+        isDismissable={false}
+        placement="auto"
+        isOpen={isOpenNewGarage}
+        onOpenChange={setIsOpenNewGarage}
+      >
+        <ModalContent>
+          {(onClose) => <GarageForm user={user} onSuccess={() => onClose()} />}
+        </ModalContent>
+      </Modal>
     </>
   );
 }
 
-function SupportCard() {
+function SellYourCarCard() {
+  const nav = useNavigate();
   return (
-    <div className="p-5">
+    <div className="">
       <Card>
         <CardHeader className="pt-0 p-4">
-          <CardDescription>
-            Do you need help? Contact our support team.
-          </CardDescription>
+          <CardDescription>A new way to sell your car</CardDescription>
         </CardHeader>
         <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
-          <Button variant={'default'} size="sm" className="w-full">
-            Contact Support
+          <Button
+            startContent={<Car className="h-4 w-4" />}
+            color="primary"
+            size="sm"
+            onClick={() => {
+              nav('/dashboard/my-cars/add');
+            }}
+            className="w-full"
+          >
+            Sell your car
           </Button>
         </CardContent>
       </Card>

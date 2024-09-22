@@ -6,11 +6,12 @@ import { ReactNode } from 'react';
 import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import LandingPage from './pages/landing/LandingPage';
 import Dashboard from './sections/dashboard';
-import Shop from './sections/new-shop';
+
 import useAuthStore from './state/auth';
 // src/routes.tsx
-import CategoryPage from './pages/dashboard/category';
-import ProductPage from './pages/dashboard/product';
+import MyCarsPage from './pages/dashboard/my-cars';
+import CarForm from './pages/dashboard/my-cars/carForm';
+import GarageProfilePage from './pages/dashboard/my-garage';
 import Overview from './sections/dashboard/overview';
 
 const RoutesWrapper = () => {
@@ -34,11 +35,10 @@ const RoutesWrapper = () => {
         }
       >
         <Route index element={<Navigate to="overview" />} />
-        <Route path="management" element={<Outlet />}>
-          <Route index element={<Navigate to="products" />} />
-          <Route path="products" element={<ProductPage />} />
-          <Route path="categories" element={<CategoryPage />} />
-        </Route>
+        <Route path="my-cars" element={<MyCarsPage />} />
+        <Route path="my-cars/add" element={<CarForm />} />
+        <Route path="my-cars/edit/:id" element={<CarForm />} />
+        <Route path="my-garage" element={<GarageProfilePage />} />
         <Route path="overview" element={<Overview />} />
         <Route
           path="*"
@@ -60,7 +60,7 @@ const RoutesWrapper = () => {
         <Route path="forget-password" element={<ForgetPassword />} />
         <Route path="reset-password" element={<ResetPassword />} />
       </Route>
-      <Route path="new-shop" element={<Shop />} />
+
       <Route
         path="*"
         element={
