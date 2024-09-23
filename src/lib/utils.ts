@@ -49,3 +49,18 @@ export const transformNullToUndefined = (value: Object) =>
       value === null ? undefined : value,
     ]),
   );
+
+export const getProfileInfo = (user: User) => {
+  if (user.garage) {
+    return {
+      name: user.garage.name,
+      description: `@${user.garage.slug}`,
+      image: getImageUrl(user.garage.logo),
+    };
+  }
+  return {
+    name: `${user.firstName} ${user.lastName}`,
+    description: user.email,
+    image: getImageUrl(user.avatar),
+  };
+};

@@ -3,7 +3,7 @@ import useAuthStore from '../state/auth';
 
 const api = axios.create({
   baseURL: `${import.meta.env.VITE_API_URL ?? 'http://localhost:4000'}/api/v1`,
-  timeout: 10000,
+  // timeout: 10000,
   headers: {
     'x-secret-key': import.meta.env.VITE_API_KEY,
   },
@@ -23,7 +23,7 @@ api.interceptors.response.use(
     if (error.response) {
       const status = error.response.status;
       if (status === 401) {
-       // useAuthStore.setState({ token: null });
+        // useAuthStore.setState({ token: null });
         // toast.error('Unauthorized');
         console.error('Session expired');
       } else if (status === 403) {

@@ -20,14 +20,13 @@ import { Textarea } from '@/components/ui/textarea';
 import Uploader from '@/components/ui/uploader';
 import { useToast } from '@/components/ui/use-toast';
 import validator from '@/lib/validator';
-import dataService from '@/services/data.service';
 import {
   default as garageService,
   default as shopService,
 } from '@/services/garage.service';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@nextui-org/react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { AnimatePresence, motion } from 'framer-motion';
 import debounce from 'lodash/debounce';
 import { Check, X } from 'lucide-react';
@@ -59,11 +58,16 @@ const formSchema = z.object({
 });
 
 export default function CreateGarage({
+  data,
   user,
   onSuccess,
 }: {
   user: User;
   onSuccess?: () => void;
+  data: {
+    countries: Country[];
+    cities: City[];
+  };
 }) {
   const [step, setStep] = useState(1);
 
@@ -80,11 +84,11 @@ export default function CreateGarage({
       phoneNumber: user.phoneNumber,
     },
   });
-  const { data: cities, isPending } = useQuery({
-    queryKey: ['cities', form.watch('countryId')],
-    queryFn: () => dataService.getCities(form.watch('countryId')),
-    enabled: !!form.watch('countryId'),
-  });
+  // const { data: cities, isPending } = useQuery({
+  //   queryKey: ['cities', form.watch('countryId')],
+  //   queryFn: () => dataService.getCities(form.watch('countryId')),
+  //   enabled: !!form.watch('countryId'),
+  // });
   const createShopMutation = useMutation({
     mutationFn: garageService.createShop,
     onSuccess: () => {
@@ -346,14 +350,23 @@ export default function CreateGarage({
                           <Select
                             required
                             value={field.value?.toString()}
-                            onValueChange={field.onChange}
+                            onValueChange={(value) =>
+                              field.onChange(parseInt(value))
+                            }
                           >
                             <SelectTrigger>
                               <SelectValue placeholder="Select a country" />
                             </SelectTrigger>
                             <SelectContent>
                               <SelectGroup>
-                                <SelectItem value="1">Morocco</SelectItem>
+                                {data.countries.map((country) => (
+                                  <SelectItem
+                                    key={country.id}
+                                    value={country.id.toString()}
+                                  >
+                                    {country.name}
+                                  </SelectItem>
+                                ))}
                               </SelectGroup>
                             </SelectContent>
                           </Select>
@@ -375,29 +388,29 @@ export default function CreateGarage({
                               onValueChange={(value) =>
                                 field.onChange(parseInt(value))
                               }
-                              disabled={isPending}
                             >
                               <SelectTrigger>
                                 <SelectValue placeholder="Select a city" />
                               </SelectTrigger>
                               <SelectContent>
                                 <SelectGroup>
-                                  {cities?.map((city) => (
-                                    <SelectItem
-                                      key={city.id}
-                                      value={city.id.toString()}
-                                    >
-                                      {city.name}
-                                    </SelectItem>
-                                  ))}
+                                  {data.cities
+                                    .filter(
+                                      (city) =>
+                                        city.countryId ===
+                                        form.watch('countryId'),
+                                    )
+                                    .map((city) => (
+                                      <SelectItem
+                                        key={city.id}
+                                        value={city.id.toString()}
+                                      >
+                                        {city.name}
+                                      </SelectItem>
+                                    ))}
                                 </SelectGroup>
                               </SelectContent>
                             </Select>
-                            {isPending && (
-                              <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                <div className="w-5 h-5 border-t-2 border-blue-500 rounded-full animate-spin"></div>
-                              </div>
-                            )}
                           </div>
                         </FormControl>
                         <FormMessage />

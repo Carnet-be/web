@@ -71,6 +71,10 @@ declare global {
     state: 'active' | 'draft';
     createdAt: Date;
     updatedAt?: Date;
+    country?: Country;
+    city?: City;
+    carCount?: number;
+    cars?: Car[];
   };
 
   type Car = {

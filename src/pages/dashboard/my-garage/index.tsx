@@ -1,3 +1,4 @@
+import BackButton from '@/components/backButton';
 import ErrorSection from '@/components/section/errorSection';
 import {
   Form,
@@ -40,7 +41,9 @@ const GarageProfilePage = () => {
   }
   return (
     <div className="flex flex-col justify-center items-center min-h-screen">
-      <div className="flex flex-row gap-2 container justify-end">
+      <div className="flex flex-row gap-2 container justify-end ">
+        <BackButton />
+        <div className="flex-1" />
         <Button
           onClick={() => {
             nav('/' + user.garage?.slug);

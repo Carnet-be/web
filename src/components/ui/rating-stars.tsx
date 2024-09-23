@@ -1,5 +1,5 @@
+import { cn } from '@/lib/utils';
 import { Tooltip } from '@nextui-org/react';
-import cx from 'classnames';
 
 const RatingStar = ({
   value = 0,
@@ -20,7 +20,7 @@ const RatingStar = ({
             onClick={() => {
               onChange?.(s);
             }}
-            className={cx(
+            className={cn(
               'h-7 w-7 cursor-pointer transition-all hover:scale-125',
               isGreater ? 'text-yellow-300' : 'text-gray-300',
             )}

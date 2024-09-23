@@ -99,6 +99,10 @@ export default {
     api.delete(`${resource}/${id}`).then((res) => res.data),
   getGarages: (query: string) =>
     api
-      .get<ResponseData<Garage>>(`${resource}/search?query=${query}`)
+      .get<ResponseData<Garage>>(`${resource}/admin/search?${query}`)
+      .then((res) => res.data),
+  garages: (query: string) =>
+    api
+      .get<ResponseData<Garage>>(`${resource}/admin/search?${query}`)
       .then((res) => res.data),
 };

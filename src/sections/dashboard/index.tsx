@@ -2,17 +2,8 @@ import ErrorSection from '@/components/section/errorSection';
 import LoadingSection from '@/components/section/loadingSection';
 
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-} from '@/components/ui/card';
-import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
@@ -23,7 +14,16 @@ import { useToast } from '@/components/ui/use-toast';
 import authService from '@/services/auth.service';
 import userService from '@/services/user.service';
 import useAuthStore from '@/state/auth';
-import { Avatar, Button, Modal, ModalContent } from '@nextui-org/react';
+import {
+  Avatar,
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Modal,
+  ModalContent,
+} from '@nextui-org/react';
 import { PersonIcon } from '@radix-ui/react-icons';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
@@ -44,7 +44,8 @@ import {
   useNavigate,
 } from 'react-router-dom';
 
-import { getImageUrl } from '@/lib/utils';
+import { CardContent, CardDescription } from '@/components/ui/card';
+import { getProfileInfo } from '@/lib/utils';
 import dataService from '@/services/data.service';
 import GarageForm from './GarageForm';
 import { LanguageToggle } from './languageSwitcher';
@@ -171,7 +172,7 @@ export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
     queryKey: ['me'],
     queryFn: () => userService.me(),
   });
-  useQuery({
+  const { data: data, isPending: isPendingData } = useQuery({
     queryKey: ['data'],
     queryFn: () => dataService.getAllData(),
   });
@@ -216,7 +217,7 @@ export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
     return menu;
   };
 
-  if (isPending || !user) {
+  if (isPending || isPendingData) {
     return <LoadingSection />;
   }
 
@@ -242,7 +243,9 @@ export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
         <div className="hidden border-r dark:border-r-muted/40 bg-muted/40 md:block">
           <div className="flex h-full max-h-screen flex-col gap-2">
             <div className="flex h-14 items-center border-b dark:border-b-muted/40 bg-muted/40 px-4 lg:h-[60px] lg:px-6 justify-center">
-              <Logo />
+              <Logo
+                type={isAdmin ? 'admin' : user?.isGarage ? 'garage' : 'user'}
+              />
             </div>
             <div className="flex-1">
               <nav className="grid items-start p-4 px-7 text-sm font-medium  gap-2">
@@ -365,37 +368,61 @@ export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
             <DropdownMenu open={isUserOpen} onOpenChange={setIsUserOpen}>
               <DropdownMenuTrigger asChild>
                 <Button
-                  // color="secondary"
                   size="sm"
                   isIconOnly
                   onClick={() => setIsUserOpen(true)}
                   className="rounded-full"
                 >
-                  <Avatar src={getImageUrl(user.avatar)} />
+                  <Avatar src={getProfileInfo(user).image} />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-[140px]">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                {!isAdmin && (
-                  <DropdownMenuItem
-                    onClick={() => {
-                      navigator('/dashboard/settings/profile');
-                    }}
-                  >
-                    <PersonIcon className="mr-2 h-4 w-4" />
-                    Profile
-                  </DropdownMenuItem>
-                )}
-                {/* <DropdownMenuItem>Support</DropdownMenuItem> */}
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onClick={() => mutate()}
-                  className="gap-2 text-destructive cursor-pointer"
-                >
-                  <LogOut className="mr-2 h-4 w-4" />
-                  Logout
-                </DropdownMenuItem>
+              <DropdownMenuContent align="end" className="max-w-[340px] p-0">
+                <Card className="w-full">
+                  <CardHeader className="justify-between">
+                    <div className="flex gap-5">
+                      <Avatar
+                        isBordered
+                        radius="full"
+                        size="md"
+                        src={getProfileInfo(user).image}
+                      />
+                      <div className="flex flex-col gap-1 items-start justify-center">
+                        <h4 className="text-small font-semibold leading-none text-default-600">
+                          {getProfileInfo(user).name}
+                        </h4>
+                        <h5 className="text-small tracking-tight text-primary">
+                          {getProfileInfo(user).description}
+                        </h5>
+                      </div>
+                    </div>
+                  </CardHeader>
+                  <CardBody className="px-3 py-0 text-small text-default-400">
+                    <p className="line-clamp-3">{user.garage?.description}</p>
+                  </CardBody>
+                  <CardFooter className="gap-3 justify-center">
+                    {!isAdmin && (
+                      <Button
+                        color="primary"
+                        variant="flat"
+                        onClick={() => {
+                          navigator('/dashboard/settings/profile');
+                          setIsUserOpen(false);
+                        }}
+                      >
+                        <PersonIcon className="mr-2 h-4 w-4" />
+                        Profile
+                      </Button>
+                    )}
+                    <Button
+                      color="danger"
+                      variant="flat"
+                      onClick={() => mutate()}
+                    >
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Logout
+                    </Button>
+                  </CardFooter>
+                </Card>
               </DropdownMenuContent>
             </DropdownMenu>
             <div className="md:flex gap-4 hidden">
@@ -424,7 +451,13 @@ export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
         onOpenChange={setIsOpenNewGarage}
       >
         <ModalContent>
-          {(onClose) => <GarageForm user={user} onSuccess={() => onClose()} />}
+          {(onClose) => (
+            <GarageForm
+              data={data ?? { cities: [], countries: [] }}
+              user={user}
+              onSuccess={() => onClose()}
+            />
+          )}
         </ModalContent>
       </Modal>
     </>

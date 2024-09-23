@@ -19,6 +19,7 @@ import MyCarsPage from './pages/dashboard/my-cars';
 import CarForm, { CarFormAdd } from './pages/dashboard/my-cars/carForm';
 import GarageProfilePage from './pages/dashboard/my-garage';
 import ProfilePage from './pages/dashboard/settings/profilePage';
+import GaragesPage from './pages/garages';
 import Overview from './sections/dashboard/overview';
 
 const RoutesWrapper = () => {
@@ -115,6 +116,9 @@ const RoutesWrapper = () => {
               </div>
             }
           />
+        </Route>
+        <Route path="garages" element={<Outlet />}>
+          <Route index element={<GaragesPage />} />
         </Route>
         <Route path="my-cars" element={<Outlet />}>
           <Route index element={<MyCarsPage />} />

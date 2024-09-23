@@ -67,8 +67,7 @@ export const CarTypeSwitch = ({}: {}) => {
 };
 export function TabsSection({}: {}) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const pathname = useLocation().pathname;
-  const router = useNavigate();
+
   const isDirect = searchParams.get('type') != 'auction';
 
   return (

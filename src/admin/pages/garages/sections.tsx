@@ -3,6 +3,7 @@ import garageService from '@/services/garage.service';
 import {
   Avatar,
   Button,
+  Chip,
   getKeyValue,
   Pagination,
   Spinner,
@@ -15,7 +16,12 @@ import {
 } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
 import { Edit } from 'lucide-react';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom';
 
 export const GaragesTable = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -44,8 +50,20 @@ export const GaragesTable = () => {
       label: 'NAME',
     },
     {
+      key: 'description',
+      label: 'DESCRIPTION',
+    },
+    {
       key: 'slug',
       label: 'SLUG',
+    },
+    {
+      key: 'city',
+      label: 'CITY',
+    },
+    {
+      key: 'carCount',
+      label: 'CAR COUNT',
     },
     {
       key: 'createdAt',
@@ -63,6 +81,20 @@ export const GaragesTable = () => {
     switch (columnKey) {
       case 'logo':
         return <Avatar src={getImageUrl(item.logo)} />;
+
+      case 'city':
+        return <div className="max-w-xs line-clamp-2">{item.city?.name}</div>;
+      case 'carCount':
+        return <Chip>{value}</Chip>;
+      case 'slug':
+        return (
+          <Link
+            to={`/${item.slug}`}
+            className="text-blue-500 hover:text-blue-700"
+          >
+            {value}
+          </Link>
+        );
       case 'createdAt':
       case 'updatedAt':
         return value ? new Date(value).toLocaleDateString() : '-';
@@ -122,6 +154,7 @@ export const GaragesTable = () => {
           <TableColumn
             key={column.key}
             allowsSorting={column.key !== 'actions'}
+            className={column.key === 'id' ? 'w-10' : ''}
           >
             {column.label}
           </TableColumn>
