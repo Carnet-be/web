@@ -7,11 +7,11 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths()],
 
   preview: {
-    port: 9998,
+    port: 3051,
     strictPort: true,
   },
   server: {
-    port: 9998,
+    port: 3051,
     strictPort: true,
   },
   resolve: {
