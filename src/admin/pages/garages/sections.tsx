@@ -16,21 +16,15 @@ import {
 } from '@nextui-org/react';
 import { useQuery } from '@tanstack/react-query';
 import { Edit } from 'lucide-react';
-import {
-  Link,
-  useLocation,
-  useNavigate,
-  useSearchParams,
-} from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 
 export const GaragesTable = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const pathname = useLocation().pathname;
+
   const {
     data: rows,
     isError,
     isLoading,
-    refetch,
   } = useQuery({
     queryKey: ['garages', searchParams.toString()],
     queryFn: () => garageService.getGarages(searchParams.toString()),

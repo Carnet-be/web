@@ -15,6 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { z } from 'zod';
 
@@ -23,6 +24,8 @@ import { PasswordInput } from '@/components/ui/password-input.tsx';
 import Lottie from 'lottie-react';
 
 export default function ResetPassword() {
+  const { t } = useTranslation();
+
   return (
     <AuthLayout pageType="reset-password">
       <div className="container relative flex flex-col items-center justify-center px-4 lg:max-w-none lg:grid-cols-1 lg:px-0">
@@ -35,10 +38,10 @@ export default function ResetPassword() {
         <div className="lg:px-8">
           <div className="mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[350px] text-center">
             <h1 className="text-2xl font-semibold tracking-tight">
-              Reset your password
+              {t('resetPassword.title')}
             </h1>
             <p className="text-sm text-muted-foreground">
-              Enter a new Password below to reset it
+              {t('resetPassword.subtitle')}
             </p>
             <ResetPasswordForm />
           </div>
@@ -49,13 +52,14 @@ export default function ResetPassword() {
 }
 
 const ResetPasswordForm = () => {
+  const { t } = useTranslation();
   const schema = z
     .object({
-      password: z.string().min(8, 'Too short, minimum 8 characters'),
-      confirmPassword: z.string().min(8, 'Too short, minimum 8 characters'),
+      password: z.string().min(8, t('resetPassword.passwordTooShort')),
+      confirmPassword: z.string().min(8, t('resetPassword.passwordTooShort')),
     })
     .refine((data) => data.password === data.confirmPassword, {
-      message: "Passwords don't match",
+      message: t('resetPassword.passwordsDontMatch'),
       path: ['confirmPassword'],
     });
 
@@ -75,8 +79,8 @@ const ResetPasswordForm = () => {
       setToken({ token, role });
       setIsSubmitted(true);
       // toast({
-      //   title: 'Success',
-      //   description: 'Password has been reset successfully',
+      //   title: t('common.success'),
+      //   description: t('resetPassword.successMessage'),
       // });
     },
     onError: (error: any) => {
@@ -88,15 +92,15 @@ const ResetPasswordForm = () => {
         return;
 
         // toast({
-        //   title: 'Error',
-        //   description: 'Invalid or Expired token',
+        //   title: t('common.error'),
+        //   description: t('resetPassword.invalidToken'),
         //   variant: 'destructive',
         // });
         // return;
       }
       toast({
-        title: 'Error',
-        description: 'An error occurred. Please try again.',
+        title: t('common.error'),
+        description: t('resetPassword.genericError'),
         variant: 'destructive',
       });
       setTimeout(() => {
@@ -118,8 +122,8 @@ const ResetPasswordForm = () => {
       mutate({ password: data.password, token: resetToken });
     } else {
       toast({
-        title: 'Error',
-        description: 'No token found, please request a password reset again',
+        title: t('common.error'),
+        description: t('resetPassword.noTokenError'),
         variant: 'destructive',
       });
     }
@@ -129,7 +133,7 @@ const ResetPasswordForm = () => {
   if (isSubmitted) {
     return (
       <div className="flex items-center justify-center p-4 bg-green-100 rounded-lg text-green-700">
-        <p className="text-sm">Password has been reset successfully!</p>
+        <p className="text-sm">{t('resetPassword.successMessage')}</p>
       </div>
     );
   }
@@ -137,9 +141,7 @@ const ResetPasswordForm = () => {
   // Conditionally render either the form or the error message
   return showErrorMessage ? (
     <div className="flex items-center justify-center p-4 bg-red-100 rounded-lg text-red-700">
-      <p className="text-md">
-        There was a mistake in your request. Please try again.
-      </p>
+      <p className="text-md">{t('resetPassword.errorMessage')}</p>
     </div>
   ) : (
     <Form {...form}>
@@ -152,10 +154,12 @@ const ResetPasswordForm = () => {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="pl-2">New Password</FormLabel>
+              <FormLabel className="pl-2">
+                {t('resetPassword.newPassword')}
+              </FormLabel>
               <FormControl>
                 <PasswordInput
-                  placeholder="Type your new password"
+                  placeholder={t('resetPassword.newPasswordPlaceholder')}
                   {...field}
                 />
               </FormControl>
@@ -169,10 +173,12 @@ const ResetPasswordForm = () => {
           name="confirmPassword"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="pl-2">Confirm Password</FormLabel>
+              <FormLabel className="pl-2">
+                {t('resetPassword.confirmPassword')}
+              </FormLabel>
               <FormControl>
                 <PasswordInput
-                  placeholder="Confirm your new password"
+                  placeholder={t('resetPassword.confirmPasswordPlaceholder')}
                   {...field}
                 />
               </FormControl>
@@ -187,7 +193,7 @@ const ResetPasswordForm = () => {
             type="submit"
             className="w-[250px]"
           >
-            Reset Password
+            {t('resetPassword.resetButton')}
           </LoaderButton>
         </div>
       </form>

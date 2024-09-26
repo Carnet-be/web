@@ -53,7 +53,8 @@ export default {
         isAvailable: boolean;
       }>(`${resource}/check-slug-availability/${slug}`)
       .then((res) => res.data),
-  getShop: (id: string) => api.get(`${resource}/${id}`).then((res) => res.data),
+  getGarage: (id: string) =>
+    api.get<Garage>(`${resource}/${id}`).then((res) => res.data),
   updateGarage: ({
     logo,
     cover,
@@ -99,7 +100,7 @@ export default {
     api.delete(`${resource}/${id}`).then((res) => res.data),
   getGarages: (query: string) =>
     api
-      .get<ResponseData<Garage>>(`${resource}/admin/search?${query}`)
+      .get<ResponseData<Garage>>(`${resource}/search?${query}`)
       .then((res) => res.data),
   garages: (query: string) =>
     api

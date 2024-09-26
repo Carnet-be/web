@@ -15,7 +15,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { CheckCircle2, CheckIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import * as z from 'zod';
 import Step1 from './step1';
 import Step2 from './step2';
@@ -102,7 +102,7 @@ export default function CreateCar({
   };
 }) {
   const [step, setStep] = useState(1);
-
+  const [searchParams] = useSearchParams();
   const { toast } = useToast();
   const [publishSuccess, setPublishSuccess] = useState(false);
   const form = useForm<z.infer<typeof formCarSchema>>({
@@ -133,11 +133,11 @@ export default function CreateCar({
       isNew: car?.isNew ?? false,
       price: car?.price,
       description: car?.description,
-      brandId: car?.brandId,
-      modelId: car?.modelId,
-      bodyId: car?.bodyId,
-      fuel: car?.fuel,
-      year: car?.year,
+      brandId: car?.brandId ?? Number(searchParams.get('brand')) ?? undefined,
+      modelId: car?.modelId ?? Number(searchParams.get('model')) ?? undefined,
+      bodyId: car?.bodyId ?? Number(searchParams.get('body')) ?? undefined,
+      fuel: car?.fuel ?? (searchParams.get('fuel') as Car['fuel']) ?? undefined,
+      year: car?.year ?? Number(searchParams.get('year')) ?? undefined,
       color: car?.color,
 
       // phoneNumber: user.phoneNumber,

@@ -6,7 +6,7 @@ import { Suspense } from 'react';
 import { GarageItem } from './sections';
 
 export default function GaragesPage() {
-  const search = useSearchParams();
+  const [search] = useSearchParams();
   const {
     data: garages,
     isPending,
@@ -14,8 +14,9 @@ export default function GaragesPage() {
     refetch,
   } = useQuery({
     queryKey: ['garages-user', search?.toString()],
-    queryFn: () => garageService.garages(search?.toString()),
+    queryFn: () => garageService.getGarages(search?.toString()),
   });
+  const { t } = useTranslation();
   if (isPending) return <LoadingSection />;
   if (isError) return <AlertError refetch={refetch} />;
   return (
@@ -23,9 +24,9 @@ export default function GaragesPage() {
       <div className="space-y-8">
         <div>
           <div>
-            <h1>Garages</h1>
+            <h1 className="text-2xl font-bold">{t('garage.title')}</h1>
             <span className="text-sm text-gray-400">
-              Find the garage that you want to visit
+              {t('garage.description')}
             </span>
           </div>
         </div>
@@ -36,12 +37,13 @@ export default function GaragesPage() {
             <GarageItem key={g.id} garage={g} />
           ))}
         </div>
-        {garages?.data.length === 0 && <div>No garages found</div>}
+        {garages?.data.length === 0 && <div>{t('garage.noGarages')}</div>}
       </div>
     </Suspense>
   );
 }
 
+import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 
 // const SearchBar = () => {

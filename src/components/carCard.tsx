@@ -3,6 +3,7 @@ import { Button } from '@nextui-org/react';
 import { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import LoadingSection from './section/loadingSection';
 
 const CarCard = ({
   children: car,
@@ -13,10 +14,12 @@ const CarCard = ({
   className?: string;
   link?: string;
 }) => {
-  const { t: c } = useTranslation('common');
+  const { t } = useTranslation();
+  const c = (key: string) => t(`common.${key}`);
+
   const navigate = useNavigate();
   return (
-    <Suspense>
+    <Suspense fallback={<LoadingSection className="aspect-[5/3]" />}>
       <div
         onClick={() => navigate(link ?? `/dashboard/car/${car.id}`)}
         style={{

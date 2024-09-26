@@ -1,4 +1,3 @@
-// Assuming you have a custom useToast hook
 import { useToast } from '@/components/ui/use-toast';
 import validator from '@/lib/validator';
 import AuthLayout from '@/sections/auth/authLayout.tsx';
@@ -8,10 +7,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input, Link as NextUILink } from '@nextui-org/react';
 import { useMutation } from '@tanstack/react-query';
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next'; // or 'next-i18next' for Next.js
 import { Link } from 'react-router-dom';
 import { z } from 'zod';
 
 export default function Login() {
+  const { t } = useTranslation();
+
   return (
     <AuthLayout pageType="login">
       <div className="container relative flex items-center justify-center px-4">
@@ -19,22 +21,20 @@ export default function Login() {
           <div className="flex flex-col space-y-6">
             <div className="flex flex-col space-y-2 text-center">
               <h1 className="text-2xl font-semibold tracking-tight">
-                Sign in to your account
+                {t('login.title')}
               </h1>
-              <p className="text-sm text-gray-500">
-                Enter your email and password below to sign in
-              </p>
+              <p className="text-sm text-gray-500">{t('login.subtitle')}</p>
             </div>
             <LoginForm />
             <p className="text-center text-sm text-gray-500">
-              Don't have an account?{' '}
+              {t('login.noAccount')}{' '}
               <NextUILink
                 size="sm"
                 as={Link}
                 to="/auth/register"
                 color="primary"
               >
-                Sign Up
+                {t('login.signUp')}
               </NextUILink>
             </p>
             <p className="text-center text-sm text-gray-500">
@@ -61,6 +61,7 @@ const LoginForm = () => {
     password: validator.password,
   });
   const { setToken } = useAuthStore();
+  const { t } = useTranslation();
   const { mutate, isPending } = useMutation({
     mutationFn: authService.seller.login,
     onSuccess: (data) => {
@@ -71,27 +72,25 @@ const LoginForm = () => {
       });
     },
     onError: (error: any) => {
-      //error can be
-      //return res.status(409).json({ status: 'error', message: 'Email already exists' });
       if (error.response?.data?.message === 'EMAIL_NOT_FOUND') {
         toast({
-          title: 'Error',
-          description: 'Account not found',
+          title: t('login.errorToasts.accountNotFound.title'),
+          description: t('login.errorToasts.accountNotFound.description'),
           variant: 'destructive',
         });
         return;
       }
       if (error.response?.data?.message === 'INVALID_PASSWORD') {
         toast({
-          title: 'Error',
-          description: 'Invalid credentials',
+          title: t('login.errorToasts.invalidCredentials.title'),
+          description: t('login.errorToasts.invalidCredentials.description'),
           variant: 'destructive',
         });
         return;
       }
       toast({
-        title: 'Error',
-        description: 'An error occurred, please try again or contact support',
+        title: t('login.errorToasts.genericError.title'),
+        description: t('login.errorToasts.genericError.description'),
         variant: 'destructive',
       });
     },
@@ -117,7 +116,7 @@ const LoginForm = () => {
         render={({ field, fieldState: { error } }) => (
           <Input
             {...field}
-            label="Email"
+            label={t('login.form.email')}
             type="email"
             isInvalid={!!error}
             errorMessage={error?.message}
@@ -131,7 +130,7 @@ const LoginForm = () => {
         render={({ field, fieldState: { error } }) => (
           <Input
             {...field}
-            label="Password"
+            label={t('login.form.password')}
             type="password"
             isInvalid={!!error}
             errorMessage={error?.message}
@@ -147,7 +146,7 @@ const LoginForm = () => {
           to="/auth/forget-password"
           color="primary"
         >
-          Forget Password?
+          {t('login.form.forgetPassword')}
         </NextUILink>
       </div>
 
@@ -158,7 +157,7 @@ const LoginForm = () => {
           isLoading={isPending}
           className="w-[250px]"
         >
-          Login
+          {t('login.form.submitButton')}
         </Button>
       </div>
     </form>

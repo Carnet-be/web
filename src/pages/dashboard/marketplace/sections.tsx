@@ -22,7 +22,8 @@ export const SearchSection = ({
 }) => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t: translate } = useTranslation();
+  const t = (key: string) => translate(`marketplace.search.${key}`);
 
   const bodies = data?.bodies ?? [];
   const brands = data?.brands ?? [];
@@ -156,7 +157,9 @@ export const SearchSection = ({
 };
 
 export const CarsSections = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
+  const { t: translate } = useTranslation();
+  const t = (key: string) => translate(`marketplace.results.${key}`);
 
   const { data, isPending, isError, refetch } = useQuery({
     queryKey: ['cars', searchParams?.toString()],
@@ -187,7 +190,7 @@ export const CarsSections = () => {
       </div>
       {data?.data.length === 0 && (
         <div className="h-[400px] flex items-center justify-center w-full p-4 text-center">
-          No car found, please adjust your search
+          {t('noResults')}
         </div>
       )}
     </div>

@@ -1,0 +1,34 @@
+import CarCard from '@/components/carCard';
+import ErrorSection from '@/components/section/errorSection';
+import LoadingSection from '@/components/section/loadingSection';
+import carService from '@/services/car.service';
+import { useQuery } from '@tanstack/react-query';
+import { useParams } from 'react-router-dom';
+
+const ListCars = () => {
+  const { slug: id } = useParams();
+  const { data, isPending, isError, refetch } = useQuery({
+    queryKey: ['cars', 'garage', id],
+    queryFn: () => carService.search({ garageSlug: id }),
+    enabled: !!id,
+  });
+
+  if (isPending) return <LoadingSection className="h-[100px]" />;
+  if (isError) return <ErrorSection refetch={refetch} />;
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 items-center justify-center gap-5 py-3">
+      {data?.data?.map((car) => (
+        <CarCard
+          key={car.id}
+          link={`/${id}/car/${car.uid}`}
+          className="bg-white"
+        >
+          {{ ...car }}
+        </CarCard>
+      ))}
+    </div>
+  );
+};
+
+export default ListCars;

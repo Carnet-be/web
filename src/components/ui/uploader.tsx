@@ -7,8 +7,10 @@ import {
 } from '@nextui-org/react';
 import { useCallback, useEffect, useState } from 'react';
 import { Accept, FileWithPath, useDropzone } from 'react-dropzone';
+import { useTranslation } from 'react-i18next';
 import { FileWithPreview, ImageCropper } from './image-crop';
 import { useToast } from './use-toast';
+// Import useTranslate hook
 
 interface UploaderProps {
   accept: Accept | undefined;
@@ -35,6 +37,10 @@ const Uploader = ({
     defaultPreview,
   );
 
+  const { t: c } = useTranslation(); // Use the useTranslate hook
+  const t = (key: string, defaultValue: string) =>
+    c('common.' + key, defaultValue);
+
   useEffect(() => {
     if (selectedFile) {
       const fileWithPreview = Object.assign(selectedFile, {
@@ -52,8 +58,11 @@ const Uploader = ({
 
       if (file.size > maxSize) {
         toast({
-          title: 'File too large',
-          description: 'The file you are trying to upload is too large.',
+          title: t('fileTooLargeTitle', 'File too large'),
+          description: t(
+            'fileTooLargeDescription',
+            'The file you are trying to upload is too large.',
+          ),
           variant: 'destructive',
         });
         return;
@@ -75,10 +84,6 @@ const Uploader = ({
     accept,
     maxSize,
   });
-
-  const handleImageClick = () => {
-    setIsPopoverOpen(true);
-  };
 
   const handleRemove = () => {
     setPreview(null);
@@ -139,16 +144,21 @@ const Uploader = ({
           </PopoverTrigger>
           <PopoverContent>
             <div className="px-1 py-2">
-              <h3 className="text-sm font-bold">Image Options</h3>
+              <h3 className="text-sm font-bold">
+                {t('imageOptionsTitle', 'Opciones de imagen')}
+              </h3>
               <p className="text-sm mt-2 mb-4">
-                Do you want to remove or replace the current image?
+                {t(
+                  'imageOptionsDescription',
+                  '¿Quieres eliminar o reemplazar la imagen actual?',
+                )}
               </p>
               <div className="flex gap-2">
                 <Button color="danger" size="sm" onClick={handleRemove}>
-                  Remove
+                  {t('removeButton', 'Eliminar')}
                 </Button>
                 <Button color="primary" size="sm" onClick={handleReplace}>
-                  Replace
+                  {t('replaceButton', 'Reemplazar')}
                 </Button>
               </div>
             </div>

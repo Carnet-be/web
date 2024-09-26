@@ -8,37 +8,38 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, Input, Link as NextUILink } from '@nextui-org/react';
 import { useMutation } from '@tanstack/react-query';
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { z } from 'zod';
 
 export default function Register() {
+  const { t } = useTranslation();
+
   return (
     <AuthLayout pageType="register">
       <div className="container relative flex items-center justify-center px-4">
         <div className="flex flex-col space-y-6">
           <div className="flex flex-col space-y-2 text-center">
             <h1 className="text-2xl font-semibold tracking-tight">
-              Create an account
+              {t('register.title')}
             </h1>
-            <p className="text-sm text-gray-500">
-              Enter your details below to create an account
-            </p>
+            <p className="text-sm text-gray-500">{t('register.subtitle')}</p>
           </div>
           <RegisterForm />
           <p className="text-center text-sm text-gray-500">
-            Already have an account?{' '}
+            {t('register.haveAccount')}{' '}
             <NextUILink size="sm" as={Link} to="/auth/login" color="primary">
-              Sign In
+              {t('register.signIn')}
             </NextUILink>
           </p>
           <p className="text-center text-sm text-gray-500">
-            By continuing, you agree to our{' '}
+            {t('register.termsAndPrivacy.prefix')}{' '}
             <NextUILink size="sm" as={Link} to="/terms" color="primary">
-              Terms of Service
+              {t('register.termsAndPrivacy.termsOfService')}
             </NextUILink>{' '}
-            and{' '}
+            {t('register.termsAndPrivacy.and')}{' '}
             <NextUILink size="sm" as={Link} to="/privacy" color="primary">
-              Privacy Policy
+              {t('register.termsAndPrivacy.privacyPolicy')}
             </NextUILink>
             .
           </p>
@@ -49,6 +50,8 @@ export default function Register() {
 }
 
 const RegisterForm = () => {
+  const { t } = useTranslation();
+
   const schema = z
     .object({
       firstName: validator.stringMinMax,
@@ -59,7 +62,7 @@ const RegisterForm = () => {
       confirmPassword: validator.password,
     })
     .refine((data) => data.password === data.confirmPassword, {
-      message: "Passwords don't match",
+      message: t('register.form.errors.passwordsMismatch'),
       path: ['confirmPassword'],
     });
   const { setToken } = useAuthStore();
@@ -68,24 +71,22 @@ const RegisterForm = () => {
     onSuccess: (data) => {
       setToken(data);
       toast({
-        title: 'Account created',
-        description: 'We have sent you an email to verify your account',
+        title: t('register.successToast.title'),
+        description: t('register.successToast.description'),
       });
     },
     onError: (error: any) => {
-      //error can be
-      //return res.status(409).json({ status: 'error', message: 'Email already exists' });
       if (error.response?.data?.message === 'Email already exists') {
         toast({
-          title: 'Error',
-          description: 'Email already associated with an account',
+          title: t('register.errorToasts.emailExists.title'),
+          description: t('register.errorToasts.emailExists.description'),
           variant: 'destructive',
         });
         return;
       } else {
         toast({
-          title: 'Error',
-          description: 'An error occurred, please try again or contact support',
+          title: t('register.errorToasts.genericError.title'),
+          description: t('register.errorToasts.genericError.description'),
           variant: 'destructive',
         });
       }
@@ -104,6 +105,7 @@ const RegisterForm = () => {
       language,
     });
   };
+
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -113,11 +115,10 @@ const RegisterForm = () => {
           render={({ field, fieldState: { error } }) => (
             <Input
               {...field}
-              label="First Name"
+              label={t('register.form.firstName')}
               isRequired
               isInvalid={!!error}
               errorMessage={error?.message}
-              //  startContent={<UserIcon className="h-5 w-5 text-gray-400" />}
             />
           )}
         />
@@ -128,10 +129,9 @@ const RegisterForm = () => {
             <Input
               {...field}
               isRequired
-              label="Last Name"
+              label={t('register.form.lastName')}
               isInvalid={!!error}
               errorMessage={error?.message}
-              //   startContent={<UserIcon className="h-5 w-5 text-gray-400" />}
             />
           )}
         />
@@ -142,12 +142,11 @@ const RegisterForm = () => {
         render={({ field, fieldState: { error } }) => (
           <Input
             {...field}
-            label="Email"
+            label={t('register.form.email')}
             isRequired
             type="email"
             isInvalid={!!error}
             errorMessage={error?.message}
-            //   startContent={<EnvelopeIcon className="h-5 w-5 text-gray-400" />}
           />
         )}
       />
@@ -157,12 +156,11 @@ const RegisterForm = () => {
         render={({ field, fieldState: { error } }) => (
           <Input
             {...field}
-            label="Phone Number"
+            label={t('register.form.phoneNumber')}
             isRequired
             isInvalid={!!error}
             errorMessage={error?.message}
             type="tel"
-            // placeholder="+1234567890"
             onChange={(e) => {
               let value = e.target.value.replace(/[^0-9+]/g, '');
               if (value && !value.startsWith('+')) {
@@ -180,14 +178,11 @@ const RegisterForm = () => {
           render={({ field, fieldState: { error } }) => (
             <Input
               {...field}
-              label="Password"
+              label={t('register.form.password')}
               isRequired
               type="password"
               isInvalid={!!error}
               errorMessage={error?.message}
-              // startContent={
-              //   <LockClosedIcon className="h-5 w-5 text-gray-400" />
-              // }
             />
           )}
         />
@@ -197,14 +192,11 @@ const RegisterForm = () => {
           render={({ field, fieldState: { error } }) => (
             <Input
               {...field}
-              label="Confirm Password"
+              label={t('register.form.confirmPassword')}
               type="password"
               isRequired
               isInvalid={!!error}
               errorMessage={error?.message}
-              // startContent={
-              //   <LockClosedIcon className="h-5 w-5 text-gray-400" />
-              // }
             />
           )}
         />
@@ -216,7 +208,7 @@ const RegisterForm = () => {
           isLoading={isPending}
           className="w-[250px]"
         >
-          Create Account
+          {t('register.form.submitButton')}
         </Button>
       </div>
     </form>

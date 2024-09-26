@@ -9,7 +9,7 @@ i18n
   .use(initReactI18next) // Passes i18n instance to react-i18next
   .init({
     supportedLngs: ['en', 'fr', 'nl'], // List the supported languages
-    fallbackLng: 'en', // Fallback language
+    fallbackLng: 'fr', // Fallback language
     debug: true, // Set to false in production
 
     interpolation: {

@@ -32,30 +32,8 @@ import debounce from 'lodash/debounce';
 import { Check, X } from 'lucide-react';
 import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import * as z from 'zod';
-
-const formSchema = z.object({
-  name: validator.stringMinMax,
-  slug: validator.stringMinMax.transform((val) =>
-    val
-      .toLowerCase()
-      .replace(/\s+/g, '_')
-      .replace(/-/g, '_')
-      .replace(/[^a-z0-9_]/g, ''),
-  ),
-  description: z.string().optional(),
-  logo: z.instanceof(File).optional(),
-  cover: z.instanceof(File).optional(),
-  countryId: z.number({
-    message: 'Country is required',
-  }),
-  cityId: z.number({
-    message: 'City is required',
-  }),
-  address: z.string().optional(),
-  zipCode: z.string().optional(),
-  phoneNumber: validator.phoneNumber,
-});
 
 export default function CreateGarage({
   data,
@@ -69,6 +47,32 @@ export default function CreateGarage({
     cities: City[];
   };
 }) {
+  const { t: tCommon } = useTranslation();
+  const t = (key: string) => tCommon('createGarage.' + key);
+
+  const formSchema = z.object({
+    name: validator.stringMinMax,
+    slug: validator.stringMinMax.transform((val) =>
+      val
+        .toLowerCase()
+        .replace(/\s+/g, '_')
+        .replace(/-/g, '_')
+        .replace(/[^a-z0-9_]/g, ''),
+    ),
+    description: z.string().optional(),
+    logo: z.instanceof(File).optional(),
+    cover: z.instanceof(File).optional(),
+    countryId: z.number({
+      message: t('garage.countryRequired'),
+    }),
+    cityId: z.number({
+      message: t('garage.cityRequired'),
+    }),
+    address: z.string().optional(),
+    zipCode: z.string().optional(),
+    phoneNumber: validator.phoneNumber,
+  });
+
   const [step, setStep] = useState(1);
 
   const [slugAvailability, setSlugAvailability] = useState<
@@ -92,20 +96,13 @@ export default function CreateGarage({
   const createShopMutation = useMutation({
     mutationFn: garageService.createShop,
     onSuccess: () => {
-      toast({ title: 'Garage created successfully' });
-      // query.setQueryData(['me'], (data: User) => {
-      //   return {
-      //     ...data,
-      //     selectedShop: shop,
-      //     shops: [...data.shops, shop],
-      //   };
-      // });
+      toast({ title: t('garage.createSuccess') });
       onSuccess?.();
     },
     onError: () => {
       toast({
-        title: 'Error creating garage',
-        description: 'Something went wrong',
+        title: t('garage.createError'),
+        description: t('garage.createErrorDescription'),
         variant: 'destructive',
       });
     },
@@ -122,8 +119,8 @@ export default function CreateGarage({
       if (!result) return;
       if (slugAvailability !== 'available') {
         toast({
-          title: 'Slug is not available',
-          description: 'Please choose a different slug',
+          title: t('garage.slugUnavailable'),
+          description: t('garage.createErrorDescription'),
           variant: 'destructive',
         });
         return;
@@ -163,10 +160,10 @@ export default function CreateGarage({
   return (
     <div className="w-full max-w-xl p-4 space-y-3 bg-card/80 backdrop-blur-sm rounded-lg">
       <div className="py-5">
-        <h1 className="text-2xl font-bold text-center">Create Your Garage</h1>
-        <p className="text-sm text-center">
-          Please fill in the following information to create your garage.
-        </p>
+        <h1 className="text-2xl font-bold text-center">
+          {t('garage.createTitle')}
+        </h1>
+        <p className="text-sm text-center">{t('garage.createDescription')}</p>
       </div>
 
       <Form {...form}>
@@ -187,7 +184,7 @@ export default function CreateGarage({
                   name="name"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Garage Name</FormLabel>
+                      <FormLabel>{t('garage.name')}</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -200,7 +197,7 @@ export default function CreateGarage({
                   name="slug"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Slug</FormLabel>
+                      <FormLabel>{t('garage.slug')}</FormLabel>
                       <FormControl>
                         <div className="relative">
                           <Input
@@ -241,16 +238,15 @@ export default function CreateGarage({
                           }`}
                         >
                           {slugAvailability === 'available' &&
-                            'Slug is available'}
+                            t('garage.slugAvailable')}
                           {slugAvailability === 'unavailable' &&
-                            'Slug is not available'}
+                            t('garage.slugUnavailable')}
                           {slugAvailability === 'checking' &&
-                            'Checking availability...'}
+                            t('garage.slugChecking')}
                         </p>
                       )}
                       <FormDescription>
-                        This is the slug of your garage that will be used in the
-                        URL.
+                        {t('garage.slugDescription')}
                       </FormDescription>
 
                       <FormMessage />
@@ -262,7 +258,7 @@ export default function CreateGarage({
                   name="description"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Description</FormLabel>
+                      <FormLabel>{t('garage.description')}</FormLabel>
                       <FormControl>
                         <Textarea {...field} />
                       </FormControl>
@@ -288,7 +284,7 @@ export default function CreateGarage({
                   name="cover"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Cover</FormLabel>
+                      <FormLabel>{t('garage.cover')}</FormLabel>
                       <FormControl>
                         <Uploader
                           accept={{
@@ -310,7 +306,7 @@ export default function CreateGarage({
                   name="logo"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Logo</FormLabel>
+                      <FormLabel>{t('garage.logo')}</FormLabel>
                       <FormControl>
                         <Uploader
                           accept={{
@@ -345,7 +341,7 @@ export default function CreateGarage({
                     name="countryId"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Country</FormLabel>
+                        <FormLabel>{t('garage.country')}</FormLabel>
                         <FormControl>
                           <Select
                             required
@@ -355,7 +351,9 @@ export default function CreateGarage({
                             }
                           >
                             <SelectTrigger>
-                              <SelectValue placeholder="Select a country" />
+                              <SelectValue
+                                placeholder={t('garage.selectCountry')}
+                              />
                             </SelectTrigger>
                             <SelectContent>
                               <SelectGroup>
@@ -380,7 +378,7 @@ export default function CreateGarage({
                     name="cityId"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>City</FormLabel>
+                        <FormLabel>{t('garage.city')}</FormLabel>
                         <FormControl>
                           <div className="relative">
                             <Select
@@ -390,7 +388,9 @@ export default function CreateGarage({
                               }
                             >
                               <SelectTrigger>
-                                <SelectValue placeholder="Select a city" />
+                                <SelectValue
+                                  placeholder={t('garage.selectCity')}
+                                />
                               </SelectTrigger>
                               <SelectContent>
                                 <SelectGroup>
@@ -423,7 +423,7 @@ export default function CreateGarage({
                   name="address"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Address</FormLabel>
+                      <FormLabel>{t('garage.address')}</FormLabel>
                       <FormControl>
                         <Textarea {...field} />
                       </FormControl>
@@ -436,7 +436,7 @@ export default function CreateGarage({
                   name="zipCode"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Zip Code</FormLabel>
+                      <FormLabel>{t('garage.zipCode')}</FormLabel>
                       <FormControl>
                         <Input {...field} />
                       </FormControl>
@@ -449,7 +449,7 @@ export default function CreateGarage({
                   name="phoneNumber"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Phone Number</FormLabel>
+                      <FormLabel>{t('garage.phoneNumber')}</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
@@ -472,12 +472,12 @@ export default function CreateGarage({
 
           <div className="flex justify-between py-6 gap-2">
             <Button type="button" variant="light" onClick={() => onSuccess?.()}>
-              Cancel
+              {tCommon('common.cancel')}
             </Button>
             <div className="grow"></div>
             {step > 1 && (
               <Button type="button" variant="ghost" onClick={prevStep}>
-                Previous
+                {tCommon('common.previous')}
               </Button>
             )}
             {step < 3 ? (
@@ -488,7 +488,7 @@ export default function CreateGarage({
                   color="primary"
                   onClick={nextStep}
                 >
-                  Next
+                  {tCommon('common.next')}
                 </Button>
               </>
             ) : (
@@ -497,7 +497,7 @@ export default function CreateGarage({
                 color="primary"
                 isLoading={createShopMutation.isPending}
               >
-                Create Garage
+                {t('garage.create')}
               </Button>
             )}
           </div>

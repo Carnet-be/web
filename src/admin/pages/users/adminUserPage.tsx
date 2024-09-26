@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { UsersTable } from './section';
 
 const AdminUserPage = () => {
-  const { data, isPending, isError, refetch } = useQuery({
+  const { isPending, isError, refetch } = useQuery({
     queryKey: ['data'],
     queryFn: () => dataService.getAllData(),
   });

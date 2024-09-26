@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils';
+import { useTranslation } from 'react-i18next';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Badge } from './badge';
 
@@ -9,6 +10,7 @@ const Logo = ({
   className?: string;
   type?: 'admin' | 'garage' | 'user';
 }) => {
+  const { t } = useTranslation();
   const path = useLocation().pathname;
   return (
     <NavLink
@@ -21,7 +23,7 @@ const Logo = ({
           variant="outline"
           className="text-[9px] uppercase p-1 rounded-[3px] -skew-x-6"
         >
-          {type}
+          {t(`common.${type}`)}
         </Badge>
       ) : null}
     </NavLink>

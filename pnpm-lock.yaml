@@ -143,6 +143,9 @@ dependencies:
   react-dropzone:
     specifier: ^14.2.3
     version: 14.2.3(react@18.3.1)
+  react-helmet:
+    specifier: ^6.1.0
+    version: 6.1.0(react@18.3.1)
   react-hook-form:
     specifier: ^7.52.2
     version: 7.52.2(react@18.3.1)
@@ -202,6 +205,9 @@ devDependencies:
   '@types/react-dom':
     specifier: ^18.3.0
     version: 18.3.0
+  '@types/react-helmet':
+    specifier: ^6.1.11
+    version: 6.1.11
   '@types/react-image-gallery':
     specifier: ^1.2.4
     version: 1.2.4
@@ -5890,6 +5896,12 @@ packages:
     dependencies:
       '@types/react': 18.3.3
 
+  /@types/react-helmet@6.1.11:
+    resolution: {integrity: sha512-0QcdGLddTERotCXo3VFlUSWO3ztraw8nZ6e3zJSgG7apwV5xt+pJUS8ewPBqT4NYB1optGLprNQzFleIY84u/g==}
+    dependencies:
+      '@types/react': 18.3.3
+    dev: true
+
   /@types/react-image-gallery@1.2.4:
     resolution: {integrity: sha512-H0xpmT5rlSH0qiTvcUDCPDLRBi3J3Xa4COqaDqGb7ffLFpQoPAxpZdNuKCuThhFI0xJmNnMubZiD6B3kCBHtcw==}
     dependencies:
@@ -8045,6 +8057,22 @@ packages:
       - utf-8-validate
     dev: true
 
+  /react-fast-compare@3.2.2:
+    resolution: {integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==}
+    dev: false
+
+  /react-helmet@6.1.0(react@18.3.1):
+    resolution: {integrity: sha512-4uMzEY9nlDlgxr61NL3XbKRy1hEkXmKNXhjbAIOVw5vcFrsdYbH2FEwcNyWvWinl103nXgzYNlns9ca+8kFiWw==}
+    peerDependencies:
+      react: '>=16.3.0'
+    dependencies:
+      object-assign: 4.1.1
+      prop-types: 15.8.1
+      react: 18.3.1
+      react-fast-compare: 3.2.2
+      react-side-effect: 2.1.2(react@18.3.1)
+    dev: false
+
   /react-hook-form@7.52.2(react@18.3.1):
     resolution: {integrity: sha512-pqfPEbERnxxiNMPd0bzmt1tuaPcVccywFDpyk2uV5xCIBphHV5T8SVnX9/o3kplPE1zzKt77+YIoq+EMwJp56A==}
     engines: {node: '>=18.0.0'}
@@ -8189,6 +8217,14 @@ packages:
       react: '>=16.8'
     dependencies:
       '@remix-run/router': 1.19.1
+      react: 18.3.1
+    dev: false
+
+  /react-side-effect@2.1.2(react@18.3.1):
+    resolution: {integrity: sha512-PVjOcvVOyIILrYoyGEpDN3vmYNLdy1CajSFNt4TDsVQC5KpTijDvWVoR+/7Rz2xT978D8/ZtFceXxzsPwZEDvw==}
+    peerDependencies:
+      react: ^16.3.0 || ^17.0.0 || ^18.0.0
+    dependencies:
       react: 18.3.1
     dev: false
 

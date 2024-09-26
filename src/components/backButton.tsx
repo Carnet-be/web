@@ -1,13 +1,16 @@
 import { Button } from '@nextui-org/react';
 import { ArrowLeft } from 'lucide-react';
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const BackButton: React.FC = () => {
+const BackButton = ({ link }: { link?: string }) => {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
-    navigate(-1);
+    if (link) {
+      navigate(link);
+    } else {
+      navigate(-1);
+    }
   };
 
   return (

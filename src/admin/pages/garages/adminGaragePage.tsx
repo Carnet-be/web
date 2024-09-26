@@ -1,18 +1,9 @@
-import AlertError from '@/components/section/alertError';
-import LoadingSection from '@/components/section/loadingSection';
 import { Input } from '@/components/ui/input';
-import dataService from '@/services/data.service';
 import { Tab, Tabs } from '@nextui-org/react';
-import { useQuery } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 import { GaragesTable } from './sections';
 const AdminGaragePage = () => {
-  const { data, isPending, isError, refetch } = useQuery({
-    queryKey: ['data'],
-    queryFn: () => dataService.getAllData(),
-  });
-  if (isPending) return <LoadingSection />;
-  if (isError) return <AlertError refetch={refetch} />;
+
   return (
     <div className="space-y-8">
       <div>

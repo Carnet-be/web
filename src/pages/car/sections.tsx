@@ -1,5 +1,5 @@
 import { cn, getImageUrl } from '@/lib/utils';
-import { Avatar, Button } from '@nextui-org/react';
+import { Avatar, Button, Card } from '@nextui-org/react';
 import { Mail, PhoneCall, View } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -26,10 +26,8 @@ export const RightSide = ({
   mine?: boolean;
   view?: 'admin' | 'owner' | 'user' | 'garage';
 }) => {
-  let img: string | undefined = undefined;
-  let name: string | undefined = undefined;
-
-  const { t: c } = useTranslation();
+  const { t } = useTranslation();
+  const c = (key: string) => t(`common.${key}`);
 
   return (
     <div className=" sticky right-0 top-0 w-full space-y-8 lg:w-[40%]">
@@ -37,8 +35,8 @@ export const RightSide = ({
         <GarageItemContact garage={car.garage} />
       )}
 
-      {car.user && <UserItemContact user={car.user} />}
-      <div className="w-full space-y-4 rounded-xl bg-white p-3">
+      {view !== 'garage' && car.user && <UserItemContact user={car.user} />}
+      <Card className="w-full space-y-4 rounded-xl bg-white  p-3">
         <div className="flex flex-row items-center justify-between gap-2 px-5">
           <div className="flex flex-col items-center font-semibold text-primary">
             <h6 className="text-lg">{car.name}</h6>
@@ -111,7 +109,7 @@ export const RightSide = ({
             value={car.cc?.toString() ?? '-'}
           />
         </div>
-      </div>
+      </Card>
       {/* {car.type==="direct" ? (
           <Buy car={car} />
         ) : user?.type === "BID" ? (
@@ -183,7 +181,8 @@ const MiniCard = (props: {
 
 export function GarageItemContact({ garage }: { garage: Garage }) {
   const [show, setShow] = useState(false);
-  const { t } = useTranslation('common');
+  const { t: c } = useTranslation();
+  const t = (key: string) => c(`common.${key}`);
   if (!garage) return null;
 
   return (
@@ -243,7 +242,8 @@ export function GarageItemContact({ garage }: { garage: Garage }) {
 
 export function UserItemContact({ user }: { user: User }) {
   const [show, setShow] = useState(false);
-  const { t } = useTranslation('common');
+  const { t: c } = useTranslation();
+  const t = (key: string) => c(`common.${key}`);
   if (!user) return <div></div>;
 
   return (

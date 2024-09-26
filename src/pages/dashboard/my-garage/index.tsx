@@ -27,10 +27,13 @@ import {
 } from '@nextui-org/react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import * as z from 'zod';
 
 const GarageProfilePage = () => {
+  const { t } = useTranslation();
+
   const { data: user } = useQuery({
     queryKey: ['me'],
     queryFn: () => userService.me(),
@@ -49,7 +52,7 @@ const GarageProfilePage = () => {
             nav('/' + user.garage?.slug);
           }}
         >
-          Visit the garage
+          {t('garage.visit')}
         </Button>
       </div>
       <UpdateGarageForm garage={user.garage} />
@@ -83,6 +86,8 @@ function UpdateGarageForm({
   garage: Garage;
   onSuccess?: () => void;
 }) {
+  const { t: c } = useTranslation();
+  const t = (key: string) => c('garage.form.' + key);
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -109,13 +114,13 @@ function UpdateGarageForm({
   const updateGarageMutation = useMutation({
     mutationFn: garageService.updateGarage,
     onSuccess: () => {
-      toast({ title: 'Garage updated successfully' });
+      toast({ title: t('garage.update_success') });
       onSuccess?.();
     },
     onError: () => {
       toast({
-        title: 'Error updating garage',
-        description: 'Something went wrong',
+        title: t('garage.update_error'),
+        description: t('garage.update_error_description'),
         variant: 'destructive',
       });
     },
@@ -133,10 +138,10 @@ function UpdateGarageForm({
   return (
     <div className="w-full max-w-xl p-4 space-y-3 bg-card/80 backdrop-blur-sm rounded-lg">
       <div className="py-5">
-        <h1 className="text-2xl font-bold text-center">Update Your Garage</h1>
-        <p className="text-sm text-center">
-          Update the information for your garage.
-        </p>
+        <h1 className="text-2xl font-bold text-center">
+          {t('garage.update_title')}
+        </h1>
+        <p className="text-sm text-center">{t('garage.update_description')}</p>
       </div>
 
       <Form {...form}>
@@ -146,15 +151,15 @@ function UpdateGarageForm({
             name="state"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-2">
-                <FormLabel>Garage State</FormLabel>
+                <FormLabel>{t('garage.state')}</FormLabel>
                 <FormControl>
                   <Tabs
                     aria-label="Tabs sizes"
                     selectedKey={field.value}
                     onSelectionChange={field.onChange}
                   >
-                    <Tab key="active" title="Active" />
-                    <Tab key="draft" title="Draft" />
+                    <Tab key="active" title={t('garage.state_active')} />
+                    <Tab key="draft" title={t('garage.state_draft')} />
                   </Tabs>
                 </FormControl>
                 <FormMessage />
@@ -166,7 +171,7 @@ function UpdateGarageForm({
             name="cover"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Cover</FormLabel>
+                <FormLabel>{t('garage.cover')}</FormLabel>
                 <FormControl>
                   <Uploader
                     accept={{ 'image/*': [] }}
@@ -187,7 +192,7 @@ function UpdateGarageForm({
             name="logo"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Logo</FormLabel>
+                <FormLabel>{t('garage.logo')}</FormLabel>
                 <FormControl>
                   <Uploader
                     accept={{ 'image/*': [] }}
@@ -209,12 +214,7 @@ function UpdateGarageForm({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input
-                    label="Name"
-                    // labelPlacement="outside"
-                    {...field}
-                    isRequired
-                  />
+                  <Input label={t('garage.name')} {...field} isRequired />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -222,8 +222,7 @@ function UpdateGarageForm({
           />
 
           <Input
-            label="Slug"
-            //labelPlacement="outside"
+            label={t('garage.slug')}
             value={garage.slug}
             isReadOnly
             isRequired
@@ -238,8 +237,7 @@ function UpdateGarageForm({
                 <FormControl>
                   <Input
                     {...field}
-                    label="Phone Number"
-                    //  labelPlacement="outside"
+                    label={t('garage.phone_number')}
                     onChange={(e) => {
                       let value = e.target.value.replace(/[^0-9+]/g, '');
                       if (value && !value.startsWith('+')) {
@@ -260,11 +258,7 @@ function UpdateGarageForm({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Textarea
-                    //  labelPlacement="outside"
-                    label="Description"
-                    {...field}
-                  />
+                  <Textarea label={t('garage.description')} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -279,14 +273,13 @@ function UpdateGarageForm({
                 <FormItem>
                   <FormControl>
                     <Select
-                      //   labelPlacement="outside"
-                      label="Select a country"
+                      label={t('garage.select_country')}
                       isRequired
                       selectedKeys={[field.value?.toString()]}
                       onChange={(e) => field.onChange(parseInt(e.target.value))}
                     >
                       <SelectItem key={1} value="1">
-                        Morocco
+                        {t('garage.country_belgium')}
                       </SelectItem>
                     </Select>
                   </FormControl>
@@ -304,8 +297,7 @@ function UpdateGarageForm({
                     <div className="relative">
                       <Select
                         isRequired
-                        //   labelPlacement="outside"
-                        label="Select a city"
+                        label={t('garage.select_city')}
                         selectedKeys={[field.value?.toString()]}
                         onChange={(e) =>
                           field.onChange(parseInt(e.target.value))
@@ -337,11 +329,7 @@ function UpdateGarageForm({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Textarea
-                    //  labelPlacement="outside"
-                    {...field}
-                    label="Address"
-                  />
+                  <Textarea {...field} label={t('garage.address')} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -354,11 +342,7 @@ function UpdateGarageForm({
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input
-                    //  labelPlacement="outside"
-                    {...field}
-                    label="Zip Code"
-                  />
+                  <Input {...field} label={t('garage.zip_code')} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -371,7 +355,7 @@ function UpdateGarageForm({
               color="primary"
               isLoading={updateGarageMutation.isPending}
             >
-              Update Garage
+              {t('garage.update_button')}
             </Button>
           </div>
         </form>

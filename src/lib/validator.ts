@@ -1,37 +1,36 @@
+import i18next from 'i18next';
 import { z } from 'zod';
 
 const stringRequired = z.string({
-  message: 'Field required',
+  message: i18next.t('validation:fieldRequired'),
 });
 
 const stringMinMax = stringRequired
-  .min(3, 'Too short, minimum 3 characters')
-  .max(255, 'Too long');
+  .min(3, i18next.t('validation:tooShort', { min: 3 }))
+  .max(255, i18next.t('validation:tooLong'));
 
 const phoneNumber = stringRequired.refine(
   (value) => {
     if (!value) return true;
-
     return /^\+?[0-9]+$/.test(value);
   },
-  { message: 'Invalid phone number format' },
+  { message: i18next.t('validation:invalidPhoneNumber') },
 );
 
-const email = stringRequired.email('Invalid email address');
+const email = stringRequired.email(i18next.t('validation:invalidEmail'));
 
 const password = stringRequired
-  .min(6, 'Too short, minimum 6 characters')
-  .max(255, 'Too long')
+  .min(6, i18next.t('validation:tooShort', { min: 6 }))
+  .max(255, i18next.t('validation:tooLong'))
   .refine(
     (data) => {
-      //no space
       return !data.includes(' ');
     },
-    { message: 'Password must not contain spaces' },
+    { message: i18next.t('validation:passwordNoSpaces') },
   );
 
 const numberRequired = z.coerce.number({
-  message: 'Field required',
+  message: i18next.t('validation:fieldRequired'),
 });
 
 export default {

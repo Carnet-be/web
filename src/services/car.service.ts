@@ -41,10 +41,12 @@ export default {
       })
       .then((res) => res.data);
   },
-  mine: async () =>
-    api.get<ResponseData<Car>>('/car/mine').then((res) => res.data),
+  mine: async () => api.get<Car[]>('/car/mine').then((res) => res.data),
 
   search: async (params: {
+    garageSlug?: string;
+    garageId?: string | number;
+    garageUid?: string;
     brandId?: string | number;
     bodyId?: string | number;
     modelId?: string | number;

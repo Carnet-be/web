@@ -27,7 +27,7 @@ import {
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { MoreHorizontal, Search, XIcon } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useDebounce } from 'usehooks-ts';
 
 export const CarTypeSwitch = ({}: {}) => {
@@ -198,8 +198,7 @@ export const AdminSearchSection = ({
 }) => {
   const brands = data.brands;
   const models = data.models;
-  const pathname = useLocation().pathname;
-  const router = useNavigate();
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const setSearch = (key: string, value: string | null | undefined) => {
@@ -316,7 +315,7 @@ export const AdminSearchSection = ({
 
 export const CarsTable = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const pathname = useLocation().pathname;
+
   const {
     data: rows,
     isError,

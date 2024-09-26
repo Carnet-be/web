@@ -2,9 +2,11 @@ import animationData from '@/assets/location.json';
 import Animation from '@/components/section/Animation';
 import { cn } from '@/lib/utils';
 import { Button } from '@nextui-org/react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 export const BannierAddAuction = () => {
   const nav = useNavigate();
+  const { t } = useTranslation();
   return (
     <div
       className={cn(
@@ -13,7 +15,7 @@ export const BannierAddAuction = () => {
     >
       <div className="flex w-full max-w-[400px] flex-grow flex-col gap-4 space-y-3 md:space-y-6 justify-center items-center md:items-start">
         <p className="text-sm md:text-xl font-bold text-white">
-          Add your car to the auction, get the best price and sell it quickly
+          {t('dashboard2.my cars.banner.title')}
         </p>
         <Button
           onClick={() => {
@@ -28,7 +30,7 @@ export const BannierAddAuction = () => {
           }}
           className="w-full max-w-[200px] cursor-pointer rounded-xl bg-white px-4 py-2 text-center text-primary no-underline"
         >
-          Add Car
+          {t('dashboard2.my cars.banner.button')}
         </Button>
       </div>
       <div className="hidden md:block w-full max-w-[330px]">

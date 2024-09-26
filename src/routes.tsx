@@ -19,7 +19,10 @@ import MyCarsPage from './pages/dashboard/my-cars';
 import CarForm, { CarFormAdd } from './pages/dashboard/my-cars/carForm';
 import GarageProfilePage from './pages/dashboard/my-garage';
 import ProfilePage from './pages/dashboard/settings/profilePage';
+import GaragePage from './pages/garage';
+import ListCars from './pages/garage/listCars';
 import GaragesPage from './pages/garages';
+import Page from './pages/home';
 import Overview from './sections/dashboard/overview';
 
 const RoutesWrapper = () => {
@@ -47,7 +50,7 @@ const RoutesWrapper = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/dashboard" />} />
+      <Route path="/" element={<Page />} />
 
       <Route
         path="/auth"
@@ -156,15 +159,10 @@ const RoutesWrapper = () => {
         <Route path="reset-password" element={<ResetPassword />} />
       </Route>
 
-      <Route
-        path="*"
-        element={
-          <div className="flex flex-col items-center justify-center h-screen">
-            <h1>404</h1>
-            <p>Page not found</p>
-          </div>
-        }
-      />
+      <Route path="/:slug" element={<GaragePage />}>
+        <Route index element={<ListCars />} />
+        <Route path="car/:id" element={<CarDetailPage view="garage" />} />
+      </Route>
     </Routes>
   );
 };

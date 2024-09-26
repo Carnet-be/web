@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
 import forgotPasswordAnimation from '@/assets/ForgotPasswordAnimation.json';
@@ -12,6 +13,8 @@ import { Button, Input } from '@nextui-org/react';
 import Lottie from 'lottie-react';
 
 export default function ForgetPassword() {
+  const { t } = useTranslation();
+
   return (
     <AuthLayout pageType="forget-password">
       <div className="flex justify-center mb-6">
@@ -24,10 +27,10 @@ export default function ForgetPassword() {
         <div className="mx-auto flex w-full flex-col justify-center space-y-6  text-center">
           <div className="flex flex-col space-y-2">
             <h1 className="text-2xl my-0 font-semibold tracking-tight">
-              Reset your password
+              {t('forgetPassword.title')}
             </h1>
             <p className="text-sm text-muted-foreground my-0">
-              Enter your email to receive a password reset link
+              {t('forgetPassword.subtitle')}
             </p>
           </div>
           <ForgetPasswordForm />
@@ -38,6 +41,8 @@ export default function ForgetPassword() {
 }
 
 const ForgetPasswordForm = () => {
+  const { t } = useTranslation();
+
   const schema = z.object({
     email: z.string().email('Invalid email address'),
   });
@@ -50,22 +55,22 @@ const ForgetPasswordForm = () => {
     onSuccess: () => {
       setIsSubmitted(true);
       // toast({
-      //   title: 'Success',
-      //   description: 'Password reset link has been sent to your email',
+      //   title: t('forgetPassword.toast.success.title'),
+      //   description: t('forgetPassword.toast.success.description'),
       // });
     },
     onError: (error: any) => {
       if (error.response?.data?.message === 'Email_NOT_FOUND') {
         toast({
-          title: 'Error',
-          description: 'Email not found, Try again with an existing email.',
+          title: t('forgetPassword.toast.emailNotFound.title'),
+          description: t('forgetPassword.toast.emailNotFound.description'),
           variant: 'destructive',
         });
         return;
       }
       toast({
-        title: 'Error',
-        description: 'An error occurred. Please try again.',
+        title: t('forgetPassword.toast.error.title'),
+        description: t('forgetPassword.toast.error.description'),
         variant: 'destructive',
       });
     },
@@ -86,9 +91,7 @@ const ForgetPasswordForm = () => {
   if (isSubmitted) {
     return (
       <div className="flex items-center justify-center p-4 bg-green-100 rounded-lg text-green-700">
-        <p className="text-sm">
-          Password reset link has been sent to your email!
-        </p>
+        <p className="text-sm">{t('forgetPassword.successMessage')}</p>
       </div>
     );
   }
@@ -100,8 +103,8 @@ const ForgetPasswordForm = () => {
     >
       <div>
         <Input
-          label="Email"
-          placeholder="Type your email"
+          label={t('forgetPassword.emailLabel')}
+          placeholder={t('forgetPassword.emailPlaceholder')}
           {...form.register('email')}
           errorMessage={form.formState.errors.email?.message}
         />
@@ -114,7 +117,7 @@ const ForgetPasswordForm = () => {
           type="submit"
           className="w-[250px]"
         >
-          Send Reset Link
+          {t('forgetPassword.submitButton')}
         </Button>
       </div>
     </form>

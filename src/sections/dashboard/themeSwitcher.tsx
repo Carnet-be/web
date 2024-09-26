@@ -1,18 +1,20 @@
-import { Code, Moon, Sun } from 'lucide-react';
-
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+// Add this import
 import { useTheme } from '@/themeProvider';
 import { Button } from '@nextui-org/react';
+import { Code, Moon, Sun } from 'lucide-react';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export function ModeToggle() {
   const { setTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useTranslation(); // Add this line
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
@@ -31,7 +33,7 @@ export function ModeToggle() {
           className="gap-3"
         >
           <Sun className="size-4" />
-          Light
+          {t('common.light')} {/* Change this line */}
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => {
@@ -41,7 +43,7 @@ export function ModeToggle() {
           className="gap-3"
         >
           <Moon className="size-4" />
-          Dark
+          {t('common.dark')} {/* Change this line */}
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => {
@@ -51,7 +53,7 @@ export function ModeToggle() {
           className="gap-3"
         >
           <Code className="size-4" />
-          System
+          {t('common.system')} {/* Change this line */}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

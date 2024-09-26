@@ -1,5 +1,6 @@
 import ErrorSection from '@/components/section/errorSection';
 import LoadingSection from '@/components/section/loadingSection';
+import { useTranslation } from 'react-i18next';
 
 import {
   DropdownMenu,
@@ -51,14 +52,10 @@ import GarageForm from './GarageForm';
 import { LanguageToggle } from './languageSwitcher';
 import { ModeToggle } from './themeSwitcher';
 
-export const description =
-  'A products dashboard with a sidebar navigation and a main content area. The dashboard has a header with a search input and a user menu. The sidebar has a logo, navigation links, and a card with a call to action. The main content area shows an empty state with a call to action.';
-
-export const iframeHeight = '800px';
-
 export const containerClassName = 'w-full h-full';
 
 export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
+  const { t } = useTranslation();
   const pathname = useLocation().pathname;
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
@@ -72,20 +69,20 @@ export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
   };
   const menuAdmin: Menu[] = [
     {
-      groupLabel: 'Management',
+      groupLabel: t('dashboard.menu.management'),
       items: [
         {
-          label: 'Cars',
+          label: t('dashboard.menu.cars'),
           icon: <List className="h-4 w-4" />,
           route: '/dashboard/admin/cars',
         },
         {
-          label: 'Users',
+          label: t('dashboard.menu.users'),
           icon: <Car className="h-4 w-4" />,
           route: '/dashboard/admin/users',
         },
         {
-          label: 'Garages',
+          label: t('dashboard.menu.garages'),
           icon: <Building className="h-4 w-4" />,
           route: '/dashboard/admin/garages',
         },
@@ -94,20 +91,20 @@ export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
   ];
   const menu: Menu[] = [
     {
-      groupLabel: 'General',
+      groupLabel: t('dashboard.menu.general'),
       items: [
         {
-          label: 'Marketplace',
+          label: t('dashboard.menu.marketplace'),
           icon: <Car className="h-4 w-4" />,
           route: '/dashboard/marketplace',
         },
         {
-          label: 'Garages',
+          label: t('dashboard.menu.garages'),
           icon: <Building className="h-4 w-4" />,
           route: '/dashboard/garages',
         },
         {
-          label: 'My cars',
+          label: t('dashboard.menu.myCars'),
           icon: <List className="h-4 w-4" />,
           route: '/dashboard/my-cars',
         },
@@ -115,10 +112,10 @@ export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
     },
 
     {
-      groupLabel: 'Settings',
+      groupLabel: t('dashboard.menu.settings'),
       items: [
         {
-          label: 'Profile',
+          label: t('dashboard.menu.profile'),
           icon: <PersonIcon className="h-4 w-4" />,
           route: '/dashboard/settings/profile',
         },
@@ -127,25 +124,25 @@ export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
   ];
   const menuGarage: Menu[] = [
     {
-      groupLabel: 'General',
+      groupLabel: t('dashboard.menu.general'),
       items: [
         {
-          label: 'Marketplace',
+          label: t('dashboard.menu.marketplace'),
           icon: <Car className="h-4 w-4" />,
           route: '/dashboard/marketplace',
         },
         {
-          label: 'Garages',
+          label: t('dashboard.menu.garages'),
           icon: <Building2 className="h-4 w-4" />,
           route: '/dashboard/garages',
         },
         {
-          label: 'My Cars',
+          label: t('dashboard.menu.myCars'),
           icon: <List className="h-4 w-4" />,
           route: '/dashboard/my-cars',
         },
         {
-          label: 'My Garage',
+          label: t('dashboard.menu.myGarage'),
           icon: <Building className="h-4 w-4" />,
           route: '/dashboard/my-garage',
         },
@@ -153,10 +150,10 @@ export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
     },
 
     {
-      groupLabel: 'Settings',
+      groupLabel: t('dashboard.menu.settings'),
       items: [
         {
-          label: 'Profile',
+          label: t('dashboard.menu.profile'),
           icon: <PersonIcon className="h-4 w-4" />,
           route: '/dashboard/settings/profile',
         },
@@ -185,8 +182,8 @@ export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
     mutationFn: authService.seller.logout,
     onMutate() {
       toast({
-        title: 'Logging out',
-        description: 'You are about to log out',
+        title: t('dashboard.toast.success.title'),
+        description: t('dashboard.toast.success.description'),
       });
     },
     onSuccess() {
@@ -196,8 +193,8 @@ export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
     onError() {
       dismiss();
       toast({
-        // title: 'Error',
-        description: 'Something went wrong, please try again',
+        title: t('dashboard.toast.error.title'),
+        description: t('dashboard.toast.error.description'),
       });
     },
   });
@@ -348,7 +345,7 @@ export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
                   <Search className="absolute left-2.5 top-3 h-4 w-4 text-muted-foreground" />
                   <Input
                     type="search"
-                    placeholder="Search ..."
+                    placeholder={t('dashboard.searchPlaceholder')}
                     className="w-full appearance-none bg-background pl-8 shadow-none md:w-2/3 lg:w-1/3"
                   />
                 </div>
@@ -362,7 +359,7 @@ export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
                 }}
                 color="primary"
               >
-                Create a garage
+                {t('dashboard.createGarage')}
               </Button>
             )}
             <DropdownMenu open={isUserOpen} onOpenChange={setIsUserOpen}>
@@ -410,7 +407,7 @@ export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
                         }}
                       >
                         <PersonIcon className="mr-2 h-4 w-4" />
-                        Profile
+                        {t('dashboard.menu.profile')}
                       </Button>
                     )}
                     <Button
@@ -419,7 +416,7 @@ export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
                       onClick={() => mutate()}
                     >
                       <LogOut className="mr-2 h-4 w-4" />
-                      Logout
+                      {t('dashboard.logout')}
                     </Button>
                   </CardFooter>
                 </Card>
@@ -465,12 +462,15 @@ export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
 }
 
 function SellYourCarCard() {
+  const { t } = useTranslation();
   const nav = useNavigate();
   return (
     <div className="">
       <Card>
         <CardHeader className="pt-0 p-4">
-          <CardDescription>A new way to sell your car</CardDescription>
+          <CardDescription>
+            {t('dashboard.sellYourCar.description')}
+          </CardDescription>
         </CardHeader>
         <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
           <Button
@@ -482,7 +482,7 @@ function SellYourCarCard() {
             }}
             className="w-full"
           >
-            Sell your car
+            {t('dashboard.sellYourCar.button')}
           </Button>
         </CardContent>
       </Card>

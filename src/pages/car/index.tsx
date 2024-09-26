@@ -7,7 +7,11 @@ import { Suspense } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import CarDetailsPage from './carDetails';
 
-const CarDetailPage = () => {
+const CarDetailPage = ({
+  view,
+}: {
+  view?: 'admin' | 'owner' | 'user' | 'garage';
+}) => {
   const { id } = useParams();
   const { data, isPending, isError, refetch } = useQuery({
     queryKey: ['car', id],
@@ -18,9 +22,11 @@ const CarDetailPage = () => {
   if (!data?.data?.[0]) return <Navigate to={'/dashboard'} />;
   return (
     <Suspense>
-      <BackButton />
+      <div>
+        <BackButton />
+      </div>
       <div className="flex flex-col gap-3 pb-3"></div>
-      <CarDetailsPage car={data?.data?.[0]} />
+      <CarDetailsPage car={data?.data?.[0]} view={view} />
     </Suspense>
   );
 };

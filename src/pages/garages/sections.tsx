@@ -6,7 +6,8 @@ import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export function GarageItem({ garage }: { garage: Garage }) {
-  const { t: c } = useTranslation('common');
+  const { t } = useTranslation();
+  const c = (key: string) => t(`common.${key}`);
   return (
     <div
       style={{

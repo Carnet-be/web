@@ -1,4 +1,5 @@
 import LoadingSection from '@/components/section/loadingSection';
+import useUser from '@/hooks/use-user';
 import { cn, getImageUrl, getPrice } from '@/lib/utils';
 import carService from '@/services/car.service';
 import {
@@ -12,13 +13,16 @@ import {
 import { useQueries } from '@tanstack/react-query';
 import { Edit } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 export const CarsSection = () => {
+  const user = useUser();
   const [{ data }] = useQueries({
     queries: [
       {
-        queryKey: ['cars', 'mine'],
+        queryKey: ['cars', 'mine', user?.id, user?.garage?.id],
         queryFn: carService.mine,
+        enabled: !!user,
       },
     ],
   });
@@ -33,7 +37,7 @@ export const CarsSection = () => {
   //   return <ErrorSection refetch={refetch} />;
   // }
 
-  if (!data || data.data.length === 0) {
+  if (!data || data.length === 0) {
     return (
       <div className="flex h-[50vh] flex-col items-center justify-center">
         <span className="text-2xl font-semibold">{t('no cars')}</span>
@@ -43,7 +47,7 @@ export const CarsSection = () => {
 
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
-      {data?.data?.map((car) => (
+      {data?.map((car) => (
         <CarCard key={car.id} className="bg-white">
           {car}
         </CarCard>
@@ -61,7 +65,7 @@ const CarCard = ({
 }) => {
   const primaryImage = getImageUrl(car.images?.[0]);
   const { t } = useTranslation('common');
-
+  const navigate = useNavigate();
   return (
     <div
       style={{
@@ -98,9 +102,18 @@ const CarCard = ({
               {t('edit')}
             </Button>
           </Link>
-          <Link href={`/dashboard/cars/${car.uid}`}>
-            <Button size="sm">{t('details')}</Button>
-          </Link>
+
+          <Button
+            isDisabled={car.status !== 'published'}
+            size="sm"
+            onClick={() => {
+              if (car.status === 'published') {
+                navigate(`/dashboard/marketplace/${car.uid}`);
+              }
+            }}
+          >
+            {t('details')}
+          </Button>
         </div>
       </div>
       <div className="absolute right-2 top-2">
