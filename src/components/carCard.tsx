@@ -1,4 +1,5 @@
 import { cn, getImageUrl, getPrice } from '@/lib/utils';
+import useAuthStore from '@/state/auth';
 import { Button } from '@nextui-org/react';
 import { Suspense } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,12 +17,21 @@ const CarCard = ({
 }) => {
   const { t } = useTranslation();
   const c = (key: string) => t(`common.${key}`);
+  const { token } = useAuthStore();
 
   const navigate = useNavigate();
+  const onClick = () => {
+    if (token?.token) {
+      navigate(link ?? `/dashboard/marketplace/${car.uid}`);
+    } else {
+      localStorage.setItem('redirect', `/dashboard/marketplace/${car.uid}`);
+      navigate('/auth/login');
+    }
+  };
   return (
     <Suspense fallback={<LoadingSection className="aspect-[5/3]" />}>
       <div
-        onClick={() => navigate(link ?? `/dashboard/car/${car.id}`)}
+        onClick={onClick}
         style={{
           boxShadow: '0px 0px 65px -58px rgba(0,0,0,0.7)',
         }}
@@ -58,8 +68,9 @@ const CarCard = ({
               })}
             </span>
             <Button
-              onClick={() => navigate(link ?? `/dashboard/car/${car.id}`)}
+              // onClick={() => navigate(link ?? `/dashboard/car/${car.id}`)}
               size="sm"
+              onClick={onClick}
               color="primary"
               variant="flat"
             >

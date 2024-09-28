@@ -1,4 +1,5 @@
 import dataService from '@/services/data.service';
+import useAuthStore from '@/state/auth';
 import {
   Autocomplete,
   AutocompleteItem,
@@ -49,9 +50,10 @@ export const InteractCard = () => {
     queryKey: ['data'],
     queryFn: () => dataService.getAllData(),
   });
-  const [brandId, setBrandId] = useState<number | undefined>(undefined);
-  const [modelId, setModelId] = useState<number | undefined>(undefined);
-  const [year, setYear] = useState<number | undefined>(undefined);
+  const { token } = useAuthStore();
+  const [brandId, setBrandId] = useState<string | undefined>(undefined);
+  const [modelId, setModelId] = useState<string | undefined>(undefined);
+  const [year, setYear] = useState<string | undefined>(undefined);
   const [fuel, setFuel] = useState<string | undefined>(undefined);
   const router = useNavigate();
 
@@ -90,7 +92,7 @@ export const InteractCard = () => {
               isLoading={isLoading}
               selectedKey={brandId}
               onSelectionChange={(value) => {
-                setBrandId(value?.valueOf() as number);
+                setBrandId(value?.toString());
                 setModelId(undefined);
               }}
               // inputProps={{
@@ -125,19 +127,22 @@ export const InteractCard = () => {
               scrollShadowProps={{
                 isEnabled: false,
               }}
-              selectedKey={modelId}
+              selectedKey={modelId?.toString()}
               onSelectionChange={(value) => {
-                setModelId(value?.valueOf() as number);
+                setModelId(value?.toString());
                 if (!brandId) {
                   setBrandId(
-                    data?.models?.find((m) => m.id == value?.valueOf())
-                      ?.brandId,
+                    data?.models
+                      ?.find((m) => m.id?.toString() == value?.toString())
+                      ?.brandId?.toString(),
                   );
                 }
               }}
             >
               {data?.models
-                ?.filter((m) => (brandId ? m.brandId == brandId : true))
+                ?.filter((m) =>
+                  brandId ? m.brandId?.toString() == brandId : true,
+                )
                 ?.map((animal) => (
                   <AutocompleteItem key={animal.id} value={animal.id}>
                     {animal.name}
@@ -161,7 +166,7 @@ export const InteractCard = () => {
               selectedKey={year}
               value={year}
               onSelectionChange={(value) => {
-                setYear(value?.valueOf() as number);
+                setYear(value?.toString());
               }}
             >
               {years.map((animal) => (
@@ -186,7 +191,7 @@ export const InteractCard = () => {
               }}
               selectedKey={fuel}
               onSelectionChange={(value) => {
-                setFuel(value?.valueOf() as string);
+                setFuel(value?.toString());
               }}
             >
               {FUEL.map((animal) => (
@@ -210,10 +215,13 @@ export const InteractCard = () => {
                   if (year) query.append('year', year.toString());
                   if (fuel) query.append('fuel', fuel);
                   //set in localstorage
-
-                  router(
-                    ('/dashboard/marketplace?' + query.toString()) as never,
-                  );
+                  const redirect = `/dashboard/marketplace?${query.toString()}`;
+                  if (token?.token) {
+                    router(redirect);
+                  } else {
+                    localStorage.setItem('redirect', redirect);
+                    router('/auth/login');
+                  }
                 }}
                 color="primary"
                 startContent={<Search className="size-4" />}
@@ -237,10 +245,13 @@ export const InteractCard = () => {
                   if (modelId) query.append('model', modelId.toString());
                   if (year) query.append('year', year.toString());
                   if (fuel) query.append('fuel', fuel);
-
-                  router(
-                    ('/dashboard/my-cars/add?' + query.toString()) as never,
-                  );
+                  const redirect = `/dashboard/my-cars/add?${query.toString()}`;
+                  if (token?.token) {
+                    router(redirect);
+                  } else {
+                    localStorage.setItem('redirect', redirect);
+                    router('/auth/login');
+                  }
                 }}
                 color="primary"
                 startContent={<Plus />}

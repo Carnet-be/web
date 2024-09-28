@@ -4,17 +4,23 @@ import LoadingSection from '@/components/section/loadingSection';
 import { transformNullToUndefined } from '@/lib/utils';
 import carService from '@/services/car.service';
 import dataService from '@/services/data.service';
+import userService from '@/services/user.service';
 import { useQueries, useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import CreateCar from './carForm';
 
 const CarForm = () => {
   const { id } = useParams();
-  const [carQuery, dataQuery] = useQueries({
+
+  const [carQuery, userQuery, dataQuery] = useQueries({
     queries: [
       {
         queryKey: ['car', id],
         queryFn: () => carService.search({ uid: id }),
+      },
+      {
+        queryKey: ['me'],
+        queryFn: () => userService.me(),
       },
       {
         queryKey: ['data'],
@@ -33,7 +39,12 @@ const CarForm = () => {
       <BackButton />
       <CreateCar
         data={dataQuery.data}
-        car={transformNullToUndefined(carQuery.data?.data?.[0]) as Car}
+        car={
+          transformNullToUndefined({
+            ...carQuery.data?.data?.[0],
+            phoneNumber: userQuery.data?.phoneNumber,
+          }) as Car
+        }
       />
     </div>
   );

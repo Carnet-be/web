@@ -38,7 +38,21 @@ const RoutesWrapper = () => {
     if (token?.token) {
       return children;
     }
-    return <Navigate to={isAdmin ? '/admin/login' : '/auth/login'} />;
+    const loginPath = isAdmin ? '/admin/login' : '/auth/login';
+
+    return <Navigate to={`${loginPath}`} />;
+  };
+
+  const AuthProtected = ({ children }: { children: ReactNode }) => {
+    if (!token?.token) {
+      return children;
+    }
+    const redirect = localStorage.getItem('redirect');
+    if (redirect) {
+      localStorage.removeItem('redirect');
+      return <Navigate to={redirect} />;
+    }
+    return <Navigate to={`/dashboard/marketplace`} />;
   };
 
   const AdminProtected = ({ children }: { children: ReactNode }) => {
@@ -54,10 +68,24 @@ const RoutesWrapper = () => {
 
       <Route
         path="/auth"
-        element={token?.token ? <Navigate to={'/dashboard'} /> : <Outlet />}
+        element={
+          <AuthProtected>
+            <Outlet />
+          </AuthProtected>
+        }
       >
         <Route index element={<Navigate to="login" />} />
-        <Route path="login" element={<Login />} />
+        <Route
+          path="login"
+          element={
+            <Login
+            // onLoginSuccess={() => {
+            //   const redirectTo = searchParams.get('redirect') || '/dashboard';
+            //   navigate(redirectTo);
+            // }}
+            />
+          }
+        />
         <Route path="register" element={<Register />} />
         <Route path="forget-password" element={<ForgetPassword />} />
         <Route path="reset-password" element={<ResetPassword />} />

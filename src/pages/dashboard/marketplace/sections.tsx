@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { Autocomplete, SelectItem } from '@nextui-org/react';
+import { Autocomplete, Button, SelectItem } from '@nextui-org/react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -10,6 +10,7 @@ import AlertError from '@/components/section/alertError';
 import LoadingSection from '@/components/section/loadingSection';
 import carService from '@/services/car.service';
 import { useQuery } from '@tanstack/react-query';
+import { X } from 'lucide-react';
 
 export const SearchSection = ({
   data,
@@ -51,95 +52,96 @@ export const SearchSection = ({
   );
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 items-end gap-6">
-      <Autocomplete
-        label={t('body')}
-        placeholder={t('placeholderBody')}
-        variant="underlined"
-        onSelectionChange={(k) =>
-          updateSearchParams('body', k?.toString() ?? null)
-        }
-        selectedKey={searchParams.get('body')}
-        labelPlacement="outside"
-        className="w-full md:w-60"
-        classNames={{
-          selectorButton: ['placeholder:text-default-700/40'],
-        }}
-      >
-        {bodies.map((b) => (
-          <SelectItem key={b.id} value={b.name!}>
-            {b.name}
-          </SelectItem>
-        ))}
-      </Autocomplete>
-      <Autocomplete
-        label={t('brand')}
-        placeholder={t('placeholderBrand')}
-        variant="underlined"
-        className="w-full md:w-60"
-        selectedKey={searchParams.get('brand')}
-        onSelectionChange={(k) =>
-          updateSearchParams('brand', k?.toString() ?? null)
-        }
-        labelPlacement="outside"
-        classNames={{
-          selectorButton: ['placeholder:text-default-700/40'],
-        }}
-      >
-        {brands.map((b) => (
-          <SelectItem key={b.id} value={b.name}>
-            {b.name}
-          </SelectItem>
-        ))}
-      </Autocomplete>
-
-      <Autocomplete
-        label={t('model')}
-        placeholder={t('placeholderModel')}
-        variant="underlined"
-        selectedKey={searchParams.get('model')}
-        labelPlacement="outside"
-        className="w-full md:w-60"
-        isDisabled={!searchParams.get('brand')}
-        onSelectionChange={(k) =>
-          updateSearchParams('model', k?.toString() ?? null)
-        }
-        classNames={{
-          selectorButton: ['placeholder:text-default-700/40'],
-        }}
-      >
-        {models
-          .filter((m) => {
-            //if (!searchParams.get("brandId")) return true;
-            return m.brandId.toString() == searchParams.get('brand');
-          })
-          .map((b) => (
+    <div>
+      <div className="grid grid-cols-1 md:grid-cols-4 items-end gap-6">
+        <Autocomplete
+          label={t('body')}
+          placeholder={t('placeholderBody')}
+          variant="underlined"
+          onSelectionChange={(k) =>
+            updateSearchParams('body', k?.toString() ?? null)
+          }
+          selectedKey={searchParams.get('body')}
+          labelPlacement="outside"
+          className="w-full md:w-60"
+          classNames={{
+            selectorButton: ['placeholder:text-default-700/40'],
+          }}
+        >
+          {bodies.map((b) => (
+            <SelectItem key={b.id} value={b.name!}>
+              {b.name}
+            </SelectItem>
+          ))}
+        </Autocomplete>
+        <Autocomplete
+          label={t('brand')}
+          placeholder={t('placeholderBrand')}
+          variant="underlined"
+          className="w-full md:w-60"
+          selectedKey={searchParams.get('brand')}
+          onSelectionChange={(k) =>
+            updateSearchParams('brand', k?.toString() ?? null)
+          }
+          labelPlacement="outside"
+          classNames={{
+            selectorButton: ['placeholder:text-default-700/40'],
+          }}
+        >
+          {brands.map((b) => (
             <SelectItem key={b.id} value={b.name}>
               {b.name}
             </SelectItem>
           ))}
-      </Autocomplete>
-      <Autocomplete
-        label={t('year')}
-        placeholder={t('placeholderYear')}
-        variant="underlined"
-        onSelectionChange={(k) =>
-          updateSearchParams('year', k?.toString() ?? null)
-        }
-        selectedKey={searchParams.get('year')?.toString()}
-        labelPlacement="outside"
-        className="w-full md:w-60"
-        classNames={{
-          selectorButton: ['placeholder:text-default-700/40'],
-        }}
-      >
-        {years.map((b) => (
-          <SelectItem key={b?.toString()} value={b.toString()}>
-            {b}
-          </SelectItem>
-        ))}
-      </Autocomplete>
-      {/* {searchParams.get('body') ??
+        </Autocomplete>
+
+        <Autocomplete
+          label={t('model')}
+          placeholder={t('placeholderModel')}
+          variant="underlined"
+          selectedKey={searchParams.get('model')}
+          labelPlacement="outside"
+          className="w-full md:w-60"
+          isDisabled={!searchParams.get('brand')}
+          onSelectionChange={(k) =>
+            updateSearchParams('model', k?.toString() ?? null)
+          }
+          classNames={{
+            selectorButton: ['placeholder:text-default-700/40'],
+          }}
+        >
+          {models
+            .filter((m) => {
+              //if (!searchParams.get("brandId")) return true;
+              return m.brandId.toString() == searchParams.get('brand');
+            })
+            .map((b) => (
+              <SelectItem key={b.id} value={b.name}>
+                {b.name}
+              </SelectItem>
+            ))}
+        </Autocomplete>
+        <Autocomplete
+          label={t('year')}
+          placeholder={t('placeholderYear')}
+          variant="underlined"
+          onSelectionChange={(k) =>
+            updateSearchParams('year', k?.toString() ?? null)
+          }
+          selectedKey={searchParams.get('year')?.toString()}
+          labelPlacement="outside"
+          className="w-full md:w-60"
+          classNames={{
+            selectorButton: ['placeholder:text-default-700/40'],
+          }}
+        >
+          {years.map((b) => (
+            <SelectItem key={b?.toString()} value={b.toString()}>
+              {b}
+            </SelectItem>
+          ))}
+        </Autocomplete>
+        {/* {searchParams.get('body') ??
       searchParams.get('brand') ??
       searchParams.get('model') ? (
         <Button
@@ -152,6 +154,26 @@ export const SearchSection = ({
           {t('clear')}
         </Button>
       ) : null} */}
+      </div>
+      <div className="flex justify-end w-full h-[30px] pt-2">
+        {searchParams.get('body') ??
+        searchParams.get('brand') ??
+        searchParams.get('year') ??
+        searchParams.get('model') ? (
+          <Button
+            onClick={() => {
+              setSearchParams({});
+            }}
+            size="sm"
+            startContent={<X className="size-4" />}
+            color="danger"
+            variant="shadow"
+            className="text-[12px]"
+          >
+            {t('clear')}
+          </Button>
+        ) : null}
+      </div>
     </div>
   );
 };

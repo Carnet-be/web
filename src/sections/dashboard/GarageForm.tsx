@@ -19,6 +19,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import Uploader from '@/components/ui/uploader';
 import { useToast } from '@/components/ui/use-toast';
+import query from '@/lib/query';
 import validator from '@/lib/validator';
 import {
   default as garageService,
@@ -98,6 +99,7 @@ export default function CreateGarage({
     onSuccess: () => {
       toast({ title: t('garage.createSuccess') });
       onSuccess?.();
+      query.invalidateQueries({ queryKey: ['me'] });
     },
     onError: () => {
       toast({

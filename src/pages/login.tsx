@@ -11,7 +11,11 @@ import { useTranslation } from 'react-i18next'; // or 'next-i18next' for Next.js
 import { Link } from 'react-router-dom';
 import { z } from 'zod';
 
-export default function Login() {
+export default function Login({
+  onLoginSuccess,
+}: {
+  onLoginSuccess?: () => void;
+}) {
   const { t } = useTranslation();
 
   return (
@@ -25,7 +29,7 @@ export default function Login() {
               </h1>
               <p className="text-sm text-gray-500">{t('login.subtitle')}</p>
             </div>
-            <LoginForm />
+            <LoginForm onLoginSuccess={onLoginSuccess} />
             <p className="text-center text-sm text-gray-500">
               {t('login.noAccount')}{' '}
               <NextUILink
@@ -55,7 +59,7 @@ export default function Login() {
   );
 }
 
-const LoginForm = () => {
+const LoginForm = ({ onLoginSuccess }: { onLoginSuccess?: () => void }) => {
   const schema = z.object({
     email: validator.email,
     password: validator.password,
@@ -67,9 +71,10 @@ const LoginForm = () => {
     onSuccess: (data) => {
       setToken(data);
       toast({
-        title: 'Welcome',
-        description: 'You have successfully logged in',
+        title: t('login.successToasts.welcome.title'),
+        description: t('login.successToasts.welcome.description'),
       });
+      onLoginSuccess?.();
     },
     onError: (error: any) => {
       if (error.response?.data?.message === 'EMAIL_NOT_FOUND') {

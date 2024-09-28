@@ -2,3 +2,5 @@
 /dist
 
 .env
+# Local Netlify folder
+.netlify
