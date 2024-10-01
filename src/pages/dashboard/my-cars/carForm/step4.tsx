@@ -8,7 +8,7 @@ import { formCarSchema } from './carForm';
 const Step4 = ({
   form,
 }: {
-  form: UseFormReturn<z.infer<typeof formCarSchema>>;
+  form: UseFormReturn<z.infer<ReturnType<typeof formCarSchema>>>;
 }) => {
   const { t } = useTranslation();
   return (
@@ -17,17 +17,19 @@ const Step4 = ({
         control={form.control}
         render={({ field: { value, onChange } }) => (
           <div className="grid w-full grid-cols-[80px_3px_auto] md:grid-cols-[300px_3px_auto] items-center gap-3">
-            <span className="text-end font-semibold">Handling</span>
+            <span className="text-end font-semibold">
+              {t('carForm.step4.handling.label')}
+            </span>
             <Divider orientation="vertical" />
             <RatingStar
               value={value ?? undefined}
               onChange={onChange}
               tooltips={[
-                t('handling.1'),
-                t('handling.2'),
-                t('handling.3'),
-                t('handling.4'),
-                t('handling.5'),
+                t('carForm.step4.handling.options.1'),
+                t('carForm.step4.handling.options.2'),
+                t('carForm.step4.handling.options.3'),
+                t('carForm.step4.handling.options.4'),
+                t('carForm.step4.handling.options.5'),
               ]}
             />
           </div>
@@ -38,17 +40,19 @@ const Step4 = ({
         control={form.control}
         render={({ field: { value, onChange } }) => (
           <div className="grid w-full grid-cols-[80px_3px_auto] md:grid-cols-[300px_3px_auto] items-center gap-3">
-            <span className="text-end font-semibold">Exterion</span>
+            <span className="text-end font-semibold">
+              {t('carForm.step4.exterior.label')}
+            </span>
             <Divider orientation="vertical" />
             <RatingStar
               value={value ?? undefined}
               onChange={onChange}
               tooltips={[
-                t('exterior.1'),
-                t('exterior.2'),
-                t('exterior.3'),
-                t('exterior.4'),
-                t('exterior.5'),
+                t('carForm.step4.exterior.options.1'),
+                t('carForm.step4.exterior.options.2'),
+                t('carForm.step4.exterior.options.3'),
+                t('carForm.step4.exterior.options.4'),
+                t('carForm.step4.exterior.options.5'),
               ]}
             />
           </div>
@@ -59,17 +63,19 @@ const Step4 = ({
         control={form.control}
         render={({ field: { value, onChange } }) => (
           <div className="grid w-full grid-cols-[80px_3px_auto] md:grid-cols-[300px_3px_auto] items-center gap-3">
-            <span className="text-end font-semibold">Interior</span>
+            <span className="text-end font-semibold">
+              {t('carForm.step4.interior.label')}
+            </span>
             <Divider orientation="vertical" />
             <RatingStar
               value={value ?? undefined}
               onChange={onChange}
               tooltips={[
-                t('interior.1'),
-                t('interior.2'),
-                t('interior.3'),
-                t('interior.4'),
-                t('interior.5'),
+                t('carForm.step4.interior.options.1'),
+                t('carForm.step4.interior.options.2'),
+                t('carForm.step4.interior.options.3'),
+                t('carForm.step4.interior.options.4'),
+                t('carForm.step4.interior.options.5'),
               ]}
             />
           </div>
@@ -80,17 +86,19 @@ const Step4 = ({
         control={form.control}
         render={({ field: { value, onChange } }) => (
           <div className="grid w-full grid-cols-[80px_3px_auto] md:grid-cols-[300px_3px_auto] items-center gap-3">
-            <span className="text-end font-semibold">Tires</span>
+            <span className="text-end font-semibold">
+              {t('carForm.step4.tires.label')}
+            </span>
             <Divider orientation="vertical" />
             <RatingStar
               value={value ?? undefined}
               onChange={onChange}
               tooltips={[
-                t('tires.1'),
-                t('tires.2'),
-                t('tires.3'),
-                t('tires.4'),
-                t('tires.5'),
+                t('carForm.step4.tires.options.1'),
+                t('carForm.step4.tires.options.2'),
+                t('carForm.step4.tires.options.3'),
+                t('carForm.step4.tires.options.4'),
+                t('carForm.step4.tires.options.5'),
               ]}
             />
           </div>

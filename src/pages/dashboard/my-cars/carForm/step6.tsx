@@ -1,14 +1,17 @@
 import { Input, Switch, Textarea } from '@nextui-org/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Controller, UseFormReturn } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { formCarSchema } from './carForm';
 
 const Step6 = ({
   form,
 }: {
-  form: UseFormReturn<z.infer<typeof formCarSchema>>;
+  form: UseFormReturn<z.infer<ReturnType<typeof formCarSchema>>>;
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-4">
       <div className="space-y-3">
@@ -23,13 +26,13 @@ const Step6 = ({
                 labelPlacement="outside"
                 minRows={6}
                 isRequired
-                placeholder="Tell us about your car"
-                label="Description"
+                placeholder={t('carForm.step6.descriptionPlaceholder')}
+                label={t('carForm.step6.descriptionLabel')}
                 classNames={{
                   input: ['placeholder:text-default-700/40'],
                 }}
                 isInvalid={!!error}
-                errorMessage={error?.message}
+                errorMessage={error?.message && t(error.message)}
               />
             )}
           />
@@ -42,7 +45,7 @@ const Step6 = ({
           render={({ field: { value, onChange } }) => {
             return (
               <Switch isSelected={value ?? undefined} onValueChange={onChange}>
-                I want to sell my car in a price range
+                {t('carForm.step6.inRangeLabel')}
               </Switch>
             );
           }}
@@ -58,7 +61,7 @@ const Step6 = ({
               >
                 <div className="grid grid-cols-1 md:grid-cols-[auto_20px_auto] items-center gap-1">
                   <Input
-                    label="Mininum Price"
+                    label={t('carForm.step6.minPriceLabel')}
                     type="number"
                     isRequired
                     {...form.register('minPrice')}
@@ -66,7 +69,10 @@ const Step6 = ({
                     classNames={{
                       input: ['placeholder:text-default-700/40'],
                     }}
-                    errorMessage={form.formState.errors.minPrice?.message}
+                    errorMessage={
+                      form.formState.errors.minPrice?.message &&
+                      t(form.formState.errors.minPrice.message)
+                    }
                     startContent={
                       <div className="pointer-events-none flex items-center">
                         <span className="text-small text-default-400">$</span>
@@ -75,11 +81,14 @@ const Step6 = ({
                   />
                   <div className="md:h-1 h-5 w-1 md:w-5 rounded-md bg-gray-300 mx-auto"></div>
                   <Input
-                    label="Maximum Price"
+                    label={t('carForm.step6.maxPriceLabel')}
                     type="number"
                     {...form.register('maxPrice')}
                     isInvalid={!!form.formState.errors.maxPrice}
-                    errorMessage={form.formState.errors.maxPrice?.message}
+                    errorMessage={
+                      form.formState.errors.maxPrice?.message &&
+                      t(form.formState.errors.maxPrice.message)
+                    }
                     classNames={{
                       input: ['placeholder:text-default-700/40'],
                     }}
@@ -99,11 +108,14 @@ const Step6 = ({
                 exit={{ opacity: 0.4 }}
               >
                 <Input
-                  label={'price'}
+                  label={t('carForm.step6.priceLabel')}
                   type="number"
                   {...form.register('price')}
                   isInvalid={!!form.formState.errors.price}
-                  errorMessage={form.formState.errors.price?.message}
+                  errorMessage={
+                    form.formState.errors.price?.message &&
+                    t(form.formState.errors.price.message)
+                  }
                   classNames={{
                     input: ['placeholder:text-default-700/40'],
                   }}

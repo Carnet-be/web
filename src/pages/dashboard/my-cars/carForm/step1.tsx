@@ -5,6 +5,7 @@ import {
   SelectItem,
 } from '@nextui-org/react';
 import { Controller, UseFormReturn } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { formCarSchema } from './carForm';
 
@@ -20,12 +21,15 @@ const Step1 = ({
   form,
   data,
 }: {
-  form: UseFormReturn<z.infer<typeof formCarSchema>>;
+  form: UseFormReturn<z.infer<ReturnType<typeof formCarSchema>>>;
   data: {
     brands: Brand[];
     models: Model[];
   };
 }) => {
+  const { t: carFormT } = useTranslation();
+  const t = (key: string) => carFormT(`carForm.${key}`);
+
   return (
     <div className="grid grid-cols-4 gap-4">
       <Controller
@@ -34,7 +38,7 @@ const Step1 = ({
         render={({ field, formState: { errors } }) => (
           <Autocomplete
             isRequired
-            label="Select a brand"
+            label={t('step1.selectBrand')}
             className="md:col-span-2 col-span-4"
             selectedKey={field.value?.toString()}
             onSelectionChange={(e) => {
@@ -60,7 +64,7 @@ const Step1 = ({
         render={({ field, formState: { errors } }) => (
           <Autocomplete
             isRequired
-            label="Select a model"
+            label={t('step1.selectModel')}
             className="md:col-span-2 col-span-4"
             isDisabled={!form.watch('brandId')}
             selectedKey={field.value?.toString()}
@@ -87,7 +91,7 @@ const Step1 = ({
           render={({ field, formState: { errors } }) => (
             <Autocomplete
               isRequired
-              label="Year"
+              label={t('step1.year')}
               selectedKey={field.value?.toString()}
               onSelectionChange={(e) =>
                 field.onChange(e ? parseInt(e.toString()) : null)
@@ -108,7 +112,7 @@ const Step1 = ({
           name="doors"
           render={({ field, formState: { errors } }) => (
             <Select
-              label="Number of doors"
+              label={t('step1.numberOfDoors')}
               selectedKeys={field.value ? [field.value] : []}
               onSelectionChange={(keys) => field.onChange(Array.from(keys)[0])}
               errorMessage={errors.doors?.message}
@@ -127,7 +131,7 @@ const Step1 = ({
           name="isNew"
           render={({ field, fieldState: { error } }) => (
             <Select
-              label="State"
+              label={t('step1.state')}
               selectedKeys={field.value ? ['new'] : ['used']}
               onSelectionChange={(keys) =>
                 field.onChange(Array.from(keys)[0] === 'new')
@@ -137,7 +141,7 @@ const Step1 = ({
             >
               {['new', 'used'].map((state) => (
                 <SelectItem key={state} value={state}>
-                  {state.charAt(0).toUpperCase() + state.slice(1)}
+                  {t(`step1.${state}`)}
                 </SelectItem>
               ))}
             </Select>
@@ -150,7 +154,7 @@ const Step1 = ({
         render={({ field, formState: { errors } }) => (
           <Select
             isRequired
-            label="Fuel type"
+            label={t('step1.fuelType')}
             className="col-span-2"
             selectedKeys={field.value ? [field.value] : []}
             onSelectionChange={(keys) => field.onChange(Array.from(keys)[0])}
@@ -159,7 +163,7 @@ const Step1 = ({
           >
             {['diesel', 'gasoline', 'electric', 'hybrid'].map((fuel) => (
               <SelectItem key={fuel} value={fuel}>
-                {fuel.charAt(0).toUpperCase() + fuel.slice(1)}
+                {t(`step1.${fuel}`)}
               </SelectItem>
             ))}
           </Select>
@@ -171,7 +175,7 @@ const Step1 = ({
         name="color"
         render={({ field, formState: { errors } }) => (
           <Select
-            label="Color"
+            label={t('step1.color')}
             className="col-span-2"
             selectedKeys={field.value ? [field.value] : []}
             onSelectionChange={(keys) => field.onChange(Array.from(keys)[0])}
@@ -187,7 +191,7 @@ const Step1 = ({
                       boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
                     }}
                   />
-                  {item.textValue}
+                  {t(`step1.${item.textValue}`)}
                 </div>
               ));
             }}
@@ -202,7 +206,7 @@ const Step1 = ({
                       boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
                     }}
                   />
-                  {color}
+                  {t(`step1.${color}`)}
                 </div>
               </SelectItem>
             ))}

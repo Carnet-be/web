@@ -9,6 +9,7 @@ import {
 import { ImagePlus, Trash2 } from 'lucide-react';
 import React from 'react';
 import { Controller, UseFormReturn } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { formCarSchema } from './carForm';
 
@@ -16,12 +17,14 @@ const Step5 = ({
   form,
   data,
 }: {
-  form: UseFormReturn<z.infer<typeof formCarSchema>>;
+  form: UseFormReturn<z.infer<ReturnType<typeof formCarSchema>>>;
   data: {
     countries: Country[];
     cities: City[];
   };
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="space-y-4">
       <Controller
@@ -43,7 +46,7 @@ const Step5 = ({
           render={({ field, formState: { errors } }) => (
             <Autocomplete
               isRequired
-              label="Select a country"
+              label={t('carForm.step5.selectCountry')}
               selectedKey={field.value?.toString()}
               onSelectionChange={(e) =>
                 field.onChange(e ? parseInt(e.toString()) : null)
@@ -66,7 +69,7 @@ const Step5 = ({
           render={({ field, formState: { errors } }) => (
             <Autocomplete
               isRequired
-              label="Select a city"
+              label={t('carForm.step5.selectCity')}
               isDisabled={!form.watch('countryId')}
               selectedKey={field.value?.toString()}
               onSelectionChange={(e) =>
@@ -94,9 +97,9 @@ const Step5 = ({
           <Input
             {...field}
             type="tel"
-            label="Phone Number"
+            label={t('carForm.step5.phoneNumber')}
             isRequired
-            placeholder="Enter your phone number"
+            placeholder={t('carForm.step5.enterPhoneNumber')}
             className="col-span-4"
             classNames={{
               input: ['placeholder:text-default-700/40'],
@@ -113,8 +116,8 @@ const Step5 = ({
         render={({ field, formState: { errors } }) => (
           <Textarea
             {...field}
-            label="Address"
-            placeholder="Enter your address"
+            label={t('carForm.step5.address')}
+            placeholder={t('carForm.step5.enterAddress')}
             className="col-span-4"
             classNames={{
               input: ['placeholder:text-default-700/40'],
@@ -131,8 +134,8 @@ const Step5 = ({
           <Input
             {...field}
             type="text"
-            label="Zip Code"
-            placeholder="Enter your zip code"
+            label={t('carForm.step5.zipCode')}
+            placeholder={t('carForm.step5.enterZipCode')}
             className="col-span-4"
             classNames={{
               input: ['placeholder:text-default-700/40'],

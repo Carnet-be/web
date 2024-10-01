@@ -75,7 +75,263 @@
     "marketplace": "Marktplaats",
     "profile": "Profiel",
     "logout": "Uitloggen",
-    "home": "Thuis"
+    "home": "Thuis",
+    "success": "Succes",
+    "error": "Fout",
+    "admin": "Beheerder",
+    "garage": "Garage",
+    "user": "Gebruiker",
+    "cancel": "Annuleren",
+    "previous": "Vorig",
+    "light": "Licht",
+    "dark": "Donker",
+    "system": "Systeem",
+    "handling": "Behandeling",
+    "exterior": "Buitenkant",
+    "interior": "Interieur",
+    "tires": "Banden",
+    "fileTooLargeTitle": "Bestand te groot",
+    "fileTooLargeDescription": "Het bestand dat u probeert te uploaden is te groot.",
+    "imageOptionsTitle": "Afbeeldingsopties",
+    "imageOptionsDescription": "Wilt u de huidige afbeelding verwijderen of vervangen?",
+    "removeButton": "Verwijderen",
+    "replaceButton": "Vervangen"
+  },
+  "section": {
+    "error": {
+      "message": "Er is iets misgegaan. Probeer het opnieuw",
+      "button": "Probeer het opnieuw"
+    }
+  },
+  "createGarage": {
+    "garage": {
+      "createTitle": "Creëer uw garage",
+      "createDescription": "Vul de volgende gegevens in om uw garage aan te maken.",
+      "createSuccess": "Garage succesvol aangemaakt",
+      "createError": "Fout bij aanmaken van garage",
+      "createErrorDescription": "Er is iets misgegaan",
+      "name": "Garagenaam",
+      "slug": "Naaktslak",
+      "slugAvailable": "Slak is beschikbaar",
+      "slugUnavailable": "Slak is niet beschikbaar",
+      "slugChecking": "Beschikbaarheid controleren...",
+      "slugDescription": "Dit is de naaktslak van uw garage die in de URL wordt gebruikt.",
+      "description": "Beschrijving",
+      "cover": "Omslag",
+      "logo": "Logo",
+      "country": "Land",
+      "selectCountry": "Selecteer een land",
+      "city": "Stad",
+      "selectCity": "Selecteer een stad",
+      "address": "Adres",
+      "zipCode": "Postcode",
+      "phoneNumber": "Telefoonnummer",
+      "create": "Garage maken"
+    }
+  },
+  "login": {
+    "title": "Welkom terug",
+    "subtitle": "Voer uw inloggegevens in om toegang te krijgen tot uw account",
+    "noAccount": "Heeft u geen account?",
+    "signUp": "Schrijf je in",
+    "errorToasts": {
+      "accountNotFound": {
+        "title": "Account niet gevonden",
+        "description": "We konden geen account vinden met dat e-mailadres"
+      },
+      "invalidCredentials": {
+        "title": "Ongeldige inloggegevens",
+        "description": "Het door u ingevoerde e-mailadres of wachtwoord is onjuist"
+      },
+      "genericError": {
+        "title": "Inloggen mislukt",
+        "description": "Er is een fout opgetreden tijdens het inloggen. Probeer het opnieuw."
+      }
+    },
+    "form": {
+      "email": "E-mail",
+      "password": "Wachtwoord",
+      "forgetPassword": "Wachtwoord vergeten?",
+      "submitButton": "Log in"
+    },
+    "termsAndPrivacy": {
+      "prefix": "Als u doorgaat, gaat u akkoord met onze",
+      "termsOfService": "Servicevoorwaarden",
+      "and": "En",
+      "privacyPolicy": "Privacybeleid"
+    },
+    "successToasts": {
+      "title": "Welkom",
+      "description": "U bent succesvol ingelogd"
+    }
+  },
+  "register": {
+    "title": "Maak een account aan",
+    "subtitle": "Vul uw gegevens in om uw account aan te maken",
+    "haveAccount": "Heeft u al een account?",
+    "signIn": "Log in",
+    "termsAndPrivacy": {
+      "prefix": "Door een account aan te maken, gaat u akkoord met onze",
+      "termsOfService": "Servicevoorwaarden",
+      "and": "En",
+      "privacyPolicy": "Privacybeleid"
+    },
+    "form": {
+      "firstName": "Voornaam",
+      "lastName": "Achternaam",
+      "email": "E-mail",
+      "phoneNumber": "Telefoonnummer",
+      "password": "Wachtwoord",
+      "confirmPassword": "Bevestig wachtwoord",
+      "submitButton": "Account aanmaken",
+      "errors": {
+        "passwordsMismatch": "Wachtwoorden komen niet overeen"
+      }
+    },
+    "successToast": {
+      "title": "Account aangemaakt",
+      "description": "Uw account is succesvol aangemaakt."
+    },
+    "errorToasts": {
+      "emailExists": {
+        "title": "Registratie mislukt",
+        "description": "Er bestaat al een account met dit e-mailadres."
+      },
+      "genericError": {
+        "title": "Registratiefout",
+        "description": "Er is een fout opgetreden bij het aanmaken van uw account. "
+      }
+    }
+  },
+  "forgetPassword": {
+    "title": "Reset uw wachtwoord",
+    "subtitle": "Voer uw e-mailadres in om een ​​link voor het opnieuw instellen van uw wachtwoord te ontvangen",
+    "successMessage": "De link voor het opnieuw instellen van het wachtwoord is naar uw e-mailadres verzonden!",
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "Typ uw e-mailadres",
+    "submitButton": "Resetlink verzenden",
+    "toast": {
+      "success": {
+        "title": "Succes",
+        "description": "De link voor het opnieuw instellen van het wachtwoord is naar uw e-mailadres verzonden"
+      },
+      "emailNotFound": {
+        "title": "Fout",
+        "description": "E-mail niet gevonden. "
+      },
+      "error": {
+        "title": "Fout",
+        "description": "Er is een fout opgetreden. "
+      }
+    }
+  },
+  "resetPassword": {
+    "title": "Reset uw wachtwoord",
+    "subtitle": "Voer hieronder een nieuw wachtwoord in om het opnieuw in te stellen",
+    "passwordTooShort": "Te kort, minimaal 8 tekens",
+    "passwordsDontMatch": "Wachtwoorden komen niet overeen",
+    "successMessage": "Wachtwoord is succesvol gereset!",
+    "invalidToken": "Ongeldig of verlopen token",
+    "genericError": "Er is een fout opgetreden. ",
+    "errorMessage": "Er zat een fout in uw verzoek. ",
+    "newPassword": "Nieuw wachtwoord",
+    "newPasswordPlaceholder": "Typ uw nieuwe wachtwoord",
+    "confirmPassword": "Bevestig wachtwoord",
+    "confirmPasswordPlaceholder": "Bevestig uw nieuwe wachtwoord",
+    "resetButton": "Wachtwoord opnieuw instellen"
+  },
+  "dashboard": {
+    "menu": {
+      "management": "Beheer",
+      "cars": "Auto's",
+      "users": "Gebruikers",
+      "garages": "Garages",
+      "general": "Algemeen",
+      "marketplace": "Marktplaats",
+      "myCars": "Mijn auto's",
+      "settings": "Instellingen",
+      "profile": "Profiel",
+      "myGarage": "Mijn garage"
+    },
+    "searchPlaceholder": "Zoekopdracht ...",
+    "createGarage": "Creëer een garage",
+    "sellYourCar": {
+      "description": "Een nieuwe manier om uw auto te verkopen",
+      "button": "Verkoop uw auto"
+    },
+    "toast": {
+      "success": {
+        "title": "Succes",
+        "description": "Uw garage is succesvol aangemaakt."
+      },
+      "error": {
+        "title": "Fout",
+        "description": "Er is een fout opgetreden bij het maken van uw garage. "
+      }
+    }
+  },
+  "marketplace": {
+    "search": {
+      "body": "Lichaam",
+      "placeholderBody": "Selecteer lichaamstype",
+      "brand": "Merk",
+      "placeholderBrand": "Selecteer merk",
+      "model": "Model",
+      "placeholderModel": "Selecteer model",
+      "year": "Jaar",
+      "placeholderYear": "Selecteer jaar",
+      "clear": "Duidelijk"
+    },
+    "results": {
+      "noResults": "Geen auto gevonden, pas uw zoekopdracht aan"
+    },
+    "carsForSale": "Auto's te koop",
+    "title": "Blader door ons ruime aanbod auto's",
+    "description": "Vind uw droomauto in ons ruime aanbod voertuigen. "
+  },
+  "validation": {
+    "fieldRequired": "Veld vereist",
+    "tooShort": "Te kort, minimaal {{min}} karakters",
+    "tooLong": "Te lang, maximaal {{max}} karakters",
+    "invalidPhoneNumber": "Ongeldig telefoonnummerformaat",
+    "invalidEmail": "Ongeldig e-mailadres",
+    "passwordNoSpaces": "Wachtwoord mag geen spaties bevatten"
+  },
+  "garage": {
+    "noGarage": {
+      "title": "Garage niet gevonden",
+      "description": "De garage die u zoekt bestaat niet. ",
+      "button": "Ga naar huis"
+    },
+    "noGarages": "Geen garages gevonden",
+    "title": "Garages",
+    "visit": "Bezoek de garage",
+    "description": "Zoek de garage die u wilt bezoeken",
+    "form": {
+      "garage": {
+        "update_success": "Garage succesvol bijgewerkt",
+        "update_error": "Fout bij updaten van garage",
+        "update_error_description": "Er is iets misgegaan",
+        "update_title": "Update uw garage",
+        "update_description": "Update de informatie voor uw garage.",
+        "state": "Garagestaat",
+        "state_active": "Actief",
+        "state_draft": "Voorlopige versie",
+        "cover": "Omslag",
+        "logo": "Logo",
+        "name": "Naam",
+        "slug": "Naaktslak",
+        "phone_number": "Telefoonnummer",
+        "description": "Beschrijving",
+        "select_country": "Selecteer een land",
+        "country_morocco": "Marokko",
+        "select_city": "Selecteer een stad",
+        "address": "Adres",
+        "zip_code": "Postcode",
+        "update_button": "Garage bijwerken",
+        "country_belgium": "België"
+      }
+    }
   },
   "text": {
     "contactInformation": "Contactgegevens",
@@ -276,7 +532,7 @@
       "contact": "Contact"
     }
   },
-  "dashboard": {
+  "dashboard2": {
     "my garage": "Mijn garage",
     "nav": {
       "placeholderSearch": "Bent u op zoek naar een auto?",
@@ -289,11 +545,11 @@
       "users": "Gebruikers"
     },
     "text": {
-      "create garage page": "Maak een garagepagina aan",
+      "create garage page": "Maak een garagepagina",
       "sellYourCar title": "Een nieuwe manier om moderne en klassieke auto's te verkopen",
       "sellYourCar": "Verkoop uw auto",
       "noGarages": "Geen garage gevonden",
-      "bannerText": "Doe mee met de spanning: creëer uw eigen veiling of plaats uw auto en zie hoe de biedingen binnenstromen!",
+      "bannerText": "Doe mee met de spanning: creëer uw eigen veiling of post uw auto en zie hoe de biedingen binnenstromen!",
       "add another car": "Voeg nog een auto toe",
       "view cars": "Visualiseer uw auto's",
       "contact title": "Contactgegevens",
@@ -311,7 +567,11 @@
       "placeholderSearch": "Kent u een garagenaam?"
     },
     "my cars": {
-      "no cars": "Je hebt nog geen auto"
+      "no cars": "Je hebt nog geen auto",
+      "banner": {
+        "title": "Voeg uw auto toe aan de veiling, krijg de beste prijs en verkoop hem snel",
+        "button": "Auto toevoegen"
+      }
     },
     "home": {
       "title": " Vind uw volgende auto",
@@ -324,127 +584,202 @@
       "noResults": "Geen auto's gevonden, probeer een andere zoekopdracht"
     }
   },
-  "car": {
-    "handling": "Behandeling",
-    "interior": "Interieur",
-    "exterior": "Buiten",
-    "tires": "Banden",
+  "carForm": {
+    "validation": {
+      "brandRequired": "Merk is vereist",
+      "modelRequired": "Model is vereist",
+      "bodyRequired": "Lichaam is vereist",
+      "yearRequired": "Jaar is vereist",
+      "pricePositive": "Prijs moet positief zijn",
+      "countryRequired": "Land is vereist",
+      "cityRequired": "Stad is vereist",
+      "phoneRequired": "Telefoonnummer is vereist",
+      "transmissionRequired": "Transmissie is vereist",
+      "kilometrageRequired": "Kilometerstand is vereist",
+      "minImagesRequired": "Er zijn minimaal 2 afbeeldingen vereist"
+    },
+    "toast": {
+      "carAddedSuccess": "Auto succesvol toegevoegd",
+      "errorAddingCar": "Fout bij toevoegen van auto",
+      "somethingWentWrong": "Er is iets misgegaan",
+      "carUpdatedSuccess": "Auto succesvol bijgewerkt",
+      "errorUpdatingCar": "Fout bij updaten van auto"
+    },
+    "modal": {
+      "updatingCar": "Een ogenblik geduld terwijl uw auto wordt bijgewerkt",
+      "publishingCar": "Een ogenblik geduld terwijl uw auto wordt gepubliceerd",
+      "carPublished": "Uw auto is gepubliceerd",
+      "publishAnother": "Publiceer nog een auto",
+      "viewCars": "Bekijk auto's"
+    },
+    "title": "Voeg uw auto toe",
+    "subtitle": "Vul de volgende gegevens in om uw auto toe te voegen",
+    "steps": {
+      "carDetails": "Autogegevens",
+      "specifications": "Specificaties",
+      "features": "Functies",
+      "condition": "Voorwaarde",
+      "location": "Locatie",
+      "description": "Beschrijving"
+    },
+    "buttons": {
+      "previous": "Vorig",
+      "next": "Volgende",
+      "updateCar": "Auto bijwerken",
+      "publishCar": "Publiceer auto"
+    },
     "step1": {
-      "title": "Geef ons eerst wat informatie over uw auto",
-      "placeholderBrand": "Selecteer een merk (verplicht)",
-      "placeholderModel": "Selecteer een sjabloon (verplicht)",
-      "placeholderFuel": "Selecteer een brandstof (verplicht)",
-      "placeholderColor": "Selecteer een kleur (verplicht)",
-      "placeholderYear": "Selecteer een jaartal (verplicht)",
-      "placeholderState": "Staat van de auto"
+      "selectBrand": "Selecteer een merk",
+      "selectModel": "Selecteer een model",
+      "year": "Jaar",
+      "numberOfDoors": "Aantal deuren",
+      "state": "Staat",
+      "new": "Nieuw",
+      "used": "Gebruikt",
+      "fuelType": "Brandstoftype",
+      "diesel": "Diesel",
+      "gasoline": "Benzine",
+      "electric": "Elektrisch",
+      "hybrid": "Hybride",
+      "color": "Kleur",
+      "red": "Rood",
+      "blue": "Blauw",
+      "green": "Groente",
+      "yellow": "Geel",
+      "black": "Zwart",
+      "white": "Wit"
     },
     "step2": {
-      "title": "Extra informatie over uw auto",
-      "placeholderTransmission": "Selecteer een transmissie (verplicht)",
-      "placeholderVersion": "Welke versie is uw auto?",
-      "version": "Versie (optioneel)",
-      "placeholderDoors": "Deuren (optioneel)",
-      "mileageLabel": "Kilometerstand (km) (verplicht)",
-      "mileagePlaceholder": "Hoeveel kilometer heeft uw auto afgelegd?",
-      "engineSizeLabel": "Cilinderinhoud (cc) (vereist)",
-      "engineSizePlaceholder": "Wat is de motorinhoud van uw auto?",
-      "horsePawerLabel": "Paardenkracht (optioneel)",
-      "horsePowerPlaceholder": "Hoe krachtig is uw auto?",
-      "co2Label": "CO2 (g/km) (Optioneel)",
-      "co2Placeholder": "Wat is de CO2-uitstoot van uw auto?",
-      "placeholderBody": "Selecteer het carrosserietype van uw auto (verplicht)"
+      "transmission": "Overdragen",
+      "selectTransmission": "Selecteer transmissie",
+      "manual": "Handmatig",
+      "automatic": "Automatisch",
+      "semiAutomatic": "Halfautomatisch",
+      "kilometrage": "Kilometerstand",
+      "enterKilometrage": "Voer kilometerstand in",
+      "cv": "CV",
+      "enterCV": "CV invoeren",
+      "cc": "CC",
+      "enterCC": "Voer CC in",
+      "co2": "CO2",
+      "enterCO2": "Voer CO2 in",
+      "version": "Versie",
+      "enterVersion": "Versie invoeren",
+      "selectBody": "Selecteer een lichaam"
     },
     "step3": {
-      "title": "Selecteer alle opties die uw auto heeft"
+      "title": "Selecteer Opties",
+      "options": {
+        "360-Degree Camera": "360 graden camera",
+        "Adaptive Cruise Control": "Adaptieve cruisecontrol",
+        "Android Auto": "Android Auto",
+        "Apple CarPlay": "Apple CarPlay",
+        "Automatic Emergency Braking": "Automatisch noodremmen",
+        "Backup Camera": "Achteruitrijcamera",
+        "Blind Spot Monitoring": "Dodehoekbewaking",
+        "Bluetooth": "Bluetooth",
+        "Electric Windows": "Elektrische ramen",
+        "Heads-Up Display": "Heads-up-display",
+        "Heated Seats": "Verwarmde stoelen",
+        "Keyless Entry": "Sleutelloze toegang",
+        "Lane Departure Warning": "Lane Departure-waarschuwing",
+        "Leather Seats": "Lederen stoelen",
+        "Navigation System": "Navigatiesysteem",
+        "Parking Sensors": "Parkeersensoren",
+        "Rain-Sensing Wipers": "Ruitenwissers met regensensor",
+        "Satellite Radio": "Satellietradio",
+        "Sunroof": "Schuifdak",
+        "Wireless Charging": "Draadloos opladen"
+      }
     },
     "step4": {
       "title": "Evalueer elk onderdeel van uw auto",
       "handling": {
-        "1": "Start en rijdt niet",
-        "2": "Start maar wil niet rijden",
-        "3": "Op het dashboard branden één of meerdere storingen",
-        "4": "Vergde slechts een klein onderhoud",
-        "5": "Alles werkt nog perfect!"
+        "label": "Behandeling",
+        "options": {
+          "1": "Start en rijdt niet",
+          "2": "Start maar wil niet rijden",
+          "3": "Op het dashboard branden één of meerdere storingen",
+          "4": "Vergde slechts een klein onderhoud",
+          "5": "Alles werkt nog perfect!"
+        }
       },
       "exterior": {
-        "1": "Betrokken bij een (ernstig) ongeval",
-        "2": "Alleen blikschade, geen structurele problemen",
-        "3": "Krassen of deuken",
-        "4": "Lichte krassen",
-        "5": "Perfecte staat"
+        "label": "Buitenkant",
+        "options": {
+          "1": "Betrokken bij een (ernstig) ongeval",
+          "2": "Alleen blikschade, geen structurele problemen",
+          "3": "Krassen of deuken",
+          "4": "Lichte krassen",
+          "5": "Perfecte staat"
+        }
       },
       "interior": {
-        "1": "Zeer slechte staat",
-        "2": "Stoelen in zeer slechte staat",
-        "3": "Zichtbare vlekken of beschadigingen aan de stof",
-        "4": "Goede staat",
-        "5": "Uitstekende staat"
+        "label": "Interieur",
+        "options": {
+          "1": "Zeer slechte staat",
+          "2": "Stoelen in zeer slechte staat",
+          "3": "Zichtbare vlekken of beschadigingen aan de stof",
+          "4": "Goede staat",
+          "5": "Uitstekende staat"
+        }
       },
       "tires": {
-        "1": "Vervanging is zo snel mogelijk vereist",
-        "2": "Ze hebben weinig tot geen profiel, maar kunnen nog steeds worden opgepompt",
-        "3": "Risico op het ontvangen van een inspectiewaarschuwing",
-        "4": "Ze hebben kilometers ervaring op het circuit",
-        "5": "Minder dan 5000 km en nog steeds in perfecte staat!"
+        "label": "Banden",
+        "options": {
+          "1": "Vervanging is zo snel mogelijk vereist",
+          "2": "Ze hebben weinig tot geen profiel, maar kunnen nog steeds worden opgepompt",
+          "3": "Risico op het ontvangen van een inspectiewaarschuwing",
+          "4": "Ze hebben kilometers ervaring op het circuit",
+          "5": "Minder dan 5000 km en nog steeds in perfecte staat!"
+        }
       }
     },
     "step5": {
-      "title": "Voeg enkele foto's toe van uw auto en vertel ons waar deze zich bevindt",
-      "placeholderCountry": "Selecteer een land (verplicht)",
-      "placeholderCity": "Selecteer een stad (verplicht)",
-      "placeholderImages": "Upload minimaal 2 afbeeldingen",
-      "placeholderPhoneNumber": "Voer uw telefoonnummer in",
-      "phoneNumberDescription": "Dit nummer is zichtbaar voor de koper."
+      "selectCountry": "Selecteer een land",
+      "selectCity": "Selecteer een stad",
+      "phoneNumber": "Telefoonnummer",
+      "enterPhoneNumber": "Voer uw telefoonnummer in",
+      "address": "Adres",
+      "enterAddress": "Voer uw adres in",
+      "zipCode": "Postcode",
+      "enterZipCode": "Voer uw postcode in"
     },
     "step6": {
-      "title": " Beschrijf uw auto en kies ten slotte het type verkoop",
-      "descriptionLabel": "Beschrijf uw auto",
-      "placeholderDescription": "Wat kenmerkt uw auto? "
+      "descriptionPlaceholder": "Vertel ons over uw auto",
+      "descriptionLabel": "Beschrijving",
+      "inRangeLabel": "Ik wil mijn auto verkopen in een prijsklasse",
+      "minPriceLabel": "Minimumprijs",
+      "maxPriceLabel": "Maximale prijs",
+      "priceLabel": "Prijs"
     }
   },
-  "error": {
-    "car images": "Upload minimaal 2 afbeeldingen",
-    "unknown": "Er is iets misgegaan",
-    "car not found": "Auto niet gevonden",
-    "brand": "Selecteer een merk",
-    "model": "Selecteer een model",
-    "fuel": "Selecteer een brandstof",
-    "color": "Selecteer een kleur",
-    "year": "Selecteer een jaar",
-    "body": "Selecteer een lichaam",
-    "mileage": "Vul de kilometerstand in",
-    "transmission": "Selecteer een transmissie",
-    "engine size": "Voer de cilinderinhoud in",
-    "rating": "Vul de beoordeling in",
-    "title": "Evalueer elk onderdeel van uw auto",
-    "country": "Selecteer een land",
-    "city": "Selecteer een stad",
-    "images": "Upload minimaal 2 afbeeldingen",
-    "price": "Voer een prijs in",
-    "description": "Voer een beschrijving in van maximaal 50 tekens",
-    "exterior": "Vul de beoordeling van de buitenkant in",
-    "interior": "Vul de beoordeling van het interieur in",
-    "tires": "Vul de beoordeling van de banden in",
-    "handling": "Vul a.u.b. de beoordeling van de handling in"
-  },
-  "notifications": {
-    "create garage": {
-      "loading": "Aanmaak van de garagepagina...",
-      "success": "De auto is aan de garage toegevoegd",
-      "error": "Fout bij aanmaken van pagina"
+  "profilePage": {
+    "title": "Profiel bewerken",
+    "form": {
+      "avatar": "Avatar",
+      "firstName": "Voornaam",
+      "lastName": "Achternaam",
+      "email": "E-mail",
+      "username": "Gebruikersnaam",
+      "address": "Adres",
+      "phoneNumber": "Telefoonnummer",
+      "country": "Land",
+      "city": "Stad",
+      "selectCountry": "Selecteer een land",
+      "selectCity": "Selecteer een stad",
+      "updateButton": "Profiel bijwerken"
     },
-    "insert car": {
-      "error": "Fout bij toevoegen van auto",
-      "success": "Auto succesvol toegevoegd",
-      "loading": "Publiceer uw auto..."
+    "toast": {
+      "success": "Profiel is succesvol bijgewerkt",
+      "error": {
+        "title": "Fout bij updaten van profiel",
+        "description": "Er is een fout opgetreden tijdens het bijwerken van uw profiel"
+      }
     },
-    "update car": {
-      "error": "Fout bij updaten van auto",
-      "success": "Auto succesvol bijgewerkt"
-    },
-    "upload image": {
-      "error": "Fout bij verzenden van afbeelding",
-      "loading": "Uw afbeeldingen uploaden..."
+    "validation": {
+      "countryRequired": "Land is vereist",
+      "cityRequired": "Stad is vereist"
     }
   },
   "bodyCar": {
@@ -461,27 +796,5 @@
     "Minibus": "Minibus",
     "Offroad": "Offroad",
     "Sedan": "Sedan"
-  },
-  "optionCar": {
-    "360-Degree Camera": "360 graden camera",
-    "Adaptive Cruise Control": "Adaptieve cruisecontrol",
-    "Android Auto": "Android Auto",
-    "Apple CarPlay": "Apple CarPlay",
-    "Automatic Emergency Braking": "Automatisch noodremmen",
-    "Backup Camera": "Achteruitrijcamera",
-    "Blind Spot Monitoring": "Dodehoekbewaking",
-    "Bluetooth": "Bluetooth",
-    "Electric Windows": "Elektrische ramen",
-    "Heads-Up Display": "Heads-up-display",
-    "Heated Seats": "Verwarmde stoelen",
-    "Keyless Entry": "Sleutelloze toegang",
-    "Lane Departure Warning": "Lane Departure-waarschuwing",
-    "Leather Seats": "Lederen stoelen",
-    "Navigation System": "Navigatiesysteem",
-    "Parking Sensors": "Parkeersensoren",
-    "Rain-Sensing Wipers": "Ruitenwissers met regensensor",
-    "Satellite Radio": "Satellietradio",
-    "Sunroof": "Schuifdak",
-    "Wireless Charging": "Draadloos opladen"
   }
 }

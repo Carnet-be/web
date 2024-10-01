@@ -1,9 +1,11 @@
 import { Button } from '@nextui-org/react';
 import { ArrowLeft } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 const BackButton = ({ link }: { link?: string }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleGoBack = () => {
     if (link) {
@@ -20,7 +22,7 @@ const BackButton = ({ link }: { link?: string }) => {
       variant="light"
       onPress={handleGoBack}
     >
-      Back
+      {t('common.back')}
     </Button>
   );
 };

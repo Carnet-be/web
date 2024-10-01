@@ -160,7 +160,7 @@
       "and": "and",
       "privacyPolicy": "Privacy Policy"
     },
-    "successToast": {
+    "successToasts": {
       "title": "Welcome",
       "description": "You have successfully logged in"
     }
@@ -334,6 +334,7 @@
       }
     }
   },
+
   "text": {
     "contactInformation": "Contact details",
     "contactInformation desc": " Before you can sell a car, you must add contact information.",
@@ -585,130 +586,205 @@
       "noResults": "No cars found, try another search"
     }
   },
-  "car": {
-    "handling": "Handling",
-    "interior": "Interior",
-    "exterior": "Outside",
-    "tires": "Tires",
+  "carForm": {
+    "validation": {
+      "brandRequired": "Brand is required",
+      "modelRequired": "Model is required",
+      "bodyRequired": "Body is required",
+      "yearRequired": "Year is required",
+      "pricePositive": "Price must be positive",
+      "countryRequired": "Country is required",
+      "cityRequired": "City is required",
+      "phoneRequired": "Phone number is required",
+      "transmissionRequired": "Transmission is required",
+      "kilometrageRequired": "Kilometrage is required",
+      "minImagesRequired": "At least 2 images are required"
+    },
+    "toast": {
+      "carAddedSuccess": "Car added successfully",
+      "errorAddingCar": "Error adding car",
+      "somethingWentWrong": "Something went wrong",
+      "carUpdatedSuccess": "Car updated successfully",
+      "errorUpdatingCar": "Error updating car"
+    },
+    "modal": {
+      "updatingCar": "Please wait while your car is being updated",
+      "publishingCar": "Please wait while your car is being published",
+      "carPublished": "Your car has been published",
+      "publishAnother": "Publish another car",
+      "viewCars": "View Cars"
+    },
+    "title": "Add your car",
+    "subtitle": "Please fill in the following information to add your car",
+    "steps": {
+      "carDetails": "Car Details",
+      "specifications": "Specifications",
+      "features": "Features",
+      "condition": "Condition",
+      "location": "Location",
+      "description": "Description"
+    },
+    "buttons": {
+      "previous": "Previous",
+      "next": "Next",
+      "updateCar": "Update Car",
+      "publishCar": "Publish Car"
+    },
     "step1": {
-      "title": "Start by giving us some information about your car",
-      "placeholderBrand": "Select a brand (required)",
-      "placeholderModel": "Select a template (required)",
-      "placeholderFuel": "Select a fuel (required)",
-      "placeholderColor": "Select a color (required)",
-      "placeholderYear": "Select a year (required)",
-      "placeholderState": "Condition of the car"
+      "selectBrand": "Select a brand",
+      "selectModel": "Select a model",
+      "year": "Year",
+      "numberOfDoors": "Number of doors",
+      "state": "State",
+      "new": "New",
+      "used": "Used",
+      "fuelType": "Fuel type",
+      "diesel": "Diesel",
+      "gasoline": "Gasoline",
+      "electric": "Electric",
+      "hybrid": "Hybrid",
+      "color": "Color",
+      "red": "Red",
+      "blue": "Blue",
+      "green": "Green",
+      "yellow": "Yellow",
+      "black": "Black",
+      "white": "White"
     },
     "step2": {
-      "title": "Additional information about your car",
-      "placeholderTransmission": "Select a transmission (required)",
-      "placeholderVersion": "What version is your car?",
-      "version": "Version (Optional)",
-      "placeholderDoors": "Doors (Optional)",
-      "mileageLabel": "Mileage (km) (required)",
-      "mileagePlaceholder": "How many kilometers has your car traveled?",
-      "engineSizeLabel": "Engine displacement (cc) (required)",
-      "engineSizePlaceholder": "What is the engine size of your car?",
-      "horsePawerLabel": "Horsepower (optional)",
-      "horsePowerPlaceholder": "How powerful is your car?",
-      "co2Label": "CO2 (g/km) (Optional)",
-      "co2Placeholder": "What is the CO2 emission of your car?",
-      "placeholderBody": "Select the body type of your car (required)"
+      "transmission": "Transmission",
+      "selectTransmission": "Select transmission",
+      "manual": "Manual",
+      "automatic": "Automatic",
+      "semiAutomatic": "Semi-automatic",
+      "kilometrage": "Kilometrage",
+      "enterKilometrage": "Enter kilometrage",
+      "cv": "CV",
+      "enterCV": "Enter CV",
+      "cc": "CC",
+      "enterCC": "Enter CC",
+      "co2": "CO2",
+      "enterCO2": "Enter CO2",
+      "version": "Version",
+      "enterVersion": "Enter version",
+      "selectBody": "Select a body"
     },
     "step3": {
-      "title": "Select all the options your car has"
+      "title": "Select Options",
+      "options": {
+        "360-Degree Camera": "360-Degree Camera",
+        "Adaptive Cruise Control": "Adaptive Cruise Control",
+        "Android Auto": "Android Auto",
+        "Apple CarPlay": "Apple CarPlay",
+        "Automatic Emergency Braking": "Automatic Emergency Braking",
+        "Backup Camera": "Backup Camera",
+        "Blind Spot Monitoring": "Blind Spot Monitoring",
+        "Bluetooth": "Bluetooth",
+        "Electric Windows": "Electric Windows",
+        "Heads-Up Display": "Heads-Up Display",
+        "Heated Seats": "Heated Seats",
+        "Keyless Entry": "Keyless Entry",
+        "Lane Departure Warning": "Lane Departure Warning",
+        "Leather Seats": "Leather Seats",
+        "Navigation System": "Navigation System",
+        "Parking Sensors": "Parking Sensors",
+        "Rain-Sensing Wipers": "Rain-Sensing Wipers",
+        "Satellite Radio": "Satellite Radio",
+        "Sunroof": "Sunroof",
+        "Wireless Charging": "Wireless Charging"
+      }
     },
     "step4": {
       "title": "Evaluate Every Part of Your Car",
       "handling": {
-        "1": "Does not start or drive",
-        "2": "Starts but won't drive",
-        "3": "One or more faults are lit on the dashboard",
-        "4": "Only required a little maintenance",
-        "5": "Everything still works perfectly!"
+        "label": "Handling",
+        "options": {
+          "1": "Does not start or drive",
+          "2": "Starts but won't drive",
+          "3": "One or more faults are lit on the dashboard",
+          "4": "Only required a little maintenance",
+          "5": "Everything still works perfectly!"
+        }
       },
       "exterior": {
-        "1": "Involved in a (serious) accident",
-        "2": "Only tinplate damage, no structural issues",
-        "3": "Scratches or dents",
-        "4": "Light scratches",
-        "5": "Perfect condition"
+        "label": "Exterior",
+        "options": {
+          "1": "Involved in a (serious) accident",
+          "2": "Only tinplate damage, no structural issues",
+          "3": "Scratches or dents",
+          "4": "Light scratches",
+          "5": "Perfect condition"
+        }
       },
       "interior": {
-        "1": "Very poor condition",
-        "2": "Seats in very poor condition",
-        "3": "Visible stains or damage to fabric",
-        "4": "Good condition",
-        "5": "Excellent condition"
+        "label": "Interior",
+        "options": {
+          "1": "Very poor condition",
+          "2": "Seats in very poor condition",
+          "3": "Visible stains or damage to fabric",
+          "4": "Good condition",
+          "5": "Excellent condition"
+        }
       },
       "tires": {
-        "1": "Replacement required ASAP",
-        "2": "They have little to no tread, but can still be inflated",
-        "3": "Risk of receiving an inspection warning",
-        "4": "They have miles of experience on the track",
-        "5": "Less than 5000 kms and still in perfect condition!"
+        "label": "Tires",
+        "options": {
+          "1": "Replacement required ASAP",
+          "2": "They have little to no tread, but can still be inflated",
+          "3": "Risk of receiving an inspection warning",
+          "4": "They have miles of experience on the track",
+          "5": "Less than 5000 kms and still in perfect condition!"
+        }
       }
     },
     "step5": {
-      "title": "Add some photos of your car and tell us where it is",
-      "placeholderCountry": "Select a country (required)",
-      "placeholderCity": "Select a city (required)",
-      "placeholderImages": "Upload at least 2 images",
-
-      "placeholderPhoneNumber": "Enter your phone number",
-      "phoneNumberDescription": "This number will be visible to the buyer."
+      "selectCountry": "Select a country",
+      "selectCity": "Select a city",
+      "phoneNumber": "Phone Number",
+      "enterPhoneNumber": "Enter your phone number",
+      "address": "Address",
+      "enterAddress": "Enter your address",
+      "zipCode": "Zip Code",
+      "enterZipCode": "Enter your zip code"
     },
     "step6": {
-      "title": " Describe your car and finally choose the type of sale",
-      "descriptionLabel": "Describe your car",
-      "placeholderDescription": "What characterizes your car? "
+      "descriptionPlaceholder": "Tell us about your car",
+      "descriptionLabel": "Description",
+      "inRangeLabel": "I want to sell my car in a price range",
+      "minPriceLabel": "Minimum Price",
+      "maxPriceLabel": "Maximum Price",
+      "priceLabel": "Price"
     }
   },
-  "error": {
-    "car images": "Please upload at least 2 images",
-    "unknown": "Something went wrong",
-    "car not found": "Car not found",
-    "brand": "Please select a brand",
-    "model": "Please select a model",
-    "fuel": "Please select a fuel",
-    "color": "Please select a color",
-    "year": "Please select a year",
-    "body": "Please select a body",
-    "mileage": "Please enter mileage",
-    "transmission": "Please select a transmission",
-    "engine size": "Please enter engine displacement",
-    "rating": "Please complete the rating",
-    "title": "Evaluate Every Part of Your Car",
-    "country": "Please select a country",
-    "city": "Please select a city",
-    "images": "Please upload at least 2 images",
-    "price": "Please enter a price",
-    "description": "Please enter a description of 50 characters or less",
-    "exterior": "Please complete the rating of the exterior",
-    "interior": "Please complete the rating of the interior",
-    "tires": "Please complete the rating of the tires",
-    "handling": "Please complete the rating of the handling"
-  },
-  "notifications": {
-    "create garage": {
-      "loading": "Creation of the garage page...",
-      "success": "The car has been added to the garage",
-      "error": "Error creating page"
+  "profilePage": {
+    "title": "Edit Profile",
+    "form": {
+      "avatar": "Avatar",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "username": "Username",
+      "address": "Address",
+      "phoneNumber": "Phone Number",
+      "country": "Country",
+      "city": "City",
+      "selectCountry": "Select a country",
+      "selectCity": "Select a city",
+      "updateButton": "Update Profile"
     },
-    "insert car": {
-      "error": "Error adding car",
-      "success": "Car added successfully",
-      "loading": "Publish your car..."
+    "toast": {
+      "success": "Profile updated successfully",
+      "error": {
+        "title": "Error updating profile",
+        "description": "An error occurred while updating your profile"
+      }
     },
-    "update car": {
-      "error": "Error updating car",
-      "success": "Car updated successfully"
-    },
-    "upload image": {
-      "error": "Error sending image",
-      "loading": "Uploading your images..."
+    "validation": {
+      "countryRequired": "Country is required",
+      "cityRequired": "City is required"
     }
   },
+
   "bodyCar": {
     "Convertible": "Convertible",
     "Coupe": "Coupe",
@@ -723,27 +799,5 @@
     "Minibus": "Minibus",
     "Offroad": "Offroad",
     "Sedan": "Sedan"
-  },
-  "optionCar": {
-    "360-Degree Camera": "360-Degree Camera",
-    "Adaptive Cruise Control": "Adaptive Cruise Control",
-    "Android Auto": "Android Auto",
-    "Apple CarPlay": "Apple CarPlay",
-    "Automatic Emergency Braking": "Automatic Emergency Braking",
-    "Backup Camera": "Backup Camera",
-    "Blind Spot Monitoring": "Blind Spot Monitoring",
-    "Bluetooth": "Bluetooth",
-    "Electric Windows": "Electric Windows",
-    "Heads-Up Display": "Heads-Up Display",
-    "Heated Seats": "Heated Seats",
-    "Keyless Entry": "Keyless Entry",
-    "Lane Departure Warning": "Lane Departure Warning",
-    "Leather Seats": "Leather Seats",
-    "Navigation System": "Navigation System",
-    "Parking Sensors": "Parking Sensors",
-    "Rain-Sensing Wipers": "Rain-Sensing Wipers",
-    "Satellite Radio": "Satellite Radio",
-    "Sunroof": "Sunroof",
-    "Wireless Charging": "Wireless Charging"
   }
 }

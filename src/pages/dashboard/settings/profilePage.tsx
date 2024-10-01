@@ -29,24 +29,25 @@ import { Button } from '@nextui-org/react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { FileWithPath } from 'react-dropzone';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import * as z from 'zod';
 
-const formSchema = z.object({
-  firstName: validator.stringMinMax,
-  lastName: validator.stringMinMax,
-  username: z.string().optional(),
-  address: z.string().optional(),
-
-  phoneNumber: validator.phoneNumber,
-  countryId: z.number({
-    message: 'Country is required',
-  }),
-  cityId: z.number({
-    message: 'City is required',
-  }),
-  zipCode: z.string().optional(),
-  avatar: z.string().or(z.instanceof(File)).optional(),
-});
+const formSchema = (t: (key: string) => string) =>
+  z.object({
+    firstName: validator.stringMinMax,
+    lastName: validator.stringMinMax,
+    username: z.string().optional(),
+    address: z.string().optional(),
+    phoneNumber: validator.phoneNumber,
+    countryId: z.number({
+      message: t('profilePage.validation.countryRequired'),
+    }),
+    cityId: z.number({
+      message: t('profilePage.validation.cityRequired'),
+    }),
+    zipCode: z.string().optional(),
+    avatar: z.string().or(z.instanceof(File)).optional(),
+  });
 
 const ProfilePage = () => {
   const {
@@ -74,10 +75,11 @@ export function ProfileForm({
   user: User;
   onSuccess?: () => void;
 }) {
+  const { t } = useTranslation();
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<ReturnType<typeof formSchema>>>({
+    resolver: zodResolver(formSchema(t)),
     defaultValues: {
       // Populate with user's current data
       countryId: user.countryId, // Default to Morocco
@@ -101,19 +103,19 @@ export function ProfileForm({
   const { mutate: updateUser, isPending: isLoading } = useMutation({
     mutationFn: userService.updateUser,
     onSuccess: () => {
-      toast({ title: 'Profile updated successfully' });
+      toast({ title: t('profilePage.toast.success') });
       onSuccess?.();
     },
     onError: () => {
       toast({
-        title: 'Error updating profile',
-        description: 'Something went wrong',
+        title: t('profilePage.toast.error.title'),
+        description: t('profilePage.toast.error.description'),
         variant: 'destructive',
       });
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<ReturnType<typeof formSchema>>) => {
     const { avatar, ...rest } = values;
     updateUser({ user: rest, id: user.id, avatar });
   };
@@ -122,7 +124,7 @@ export function ProfileForm({
     <div>
       <BackButton />
       <div className="w-full max-w-xl mx-auto p-4 space-y-6 bg-card/80 backdrop-blur-sm rounded-lg">
-        <h1 className="text-2xl font-bold">Edit Profile</h1>
+        <h1 className="text-2xl font-bold">{t('profilePage.title')}</h1>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -131,7 +133,7 @@ export function ProfileForm({
               name="avatar"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Avatar</FormLabel>
+                  <FormLabel>{t('profilePage.form.avatar')}</FormLabel>
                   <FormControl>
                     <Uploader
                       accept={{ 'image/*': [] }}
@@ -157,7 +159,7 @@ export function ProfileForm({
                 name="firstName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>First Name</FormLabel>
+                    <FormLabel>{t('profilePage.form.firstName')}</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -170,7 +172,7 @@ export function ProfileForm({
                 name="lastName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Last Name</FormLabel>
+                    <FormLabel>{t('profilePage.form.lastName')}</FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -181,7 +183,7 @@ export function ProfileForm({
             </div>
 
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>{t('profilePage.form.email')}</FormLabel>
               <FormControl>
                 <Input value={user.email} disabled />
               </FormControl>
@@ -193,7 +195,7 @@ export function ProfileForm({
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Username</FormLabel>
+                  <FormLabel>{t('profilePage.form.username')}</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -207,7 +209,7 @@ export function ProfileForm({
               name="address"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Address</FormLabel>
+                  <FormLabel>{t('profilePage.form.address')}</FormLabel>
                   <FormControl>
                     <Textarea {...field} />
                   </FormControl>
@@ -221,7 +223,7 @@ export function ProfileForm({
               name="phoneNumber"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
+                  <FormLabel>{t('profilePage.form.phoneNumber')}</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -236,7 +238,7 @@ export function ProfileForm({
                 name="countryId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Country</FormLabel>
+                    <FormLabel>{t('profilePage.form.country')}</FormLabel>
                     <FormControl>
                       <Select
                         value={field.value?.toString()}
@@ -245,7 +247,9 @@ export function ProfileForm({
                         }
                       >
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a country" />
+                          <SelectValue
+                            placeholder={t('profilePage.form.selectCountry')}
+                          />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
@@ -264,7 +268,7 @@ export function ProfileForm({
                 name="cityId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>City</FormLabel>
+                    <FormLabel>{t('profilePage.form.city')}</FormLabel>
                     <FormControl>
                       <Select
                         value={field.value?.toString()}
@@ -274,7 +278,9 @@ export function ProfileForm({
                         disabled={isPending}
                       >
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a city" />
+                          <SelectValue
+                            placeholder={t('profilePage.form.selectCity')}
+                          />
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
@@ -303,7 +309,7 @@ export function ProfileForm({
               color="primary"
               isLoading={isLoading}
             >
-              Update Profile
+              {t('profilePage.form.updateButton')}
             </Button>
           </form>
         </Form>

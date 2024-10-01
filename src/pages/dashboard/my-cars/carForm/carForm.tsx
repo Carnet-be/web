@@ -15,6 +15,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { CheckCircle2, CheckIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import * as z from 'zod';
 import Step1 from './step1';
@@ -24,66 +25,69 @@ import Step4 from './step4';
 import Step5 from './step5';
 import Step6 from './step6';
 
-export const formCarSchema = z.object({
-  brandId: z.coerce.number({
-    message: 'Brand is required',
-  }),
-  modelId: z.coerce.number({
-    message: 'Model is required',
-  }),
-  bodyId: z.coerce.number({
-    message: 'Body is required',
-  }),
-
-  description: z.string().optional(),
-  year: z.coerce
-    .number({
-      message: 'Year is required',
-    })
-    .min(1900)
-    .max(new Date().getFullYear() + 1),
-  color: z.string().optional(),
-  fuel: z.enum(['diesel', 'gasoline', 'electric', 'hybrid']),
-  isNew: z.boolean().default(false),
-  price: z.coerce.number().positive('Price must be positive').optional(),
-  countryId: z.coerce.number({
-    message: 'Country is required',
-  }),
-  cityId: z.coerce.number({
-    message: 'City is required',
-  }),
-  address: z.string().optional(),
-  phoneNumber: z.string({
-    message: 'Phone number is required',
-  }),
-  zipCode: z.string().optional(),
-  handling: z.coerce.number().min(0).max(10).optional(),
-  tires: z.coerce.number().min(0).max(10).optional(),
-  exterior: z.coerce.number().min(0).max(10).optional(),
-  interior: z.coerce.number().min(0).max(10).optional(),
-  transmission: z.enum(['manual', 'automatic', 'semi-automatic'], {
-    message: 'Transmission is required',
-  }),
-  inRange: z.boolean().default(false),
-  doors: z.enum(['2', '3', '4', '5', '6', '7', '8']).optional(),
-  cv: z.coerce.number().positive().optional(),
-  cc: z.coerce.number().positive().optional(),
-  co2: z.coerce.number().nonnegative().optional(),
-  kilometrage: z.coerce.number({
-    message: 'Kilometrage is required',
-  }),
-  version: z.string().optional(),
-  images: z
-    .array(z.string().or(z.instanceof(File)))
-    .min(2, {
-      message: 'At least 2 images are required',
-    })
-    .default([]),
-  isAuction: z.boolean().default(false),
-  minPrice: z.coerce.number().positive().optional(),
-  maxPrice: z.coerce.number().positive().optional(),
-  options: z.array(z.number()).optional(),
-});
+export const formCarSchema = (t: any) =>
+  z.object({
+    brandId: z.coerce.number({
+      message: t('carForm.validation.brandRequired'),
+    }),
+    modelId: z.coerce.number({
+      message: t('carForm.validation.modelRequired'),
+    }),
+    bodyId: z.coerce.number({
+      message: t('carForm.validation.bodyRequired'),
+    }),
+    description: z.string().optional(),
+    year: z.coerce
+      .number({
+        message: t('carForm.validation.yearRequired'),
+      })
+      .min(1900)
+      .max(new Date().getFullYear() + 1),
+    color: z.string().optional(),
+    fuel: z.enum(['diesel', 'gasoline', 'electric', 'hybrid']),
+    isNew: z.boolean().default(false),
+    price: z.coerce
+      .number()
+      .positive(t('carForm.validation.pricePositive'))
+      .optional(),
+    countryId: z.coerce.number({
+      message: t('carForm.validation.countryRequired'),
+    }),
+    cityId: z.coerce.number({
+      message: t('carForm.validation.cityRequired'),
+    }),
+    address: z.string().optional(),
+    phoneNumber: z.string({
+      message: t('carForm.validation.phoneRequired'),
+    }),
+    zipCode: z.string().optional(),
+    handling: z.coerce.number().min(0).max(10).optional(),
+    tires: z.coerce.number().min(0).max(10).optional(),
+    exterior: z.coerce.number().min(0).max(10).optional(),
+    interior: z.coerce.number().min(0).max(10).optional(),
+    transmission: z.enum(['manual', 'automatic', 'semi-automatic'], {
+      message: t('carForm.validation.transmissionRequired'),
+    }),
+    inRange: z.boolean().default(false),
+    doors: z.enum(['2', '3', '4', '5', '6', '7', '8']).optional(),
+    cv: z.coerce.number().positive().optional(),
+    cc: z.coerce.number().positive().optional(),
+    co2: z.coerce.number().nonnegative().optional(),
+    kilometrage: z.coerce.number({
+      message: t('carForm.validation.kilometrageRequired'),
+    }),
+    version: z.string().optional(),
+    images: z
+      .array(z.string().or(z.instanceof(File)))
+      .min(2, {
+        message: t('carForm.validation.minImagesRequired'),
+      })
+      .default([]),
+    isAuction: z.boolean().default(false),
+    minPrice: z.coerce.number().positive().optional(),
+    maxPrice: z.coerce.number().positive().optional(),
+    options: z.array(z.number()).optional(),
+  });
 
 export default function CreateCar({
   car,
@@ -101,12 +105,13 @@ export default function CreateCar({
     cities: City[];
   };
 }) {
+  const { t } = useTranslation();
   const [step, setStep] = useState(1);
   const [searchParams] = useSearchParams();
   const { toast } = useToast();
   const [publishSuccess, setPublishSuccess] = useState(false);
-  const form = useForm<z.infer<typeof formCarSchema>>({
-    resolver: zodResolver(formCarSchema),
+  const form = useForm<z.infer<ReturnType<typeof formCarSchema>>>({
+    resolver: zodResolver(formCarSchema(t)),
     defaultValues: {
       countryId: car?.countryId,
       cityId: car?.cityId,
@@ -148,14 +153,7 @@ export default function CreateCar({
   const { mutate, isPending: isCreatingCar } = useMutation({
     mutationFn: carService.createCar,
     onSuccess: () => {
-      toast({ title: 'Car added successfully' });
-      // query.setQueryData(['me'], (data: User) => {
-      //   return {
-      //     ...data,
-      //     selectedShop: shop,
-      //     shops: [...data.shops, shop],
-      //   };
-      // });
+      toast({ title: t('carForm.toast.carAddedSuccess') });
       setPublishSuccess(true);
       onSuccess?.();
     },
@@ -163,8 +161,8 @@ export default function CreateCar({
       console.log(err);
       setPublishSuccess(false);
       toast({
-        title: 'Error adding car',
-        description: 'Something went wrong',
+        title: t('carForm.toast.errorAddingCar'),
+        description: t('carForm.toast.somethingWentWrong'),
         variant: 'destructive',
       });
     },
@@ -173,29 +171,21 @@ export default function CreateCar({
   const { mutate: mutateUpdate, isPending: isUpdatingCar } = useMutation({
     mutationFn: carService.updateCar,
     onSuccess: () => {
-      toast({ title: 'Car updated successfully' });
-      // query.setQueryData(['me'], (data: User) => {
-      //   return {
-      //     ...data,
-      //     selectedShop: shop,
-      //     shops: [...data.shops, shop],
-      //   };
-      // });
-      // setPublishSuccess(true);
+      toast({ title: t('carForm.toast.carUpdatedSuccess') });
       onSuccess?.();
       nav(-1);
     },
     onError: (err) => {
       console.log(err);
       toast({
-        title: 'Error updating car',
-        description: 'Something went wrong',
+        title: t('carForm.toast.errorUpdatingCar'),
+        description: t('carForm.toast.somethingWentWrong'),
         variant: 'destructive',
       });
     },
   });
 
-  const onSubmit = (values: z.infer<typeof formCarSchema>) => {
+  const onSubmit = (values: z.infer<ReturnType<typeof formCarSchema>>) => {
     const { images, ...data } = values;
     if (car) {
       mutateUpdate({ data: data as any, images, id: car.id });
@@ -252,12 +242,12 @@ export default function CreateCar({
   const nav = useNavigate();
 
   const steps = [
-    'Car Details',
-    'Specifications',
-    'Features',
-    'Condition',
-    'Location',
-    'Description',
+    t('carForm.steps.carDetails'),
+    t('carForm.steps.specifications'),
+    t('carForm.steps.features'),
+    t('carForm.steps.condition'),
+    t('carForm.steps.location'),
+    t('carForm.steps.description'),
   ];
 
   return (
@@ -273,9 +263,9 @@ export default function CreateCar({
               {isCreatingCar || isUpdatingCar ? (
                 <ModalBody className="flex flex-col gap-5 text-center justify-center items-center py-20">
                   {isUpdatingCar ? (
-                    <p>Please wait while your car is being updated</p>
+                    <p>{t('carForm.modal.updatingCar')}</p>
                   ) : (
-                    <p>Please wait while your car is being published</p>
+                    <p>{t('carForm.modal.publishingCar')}</p>
                   )}
                   <Spinner />
                 </ModalBody>
@@ -283,7 +273,7 @@ export default function CreateCar({
                 <>
                   <ModalBody className="flex flex-col gap-5 text-center justify-center items-center py-10">
                     <CheckCircle2 className="w-10 h-10 text-green-500" />
-                    <p>Your car has been published</p>
+                    <p>{t('carForm.modal.carPublished')}</p>
                   </ModalBody>
                   <ModalFooter>
                     <Button
@@ -293,13 +283,13 @@ export default function CreateCar({
                         setStep(1);
                       }}
                     >
-                      Publish another car
+                      {t('carForm.modal.publishAnother')}
                     </Button>
                     <Button
                       color="primary"
                       onClick={() => nav(`/dashboard/my-cars`)}
                     >
-                      View Cars
+                      {t('carForm.modal.viewCars')}
                     </Button>
                   </ModalFooter>
                 </>
@@ -310,10 +300,10 @@ export default function CreateCar({
       </Modal>
       <div className="w-full max-w-3xl p-4 space-y-3 bg-card/80 backdrop-blur-sm rounded-lg mx-auto">
         <div className="pt-5 pb-10">
-          <h1 className="text-2xl font-bold text-center">Add your car</h1>
-          <p className="text-sm text-center">
-            Please fill in the following information to add your car
-          </p>
+          <h1 className="text-2xl font-bold text-center">
+            {t('carForm.title')}
+          </h1>
+          <p className="text-sm text-center">{t('carForm.subtitle')}</p>
         </div>
 
         {/* Updated stepper component */}
@@ -454,23 +444,20 @@ export default function CreateCar({
               <div className="grow"></div>
               {step > 1 && (
                 <Button type="button" variant="ghost" onClick={prevStep}>
-                  Previous
+                  {t('carForm.buttons.previous')}
                 </Button>
               )}
               {step < 6 ? (
                 <>
-                  <Button
-                    //isDisabled={slugAvailability !== 'available'}
-                    type="button"
-                    color="primary"
-                    onClick={nextStep}
-                  >
-                    Next
+                  <Button type="button" color="primary" onClick={nextStep}>
+                    {t('carForm.buttons.next')}
                   </Button>
                 </>
               ) : (
                 <Button type="submit" color="primary" isLoading={isCreatingCar}>
-                  {car ? 'Update Car' : 'Publish Car'}
+                  {car
+                    ? t('carForm.buttons.updateCar')
+                    : t('carForm.buttons.publishCar')}
                 </Button>
               )}
             </div>

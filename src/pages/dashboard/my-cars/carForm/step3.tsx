@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils';
 import { Controller, UseFormReturn } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { formCarSchema } from './carForm';
 
@@ -7,11 +8,13 @@ const Step3 = ({
   form,
   data: { options },
 }: {
-  form: UseFormReturn<z.infer<typeof formCarSchema>>;
+  form: UseFormReturn<z.infer<ReturnType<typeof formCarSchema>>>;
   data: {
     options: CarOption[];
   };
 }) => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex flex-wrap items-center justify-center gap-3 w-full">
       {options.map((o) => {
@@ -39,7 +42,7 @@ const Step3 = ({
                     : '',
                 )}
               >
-                {o.name}
+                {t(`carForm.step3.options.${o.name}`, { defaultValue: o.name })}
               </div>
             )}
             name={'options'}

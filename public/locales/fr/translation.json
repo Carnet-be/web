@@ -75,7 +75,263 @@
     "marketplace": "Marché",
     "profile": "Profil",
     "logout": "Déconnexion",
-    "home": "Maison"
+    "home": "Maison",
+    "success": "Succès",
+    "error": "Erreur",
+    "admin": "Administrateur",
+    "garage": "Garage",
+    "user": "Utilisateur",
+    "cancel": "Annuler",
+    "previous": "Précédent",
+    "light": "Lumière",
+    "dark": "Sombre",
+    "system": "Système",
+    "handling": "Manutention",
+    "exterior": "Extérieur",
+    "interior": "Intérieur",
+    "tires": "Pneus",
+    "fileTooLargeTitle": "Fichier trop volumineux",
+    "fileTooLargeDescription": "Le fichier que vous essayez de télécharger est trop volumineux.",
+    "imageOptionsTitle": "Options d'images",
+    "imageOptionsDescription": "Voulez-vous supprimer ou remplacer l'image actuelle ?",
+    "removeButton": "Retirer",
+    "replaceButton": "Remplacer"
+  },
+  "section": {
+    "error": {
+      "message": "Quelque chose s'est mal passé, veuillez réessayer",
+      "button": "Essayer à nouveau"
+    }
+  },
+  "createGarage": {
+    "garage": {
+      "createTitle": "Créez votre garage",
+      "createDescription": "Veuillez remplir les informations suivantes pour créer votre garage.",
+      "createSuccess": "Garage créé avec succès",
+      "createError": "Erreur lors de la création du garage",
+      "createErrorDescription": "Quelque chose s'est mal passé",
+      "name": "Nom du garage",
+      "slug": "Limace",
+      "slugAvailable": "La limace est disponible",
+      "slugUnavailable": "Slug n'est pas disponible",
+      "slugChecking": "Vérification de la disponibilité...",
+      "slugDescription": "C'est le slug de votre garage qui sera utilisé dans l'URL.",
+      "description": "Description",
+      "cover": "Couverture",
+      "logo": "Logo",
+      "country": "Pays",
+      "selectCountry": "Sélectionnez un pays",
+      "city": "Ville",
+      "selectCity": "Sélectionnez une ville",
+      "address": "Adresse",
+      "zipCode": "Code postal",
+      "phoneNumber": "Numéro de téléphone",
+      "create": "Créer un garage"
+    }
+  },
+  "login": {
+    "title": "Content de te revoir",
+    "subtitle": "Entrez vos identifiants pour accéder à votre compte",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "signUp": "S'inscrire",
+    "errorToasts": {
+      "accountNotFound": {
+        "title": "Compte introuvable",
+        "description": "Nous n'avons pas trouvé de compte avec cette adresse e-mail"
+      },
+      "invalidCredentials": {
+        "title": "Identifiants invalides",
+        "description": "L'email ou le mot de passe que vous avez saisi est incorrect"
+      },
+      "genericError": {
+        "title": "La connexion a échoué",
+        "description": "Une erreur s'est produite lors de la tentative de connexion. Veuillez réessayer."
+      }
+    },
+    "form": {
+      "email": "E-mail",
+      "password": "Mot de passe",
+      "forgetPassword": "Mot de passe oublié ?",
+      "submitButton": "Se connecter"
+    },
+    "termsAndPrivacy": {
+      "prefix": "En continuant, vous acceptez notre",
+      "termsOfService": "Conditions d'utilisation",
+      "and": "et",
+      "privacyPolicy": "politique de confidentialité"
+    },
+    "successToasts": {
+      "title": "Accueillir",
+      "description": "Vous êtes connecté avec succès"
+    }
+  },
+  "register": {
+    "title": "Créer un compte",
+    "subtitle": "Entrez vos coordonnées pour créer votre compte",
+    "haveAccount": "Vous avez déjà un compte ?",
+    "signIn": "Se connecter",
+    "termsAndPrivacy": {
+      "prefix": "En créant un compte, vous acceptez nos",
+      "termsOfService": "Conditions d'utilisation",
+      "and": "et",
+      "privacyPolicy": "politique de confidentialité"
+    },
+    "form": {
+      "firstName": "Prénom",
+      "lastName": "Nom de famille",
+      "email": "E-mail",
+      "phoneNumber": "Numéro de téléphone",
+      "password": "Mot de passe",
+      "confirmPassword": "Confirmez le mot de passe",
+      "submitButton": "Créer un compte",
+      "errors": {
+        "passwordsMismatch": "Les mots de passe ne correspondent pas"
+      }
+    },
+    "successToast": {
+      "title": "Compte créé",
+      "description": "Votre compte a été créé avec succès."
+    },
+    "errorToasts": {
+      "emailExists": {
+        "title": "L'inscription a échoué",
+        "description": "Un compte avec cette adresse email existe déjà."
+      },
+      "genericError": {
+        "title": "Erreur d'enregistrement",
+        "description": "Une erreur s'est produite lors de la création de votre compte. "
+      }
+    }
+  },
+  "forgetPassword": {
+    "title": "Réinitialisez votre mot de passe",
+    "subtitle": "Entrez votre email pour recevoir un lien de réinitialisation du mot de passe",
+    "successMessage": "Le lien de réinitialisation du mot de passe a été envoyé à votre adresse e-mail !",
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "Tapez votre email",
+    "submitButton": "Envoyer le lien de réinitialisation",
+    "toast": {
+      "success": {
+        "title": "Succès",
+        "description": "Le lien de réinitialisation du mot de passe a été envoyé à votre adresse e-mail"
+      },
+      "emailNotFound": {
+        "title": "Erreur",
+        "description": "E-mail introuvable. "
+      },
+      "error": {
+        "title": "Erreur",
+        "description": "Une erreur s'est produite. "
+      }
+    }
+  },
+  "resetPassword": {
+    "title": "Réinitialisez votre mot de passe",
+    "subtitle": "Entrez un nouveau mot de passe ci-dessous pour le réinitialiser",
+    "passwordTooShort": "Trop court, minimum 8 caractères",
+    "passwordsDontMatch": "Les mots de passe ne correspondent pas",
+    "successMessage": "Le mot de passe a été réinitialisé avec succès !",
+    "invalidToken": "Jeton invalide ou expiré",
+    "genericError": "Une erreur s'est produite. ",
+    "errorMessage": "Il y avait une erreur dans votre demande. ",
+    "newPassword": "Nouveau mot de passe",
+    "newPasswordPlaceholder": "Tapez votre nouveau mot de passe",
+    "confirmPassword": "Confirmez le mot de passe",
+    "confirmPasswordPlaceholder": "Confirmez votre nouveau mot de passe",
+    "resetButton": "Réinitialiser le mot de passe"
+  },
+  "dashboard": {
+    "menu": {
+      "management": "Gestion",
+      "cars": "Voitures",
+      "users": "Utilisateurs",
+      "garages": "Garage",
+      "general": "Général",
+      "marketplace": "Marché",
+      "myCars": "Mes voitures",
+      "settings": "Paramètres",
+      "profile": "Profil",
+      "myGarage": "Mon garage"
+    },
+    "searchPlaceholder": "Recherche ...",
+    "createGarage": "Créer un garage",
+    "sellYourCar": {
+      "description": "Une nouvelle façon de vendre votre voiture",
+      "button": "Vendez votre voiture"
+    },
+    "toast": {
+      "success": {
+        "title": "Succès",
+        "description": "Votre garage a été créé avec succès."
+      },
+      "error": {
+        "title": "Erreur",
+        "description": "Une erreur s'est produite lors de la création de votre garage. "
+      }
+    }
+  },
+  "marketplace": {
+    "search": {
+      "body": "Corps",
+      "placeholderBody": "Sélectionnez le type de corps",
+      "brand": "Marque",
+      "placeholderBrand": "Sélectionnez la marque",
+      "model": "Modèle",
+      "placeholderModel": "Sélectionnez le modèle",
+      "year": "Année",
+      "placeholderYear": "Sélectionnez l'année",
+      "clear": "Clair"
+    },
+    "results": {
+      "noResults": "Aucune voiture trouvée, veuillez ajuster votre recherche"
+    },
+    "carsForSale": "Voitures à vendre",
+    "title": "Parcourez notre large gamme de voitures",
+    "description": "Trouvez la voiture de vos rêves parmi notre large sélection de véhicules. "
+  },
+  "validation": {
+    "fieldRequired": "Champ obligatoire",
+    "tooShort": "Trop court, minimum {{min}} personnages",
+    "tooLong": "Trop long, maximum {{max}} personnages",
+    "invalidPhoneNumber": "Format de numéro de téléphone invalide",
+    "invalidEmail": "Adresse e-mail invalide",
+    "passwordNoSpaces": "Le mot de passe ne doit pas contenir d'espaces"
+  },
+  "garage": {
+    "noGarage": {
+      "title": "Garage introuvable",
+      "description": "Le garage que vous recherchez n'existe pas. ",
+      "button": "Rentre à la maison"
+    },
+    "noGarages": "Aucun garage trouvé",
+    "title": "Garage",
+    "visit": "Visitez le garage",
+    "description": "Trouvez le garage que vous souhaitez visiter",
+    "form": {
+      "garage": {
+        "update_success": "Garage mis à jour avec succès",
+        "update_error": "Erreur lors de la mise à jour du garage",
+        "update_error_description": "Quelque chose s'est mal passé",
+        "update_title": "Mettez à jour votre garage",
+        "update_description": "Mettez à jour les informations de votre garage.",
+        "state": "État du garage",
+        "state_active": "Actif",
+        "state_draft": "Brouillon",
+        "cover": "Couverture",
+        "logo": "Logo",
+        "name": "Nom",
+        "slug": "Limace",
+        "phone_number": "Numéro de téléphone",
+        "description": "Description",
+        "select_country": "Sélectionnez un pays",
+        "country_morocco": "Maroc",
+        "select_city": "Sélectionnez une ville",
+        "address": "Adresse",
+        "zip_code": "Code postal",
+        "update_button": "Mettre à jour le garage",
+        "country_belgium": "Belgique"
+      }
+    }
   },
   "text": {
     "contactInformation": "Coordonnées",
@@ -276,7 +532,7 @@
       "contact": "Contact"
     }
   },
-  "dashboard": {
+  "dashboard2": {
     "my garage": "Mon garage",
     "nav": {
       "placeholderSearch": "Vous cherchez une voiture ?",
@@ -311,7 +567,11 @@
       "placeholderSearch": "Connaissez-vous un nom de garage ?"
     },
     "my cars": {
-      "no cars": "Vous n'avez pas encore de voiture"
+      "no cars": "Vous n'avez pas encore de voiture",
+      "banner": {
+        "title": "Ajoutez votre voiture aux enchères, obtenez le meilleur prix et vendez-la rapidement",
+        "button": "Ajouter une voiture"
+      }
     },
     "home": {
       "title": " Trouvez votre prochaine voiture",
@@ -324,127 +584,202 @@
       "noResults": "Aucune voiture trouvée, essayez une autre recherche"
     }
   },
-  "car": {
-    "handling": "Manutention",
-    "interior": "Intérieur",
-    "exterior": "Dehors",
-    "tires": "Pneus",
+  "carForm": {
+    "validation": {
+      "brandRequired": "La marque est obligatoire",
+      "modelRequired": "Le modèle est requis",
+      "bodyRequired": "Le corps est requis",
+      "yearRequired": "L'année est requise",
+      "pricePositive": "Le prix doit être positif",
+      "countryRequired": "Le pays est requis",
+      "cityRequired": "La ville est obligatoire",
+      "phoneRequired": "Le numéro de téléphone est requis",
+      "transmissionRequired": "La transmission est obligatoire",
+      "kilometrageRequired": "Un kilométrage est obligatoire",
+      "minImagesRequired": "Au moins 2 images sont requises"
+    },
+    "toast": {
+      "carAddedSuccess": "Voiture ajoutée avec succès",
+      "errorAddingCar": "Erreur lors de l'ajout de la voiture",
+      "somethingWentWrong": "Quelque chose s'est mal passé",
+      "carUpdatedSuccess": "Voiture mise à jour avec succès",
+      "errorUpdatingCar": "Erreur lors de la mise à jour de la voiture"
+    },
+    "modal": {
+      "updatingCar": "Veuillez patienter pendant la mise à jour de votre voiture",
+      "publishingCar": "Veuillez patienter pendant que votre voiture est publiée",
+      "carPublished": "Votre voiture a été publiée",
+      "publishAnother": "Publier une autre voiture",
+      "viewCars": "Voir les voitures"
+    },
+    "title": "Ajoutez votre voiture",
+    "subtitle": "Veuillez remplir les informations suivantes pour ajouter votre voiture",
+    "steps": {
+      "carDetails": "Détails de la voiture",
+      "specifications": "Caractéristiques",
+      "features": "Caractéristiques",
+      "condition": "Condition",
+      "location": "Emplacement",
+      "description": "Description"
+    },
+    "buttons": {
+      "previous": "Précédent",
+      "next": "Suivant",
+      "updateCar": "Mettre à jour la voiture",
+      "publishCar": "Publier une voiture"
+    },
     "step1": {
-      "title": "Commencez par nous donner quelques informations sur votre voiture",
-      "placeholderBrand": "Sélectionnez une marque (obligatoire)",
-      "placeholderModel": "Sélectionnez un modèle (obligatoire)",
-      "placeholderFuel": "Sélectionnez un carburant (obligatoire)",
-      "placeholderColor": "Sélectionnez une couleur (obligatoire)",
-      "placeholderYear": "Sélectionnez une année (obligatoire)",
-      "placeholderState": "État de la voiture"
+      "selectBrand": "Sélectionnez une marque",
+      "selectModel": "Sélectionnez un modèle",
+      "year": "Année",
+      "numberOfDoors": "Nombre de portes",
+      "state": "État",
+      "new": "Nouveau",
+      "used": "Utilisé",
+      "fuelType": "Type de carburant",
+      "diesel": "Diesel",
+      "gasoline": "Essence",
+      "electric": "Électrique",
+      "hybrid": "Hybride",
+      "color": "Couleur",
+      "red": "Rouge",
+      "blue": "Bleu",
+      "green": "Vert",
+      "yellow": "Jaune",
+      "black": "Noir",
+      "white": "Blanc"
     },
     "step2": {
-      "title": "Informations complémentaires sur votre voiture",
-      "placeholderTransmission": "Sélectionnez une transmission (obligatoire)",
-      "placeholderVersion": "Quelle version est ta voiture ?",
-      "version": "Version (Facultatif)",
-      "placeholderDoors": "Portes (En option)",
-      "mileageLabel": "Kilométrage (km) (obligatoire)",
-      "mileagePlaceholder": "Combien de kilomètres votre voiture a-t-elle parcouru ?",
-      "engineSizeLabel": "Cylindrée du moteur (cc) (obligatoire)",
-      "engineSizePlaceholder": "Quelle est la cylindrée du moteur de votre voiture ?",
-      "horsePawerLabel": "Puissance (facultatif)",
-      "horsePowerPlaceholder": "Quelle est la puissance de votre voiture ?",
-      "co2Label": "CO2 (g/km) (Facultatif)",
-      "co2Placeholder": "Quelle est l’émission de CO2 de votre voiture ?",
-      "placeholderBody": "Sélectionnez le type de carrosserie de votre voiture (obligatoire)"
+      "transmission": "Transmission",
+      "selectTransmission": "Sélectionnez la transmission",
+      "manual": "Manuel",
+      "automatic": "Automatique",
+      "semiAutomatic": "Semi-automatique",
+      "kilometrage": "Kilométrage",
+      "enterKilometrage": "Entrez le kilométrage",
+      "cv": "CV",
+      "enterCV": "Entrez votre CV",
+      "cc": "CC",
+      "enterCC": "Entrez CC",
+      "co2": "CO2",
+      "enterCO2": "Entrez le CO2",
+      "version": "Version",
+      "enterVersion": "Entrez la version",
+      "selectBody": "Sélectionnez un corps"
     },
     "step3": {
-      "title": "Sélectionnez toutes les options dont dispose votre voiture"
+      "title": "Sélectionnez les options",
+      "options": {
+        "360-Degree Camera": "Caméra à 360 degrés",
+        "Adaptive Cruise Control": "Régulateur de vitesse adaptatif",
+        "Android Auto": "Android Auto",
+        "Apple CarPlay": "Apple CarPlay",
+        "Automatic Emergency Braking": "Freinage d'urgence automatique",
+        "Backup Camera": "Caméra de recul",
+        "Blind Spot Monitoring": "Surveillance des angles morts",
+        "Bluetooth": "Bluetooth",
+        "Electric Windows": "Vitres électriques",
+        "Heads-Up Display": "Affichage tête haute",
+        "Heated Seats": "Sièges chauffants",
+        "Keyless Entry": "Entrée sans clé",
+        "Lane Departure Warning": "Avertissement de sortie de voie",
+        "Leather Seats": "Sièges en cuir",
+        "Navigation System": "Système de navigation",
+        "Parking Sensors": "Capteurs de stationnement",
+        "Rain-Sensing Wipers": "Essuie-glaces à détection de pluie",
+        "Satellite Radio": "Radio satellite",
+        "Sunroof": "Toit ouvrant",
+        "Wireless Charging": "Chargement sans fil"
+      }
     },
     "step4": {
       "title": "Évaluez chaque partie de votre voiture",
       "handling": {
-        "1": "Ne démarre pas et ne roule pas",
-        "2": "Démarre mais ne roule pas",
-        "3": "Un ou plusieurs défauts sont allumés au tableau de bord",
-        "4": "Nécessite seulement un peu d'entretien",
-        "5": "Tout fonctionne toujours parfaitement !"
+        "label": "Manutention",
+        "options": {
+          "1": "Ne démarre pas et ne roule pas",
+          "2": "Démarre mais ne roule pas",
+          "3": "Un ou plusieurs défauts sont allumés au tableau de bord",
+          "4": "Nécessite seulement un peu d'entretien",
+          "5": "Tout fonctionne toujours parfaitement !"
+        }
       },
       "exterior": {
-        "1": "Impliqué dans un (grave) accident",
-        "2": "Seulement des dommages causés par le fer blanc, pas de problèmes structurels",
-        "3": "Rayures ou bosses",
-        "4": "Légères rayures",
-        "5": "Parfait état"
+        "label": "Extérieur",
+        "options": {
+          "1": "Impliqué dans un (grave) accident",
+          "2": "Seulement des dommages causés par le fer blanc, pas de problèmes structurels",
+          "3": "Rayures ou bosses",
+          "4": "Légères rayures",
+          "5": "Parfait état"
+        }
       },
       "interior": {
-        "1": "Très mauvais état",
-        "2": "Sièges en très mauvais état",
-        "3": "Taches visibles ou dommages au tissu",
-        "4": "Bon état",
-        "5": "Excellent état"
+        "label": "Intérieur",
+        "options": {
+          "1": "Très mauvais état",
+          "2": "Sièges en très mauvais état",
+          "3": "Taches visibles ou dommages au tissu",
+          "4": "Bon état",
+          "5": "Excellent état"
+        }
       },
       "tires": {
-        "1": "Remplacement requis dès que possible",
-        "2": "Ils ont peu ou pas de bande de roulement, mais peuvent quand même être gonflés",
-        "3": "Risque de recevoir un avertissement d'inspection",
-        "4": "Ils ont des kilomètres d'expérience sur la piste",
-        "5": "Moins de 5000 kms et toujours en parfait état !"
+        "label": "Pneus",
+        "options": {
+          "1": "Remplacement requis dès que possible",
+          "2": "Ils ont peu ou pas de bande de roulement, mais peuvent quand même être gonflés",
+          "3": "Risque de recevoir un avertissement d'inspection",
+          "4": "Ils ont des kilomètres d'expérience sur la piste",
+          "5": "Moins de 5000 kms et toujours en parfait état !"
+        }
       }
     },
     "step5": {
-      "title": "Ajoutez quelques photos de votre voiture et dites-nous où elle se trouve",
-      "placeholderCountry": "Sélectionnez un pays (obligatoire)",
-      "placeholderCity": "Sélectionnez une ville (obligatoire)",
-      "placeholderImages": "Téléchargez au moins 2 images",
-      "placeholderPhoneNumber": "Entrez votre numéro de téléphone",
-      "phoneNumberDescription": "Ce numéro sera visible par l'acheteur."
+      "selectCountry": "Sélectionnez un pays",
+      "selectCity": "Sélectionnez une ville",
+      "phoneNumber": "Numéro de téléphone",
+      "enterPhoneNumber": "Entrez votre numéro de téléphone",
+      "address": "Adresse",
+      "enterAddress": "Entrez votre adresse",
+      "zipCode": "Code postal",
+      "enterZipCode": "Entrez votre code postal"
     },
     "step6": {
-      "title": " Décrivez votre voiture et choisissez enfin le type de vente",
-      "descriptionLabel": "Décrivez votre voiture",
-      "placeholderDescription": "Qu'est-ce qui caractérise votre voiture ? "
+      "descriptionPlaceholder": "Parlez-nous de votre voiture",
+      "descriptionLabel": "Description",
+      "inRangeLabel": "Je souhaite vendre ma voiture dans une fourchette de prix",
+      "minPriceLabel": "Prix ​​minimum",
+      "maxPriceLabel": "Prix ​​maximum",
+      "priceLabel": "Prix"
     }
   },
-  "error": {
-    "car images": "Veuillez télécharger au moins 2 images",
-    "unknown": "Quelque chose s'est mal passé",
-    "car not found": "Voiture introuvable",
-    "brand": "Veuillez sélectionner une marque",
-    "model": "Veuillez sélectionner un modèle",
-    "fuel": "Veuillez sélectionner un carburant",
-    "color": "Veuillez sélectionner une couleur",
-    "year": "Veuillez sélectionner une année",
-    "body": "Veuillez sélectionner un corps",
-    "mileage": "Veuillez entrer le kilométrage",
-    "transmission": "Veuillez sélectionner une transmission",
-    "engine size": "Veuillez entrer la cylindrée du moteur",
-    "rating": "Veuillez compléter la note",
-    "title": "Évaluez chaque partie de votre voiture",
-    "country": "Veuillez sélectionner un pays",
-    "city": "Veuillez sélectionner une ville",
-    "images": "Veuillez télécharger au moins 2 images",
-    "price": "Veuillez entrer un prix",
-    "description": "Veuillez saisir une description de 50 caractères ou moins",
-    "exterior": "Merci de compléter la notation de l'extérieur",
-    "interior": "Veuillez compléter l'évaluation de l'intérieur",
-    "tires": "Veuillez compléter la note des pneus",
-    "handling": "Merci de compléter la notation de la manipulation"
-  },
-  "notifications": {
-    "create garage": {
-      "loading": "Création de la page garage...",
-      "success": "La voiture a été ajoutée au garage",
-      "error": "Erreur lors de la création de la page"
+  "profilePage": {
+    "title": "Modifier le profil",
+    "form": {
+      "avatar": "Avatar",
+      "firstName": "Prénom",
+      "lastName": "Nom de famille",
+      "email": "E-mail",
+      "username": "Nom d'utilisateur",
+      "address": "Adresse",
+      "phoneNumber": "Numéro de téléphone",
+      "country": "Pays",
+      "city": "Ville",
+      "selectCountry": "Sélectionnez un pays",
+      "selectCity": "Sélectionnez une ville",
+      "updateButton": "Mettre à jour le profil"
     },
-    "insert car": {
-      "error": "Erreur lors de l'ajout de la voiture",
-      "success": "Voiture ajoutée avec succès",
-      "loading": "Publiez votre voiture..."
+    "toast": {
+      "success": "Profil mis à jour avec succès",
+      "error": {
+        "title": "Erreur lors de la mise à jour du profil",
+        "description": "Une erreur s'est produite lors de la mise à jour de votre profil"
+      }
     },
-    "update car": {
-      "error": "Erreur lors de la mise à jour de la voiture",
-      "success": "Voiture mise à jour avec succès"
-    },
-    "upload image": {
-      "error": "Erreur lors de l'envoi de l'image",
-      "loading": "Téléchargement de vos images..."
+    "validation": {
+      "countryRequired": "Le pays est requis",
+      "cityRequired": "La ville est obligatoire"
     }
   },
   "bodyCar": {
@@ -461,27 +796,5 @@
     "Minibus": "Minibus",
     "Offroad": "Hors route",
     "Sedan": "Sedan"
-  },
-  "optionCar": {
-    "360-Degree Camera": "Caméra à 360 degrés",
-    "Adaptive Cruise Control": "Régulateur de vitesse adaptatif",
-    "Android Auto": "Android Auto",
-    "Apple CarPlay": "Apple CarPlay",
-    "Automatic Emergency Braking": "Freinage d'urgence automatique",
-    "Backup Camera": "Caméra de recul",
-    "Blind Spot Monitoring": "Surveillance des angles morts",
-    "Bluetooth": "Bluetooth",
-    "Electric Windows": "Vitres électriques",
-    "Heads-Up Display": "Affichage tête haute",
-    "Heated Seats": "Sièges chauffants",
-    "Keyless Entry": "Entrée sans clé",
-    "Lane Departure Warning": "Avertissement de sortie de voie",
-    "Leather Seats": "Sièges en cuir",
-    "Navigation System": "Système de navigation",
-    "Parking Sensors": "Capteurs de stationnement",
-    "Rain-Sensing Wipers": "Essuie-glaces à détection de pluie",
-    "Satellite Radio": "Radio satellite",
-    "Sunroof": "Toit ouvrant",
-    "Wireless Charging": "Chargement sans fil"
   }
 }

@@ -10,6 +10,7 @@ import {
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useRef } from 'react';
 import { Controller, UseFormReturn } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 import { formCarSchema } from './carForm';
 
@@ -17,11 +18,14 @@ const Step2 = ({
   form,
   data,
 }: {
-  form: UseFormReturn<z.infer<typeof formCarSchema>>;
+  form: UseFormReturn<z.infer<ReturnType<typeof formCarSchema>>>;
   data: {
     bodies: Bodies[];
   };
 }) => {
+  const { t: carFormT } = useTranslation();
+  const t = (key: string) => carFormT(`carForm.${key}`);
+
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -46,8 +50,8 @@ const Step2 = ({
           name="transmission"
           render={({ field, fieldState: { error } }) => (
             <Select
-              label="Transmission"
-              placeholder="Select transmission"
+              label={t('step2.transmission')}
+              placeholder={t('step2.selectTransmission')}
               isRequired
               selectedKeys={field.value ? [field.value] : []}
               onSelectionChange={(keys) => field.onChange(Array.from(keys)[0])}
@@ -55,13 +59,13 @@ const Step2 = ({
               isInvalid={!!error?.message}
             >
               <SelectItem key="manual" value="manual">
-                Manual
+                {t('step2.manual')}
               </SelectItem>
               <SelectItem key="automatic" value="automatic">
-                Automatic
+                {t('step2.automatic')}
               </SelectItem>
               <SelectItem key="semi-automatic" value="semi-automatic">
-                Semi-automatic
+                {t('step2.semiAutomatic')}
               </SelectItem>
             </Select>
           )}
@@ -73,9 +77,9 @@ const Step2 = ({
           render={({ field, fieldState: { error } }) => (
             <Input
               type="number"
-              label="Kilometrage"
+              label={t('step2.kilometrage')}
               isRequired
-              placeholder="Enter kilometrage"
+              placeholder={t('step2.enterKilometrage')}
               min={0}
               value={field.value?.toString()}
               onChange={(e) => field.onChange(Number(e.target.value))}
@@ -96,8 +100,8 @@ const Step2 = ({
           render={({ field, fieldState: { error } }) => (
             <Input
               type="number"
-              label="CV"
-              placeholder="Enter CV"
+              label={t('step2.cv')}
+              placeholder={t('step2.enterCV')}
               min={0}
               value={field.value?.toString()}
               onChange={(e) => field.onChange(Number(e.target.value))}
@@ -116,8 +120,8 @@ const Step2 = ({
           render={({ field, fieldState: { error } }) => (
             <Input
               type="number"
-              label="CC"
-              placeholder="Enter CC"
+              label={t('step2.cc')}
+              placeholder={t('step2.enterCC')}
               min={0}
               value={field.value?.toString()}
               onChange={(e) => field.onChange(Number(e.target.value))}
@@ -136,8 +140,8 @@ const Step2 = ({
           render={({ field, fieldState: { error } }) => (
             <Input
               type="number"
-              label="CO2"
-              placeholder="Enter CO2"
+              label={t('step2.co2')}
+              placeholder={t('step2.enterCO2')}
               min={0}
               value={field.value?.toString()}
               onChange={(e) => field.onChange(Number(e.target.value))}
@@ -156,8 +160,8 @@ const Step2 = ({
         name="version"
         render={({ field }) => (
           <Input
-            label="Version"
-            placeholder="Enter version"
+            label={t('step2.version')}
+            placeholder={t('step2.enterVersion')}
             {...field}
             classNames={{
               input: ['placeholder:text-default-700/40'],
@@ -184,8 +188,9 @@ const BodySelection = ({
   errorMessage?: string;
   isInvalid?: boolean;
 }) => {
-  // const t = useTranslations("car.step2");
-  // const bT = useTranslations("bodyCar");
+  const { t: carFormT } = useTranslation();
+  const t = (key: string) => carFormT(`carForm.${key}`);
+
   const carousel = useRef<HTMLDivElement | null>(null);
   const next = () =>
     (carousel.current as any)?.scrollBy({ left: 300, behavior: 'smooth' });
@@ -196,7 +201,7 @@ const BodySelection = ({
   return (
     <div className="w-full col-span-4">
       <span className="px-20">
-        Select a body <span className="text-red-500">*</span>
+        {t('step2.selectBody')} <span className="text-red-500">*</span>
       </span>
 
       <div className="h-3"></div>
@@ -240,8 +245,8 @@ const BodySelection = ({
           <ChevronRight />
         </Button>
       </div>
-      {isInvalid && (
-        <span className="text-red-500 text-sm ml-14">{errorMessage}</span>
+      {isInvalid && errorMessage && (
+        <span className="text-red-500 text-sm ml-14">{t(errorMessage)}</span>
       )}
     </div>
   );
