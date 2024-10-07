@@ -60,6 +60,7 @@ export default {
     page?: number;
     status?: string;
     uid?: string;
+    ignore?: boolean;
   }) => {
     const queryParams = new URLSearchParams();
     Object.entries(params).forEach(([key, value]) => {

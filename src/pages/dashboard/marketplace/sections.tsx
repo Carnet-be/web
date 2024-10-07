@@ -128,7 +128,7 @@ export const SearchSection = ({
           onSelectionChange={(k) =>
             updateSearchParams('year', k?.toString() ?? null)
           }
-          selectedKey={searchParams.get('year')?.toString()}
+          selectedKey={searchParams.get('year')}
           labelPlacement="outside"
           className="w-full md:w-60"
           classNames={{

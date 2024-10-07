@@ -64,7 +64,11 @@ export const CarsSectionGarage = ({ cars }: { cars: Car[] }) => {
         className="flex flex-grow flex-row gap-6 overflow-x-hidden"
       >
         {cars.map((b) => (
-          <CarCard key={b.id} className={'min-w-[300px]'}>
+          <CarCard
+            key={b.id}
+            link={`/dashboard/marketplace/${b.uid}`}
+            className={'min-w-[300px]'}
+          >
             {b}
           </CarCard>
         ))}

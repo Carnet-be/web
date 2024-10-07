@@ -12,15 +12,11 @@ import CreateCar from './carForm';
 const CarForm = () => {
   const { id } = useParams();
 
-  const [carQuery, userQuery, dataQuery] = useQueries({
+  const [carQuery, dataQuery] = useQueries({
     queries: [
       {
         queryKey: ['car', id],
-        queryFn: () => carService.search({ uid: id }),
-      },
-      {
-        queryKey: ['me'],
-        queryFn: () => userService.me(),
+        queryFn: () => carService.search({ uid: id, ignore: true }),
       },
       {
         queryKey: ['data'],
@@ -42,7 +38,6 @@ const CarForm = () => {
         car={
           transformNullToUndefined({
             ...carQuery.data?.data?.[0],
-            phoneNumber: userQuery.data?.phoneNumber,
           }) as Car
         }
       />
@@ -58,14 +53,20 @@ export const CarFormAdd = () => {
     queryFn: () => dataService.getAllData(),
   });
 
-  if (dataQuery.isPending)
+  const userQuery = useQuery({
+    queryKey: ['me'],
+    queryFn: () => userService.me(),
+  });
+
+  if (dataQuery.isPending || userQuery.isPending)
     return <LoadingSection className="min-h-screen w-full" />;
-  if (dataQuery.isError) return <AlertError refetch={dataQuery.refetch} />;
+  if (dataQuery.isError || userQuery.isError)
+    return <AlertError refetch={dataQuery.refetch} />;
 
   return (
     <div>
       <BackButton />
-      <CreateCar data={dataQuery.data} />
+      <CreateCar data={dataQuery.data} user={userQuery.data as User} />
     </div>
   );
 };

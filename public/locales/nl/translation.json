@@ -241,6 +241,7 @@
     "resetButton": "Wachtwoord opnieuw instellen"
   },
   "dashboard": {
+    "logout": "Uitloggen",
     "menu": {
       "management": "Beheer",
       "cars": "Auto's",
@@ -303,6 +304,7 @@
       "description": "De garage die u zoekt bestaat niet. ",
       "button": "Ga naar huis"
     },
+    "noCars": "Geen auto's gevonden voor deze garage",
     "noGarages": "Geen garages gevonden",
     "title": "Garages",
     "visit": "Bezoek de garage",
@@ -596,7 +598,8 @@
       "phoneRequired": "Telefoonnummer is vereist",
       "transmissionRequired": "Transmissie is vereist",
       "kilometrageRequired": "Kilometerstand is vereist",
-      "minImagesRequired": "Er zijn minimaal 2 afbeeldingen vereist"
+      "minImagesRequired": "Er zijn minimaal 2 afbeeldingen vereist",
+      "maxPriceMustBeGreaterThanMin": "Maximale prijs moet groter zijn dan minimale prijs"
     },
     "toast": {
       "carAddedSuccess": "Auto succesvol toegevoegd",

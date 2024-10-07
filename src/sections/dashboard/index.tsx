@@ -28,18 +28,11 @@ import {
 import { PersonIcon } from '@radix-ui/react-icons';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import clsx from 'clsx';
-import {
-  Building,
-  Building2,
-  Car,
-  List,
-  LogOut,
-  Menu,
-  Search,
-} from 'lucide-react';
+import { Building, Building2, Car, List, Menu, Search } from 'lucide-react';
 import { useState } from 'react';
 import {
   NavLink as Link,
+  NavLink,
   Outlet,
   useLocation,
   useNavigate,
@@ -387,9 +380,21 @@ export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
                         <h4 className="text-small font-semibold leading-none text-default-600">
                           {getProfileInfo(user).name}
                         </h4>
-                        <h5 className="text-small tracking-tight text-primary">
-                          {getProfileInfo(user).description}
-                        </h5>
+                        {!getProfileInfo(user).isGarage ? (
+                          <h5 className="text-small tracking-tight text-primary">
+                            {getProfileInfo(user).description}
+                          </h5>
+                        ) : (
+                          <NavLink
+                            to={`/${getProfileInfo(user).description?.replace(
+                              '@',
+                              '',
+                            )}`}
+                            className="text-small tracking-tight text-primary"
+                          >
+                            {getProfileInfo(user).description}
+                          </NavLink>
+                        )}
                       </div>
                     </div>
                   </CardHeader>
@@ -397,25 +402,36 @@ export default function Dashboard({ isAdmin = false }: { isAdmin?: boolean }) {
                     <p className="line-clamp-3">{user.garage?.description}</p>
                   </CardBody>
                   <CardFooter className="gap-3 justify-center">
-                    {!isAdmin && (
-                      <Button
-                        color="primary"
-                        variant="flat"
-                        onClick={() => {
-                          navigator('/dashboard/settings/profile');
-                          setIsUserOpen(false);
-                        }}
-                      >
-                        <PersonIcon className="mr-2 h-4 w-4" />
-                        {t('dashboard.menu.profile')}
-                      </Button>
-                    )}
+                    {!isAdmin ? (
+                      user.garage ? (
+                        <Button
+                          color="primary"
+                          variant="flat"
+                          onClick={() => {
+                            navigator('/dashboard/my-garage');
+                            setIsUserOpen(false);
+                          }}
+                        >
+                          {t('common.garage')}
+                        </Button>
+                      ) : (
+                        <Button
+                          color="primary"
+                          variant="flat"
+                          onClick={() => {
+                            navigator('/dashboard/settings/profile');
+                            setIsUserOpen(false);
+                          }}
+                        >
+                          {t('dashboard.menu.profile')}
+                        </Button>
+                      )
+                    ) : null}
                     <Button
                       color="danger"
                       variant="flat"
                       onClick={() => mutate()}
                     >
-                      <LogOut className="mr-2 h-4 w-4" />
                       {t('dashboard.logout')}
                     </Button>
                   </CardFooter>

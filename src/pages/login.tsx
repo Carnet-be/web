@@ -1,4 +1,5 @@
 import { useToast } from '@/components/ui/use-toast';
+import { TERMS_AND_CONDITIONS } from '@/config/data';
 import validator from '@/lib/validator';
 import AuthLayout from '@/sections/auth/authLayout.tsx';
 import authService from '@/services/auth.service';
@@ -43,11 +44,21 @@ export default function Login({
             </p>
             <p className="text-center text-sm text-gray-500">
               By continuing, you agree to our{' '}
-              <NextUILink size="sm" as={Link} to="/terms" color="primary">
+              <NextUILink
+                size="sm"
+                as={Link}
+                to={TERMS_AND_CONDITIONS}
+                color="primary"
+              >
                 Terms of Service
               </NextUILink>{' '}
               and{' '}
-              <NextUILink as={Link} size="sm" to="/privacy" color="primary">
+              <NextUILink
+                as={Link}
+                size="sm"
+                to={TERMS_AND_CONDITIONS}
+                color="primary"
+              >
                 Privacy Policy
               </NextUILink>
               .
@@ -71,8 +82,8 @@ const LoginForm = ({ onLoginSuccess }: { onLoginSuccess?: () => void }) => {
     onSuccess: (data) => {
       setToken(data);
       toast({
-        title: t('login.successToasts.welcome.title'),
-        description: t('login.successToasts.welcome.description'),
+        title: t('login.successToasts.title'),
+        description: t('login.successToasts.description'),
       });
       onLoginSuccess?.();
     },

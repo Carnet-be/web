@@ -166,26 +166,6 @@ function UpdateGarageForm({
               </FormItem>
             )}
           />
-          <FormField
-            control={form.control}
-            name="cover"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>{t('garage.cover')}</FormLabel>
-                <FormControl>
-                  <Uploader
-                    accept={{ 'image/*': [] }}
-                    aspect={16 / 9}
-                    selectedFile={field.value || null}
-                    className="w-full aspect-video"
-                    setSelectedFile={field.onChange}
-                    defaultPreview={garage.cover}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
 
           <FormField
             control={form.control}
@@ -207,7 +187,26 @@ function UpdateGarageForm({
               </FormItem>
             )}
           />
-
+          <FormField
+            control={form.control}
+            name="cover"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>{t('garage.cover')}</FormLabel>
+                <FormControl>
+                  <Uploader
+                    accept={{ 'image/*': [] }}
+                    aspect={16 / 9}
+                    selectedFile={field.value || null}
+                    className="w-full aspect-video"
+                    setSelectedFile={field.onChange}
+                    defaultPreview={garage.cover}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="name"

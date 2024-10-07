@@ -241,6 +241,7 @@
     "resetButton": "Réinitialiser le mot de passe"
   },
   "dashboard": {
+    "logout": "Déconnexion",
     "menu": {
       "management": "Gestion",
       "cars": "Voitures",
@@ -304,6 +305,7 @@
       "button": "Rentre à la maison"
     },
     "noGarages": "Aucun garage trouvé",
+    "noCars": "Aucune voiture pour ce garage",
     "title": "Garage",
     "visit": "Visitez le garage",
     "description": "Trouvez le garage que vous souhaitez visiter",
@@ -596,7 +598,8 @@
       "phoneRequired": "Le numéro de téléphone est requis",
       "transmissionRequired": "La transmission est obligatoire",
       "kilometrageRequired": "Un kilométrage est obligatoire",
-      "minImagesRequired": "Au moins 2 images sont requises"
+      "minImagesRequired": "Au moins 2 images sont requises",
+      "maxPriceMustBeGreaterThanMin": "Le prix maximum doit être supérieur au prix minimum"
     },
     "toast": {
       "carAddedSuccess": "Voiture ajoutée avec succès",

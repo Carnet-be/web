@@ -13,6 +13,13 @@ export const getImageUrl = (
     ? `https://fitrack.blr1.cdn.digitaloceanspaces.com/carnet/${key}`
     : placeholder;
 
+export const getImageAvatar = (
+  key?: string | null,
+  placeholder: string | undefined = '/images/placeholder_avatar.png',
+) =>
+  key
+    ? `https://fitrack.blr1.cdn.digitaloceanspaces.com/carnet/${key}`
+    : placeholder;
 export const priceFormatter = new Intl.NumberFormat('fr-FR', {
   style: 'currency',
   currency: 'EUR',
@@ -56,11 +63,13 @@ export const getProfileInfo = (user: User) => {
       name: user.garage.name,
       description: `@${user.garage.slug}`,
       image: getImageUrl(user.garage.logo),
+      isGarage: true,
     };
   }
   return {
     name: `${user.firstName} ${user.lastName}`,
     description: user.email,
-    image: getImageUrl(user.avatar),
+    image: getImageAvatar(user.avatar),
+    isGarage: false,
   };
 };

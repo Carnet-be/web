@@ -1,6 +1,6 @@
-import { cn, getImageUrl } from '@/lib/utils';
+import { cn, getImageAvatar, getImageUrl } from '@/lib/utils';
 import { Avatar, Button, Card } from '@nextui-org/react';
-import { Mail, PhoneCall, View } from 'lucide-react';
+import { LocateIcon, Mail, PhoneCall, View } from 'lucide-react';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
@@ -31,11 +31,20 @@ export const RightSide = ({
 
   return (
     <div className=" sticky right-0 top-0 w-full space-y-8 lg:w-[40%]">
-      {view !== 'garage' && car.garage && (
+      {/* {view !== 'garage' && car.garage && (
         <GarageItemContact garage={car.garage} />
+      )} */}
+
+      {view !== 'garage' ? (
+        car.garage ? (
+          <GarageItemContact garage={car.garage} />
+        ) : (
+          <UserItemContact user={car.user} />
+        )
+      ) : (
+        <div></div>
       )}
 
-      {view !== 'garage' && car.user && <UserItemContact user={car.user} />}
       <Card className="w-full space-y-4 rounded-xl bg-white  p-3">
         <div className="flex flex-row items-center justify-between gap-2 px-5">
           <div className="flex flex-col items-center font-semibold text-primary">
@@ -193,7 +202,7 @@ export function GarageItemContact({ garage }: { garage: Garage }) {
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
       }}
-      className="relative h-[260px] w-full overflow-hidden rounded-md"
+      className="relative h-[200px] w-full overflow-hidden rounded-md"
     >
       <div className="absolute bottom-0 left-0 right-0 h-full space-y-3 bg-gradient-to-r from-black  to-black/20 p-3 py-5 text-white">
         <div className="flex flex-row justify-between">
@@ -214,14 +223,14 @@ export function GarageItemContact({ garage }: { garage: Garage }) {
           </Link>
         </div>
         <p className="line-clamp-2 max-w-[500px]">{garage.description}</p>
-        <div className="backdrop-blur-40 relative rounded-md bg-white/20 p-4">
+        <div className="backdrop-blur-40 relative rounded-md bg-white/20 p-4 space-y-2">
           <div className="flex items-center gap-3">
             <PhoneCall />
             <span>{garage.phoneNumber}</span>
           </div>
           <div className="flex items-center gap-3">
-            <Mail />
-            <span>{}</span>
+            <LocateIcon />
+            <span>{garage.address ?? '-'}</span>
           </div>
           {!show && (
             <div
@@ -252,7 +261,7 @@ export function UserItemContact({ user }: { user: User }) {
         <div className="flex flex-row justify-between">
           <div className="flex gap-3">
             <Avatar
-              src={getImageUrl(user.avatar)}
+              src={getImageAvatar(user.avatar)}
               className="h-16 w-16 rounded-full border-2 border-white"
             />
             <div className="flex flex-col items-start justify-center gap-1">

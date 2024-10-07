@@ -1,11 +1,5 @@
 import { cn, getImageUrl } from '@/lib/utils';
-import {
-  Button,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@nextui-org/react';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Accept, FileWithPath, useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 import { FileWithPreview, ImageCropper } from './image-crop';
@@ -32,10 +26,8 @@ const Uploader = ({
 }: UploaderProps) => {
   const [isDialogOpen, setDialogOpen] = useState(false);
   const [file, setFile] = useState<FileWithPreview | null>(null);
-  const [isPopoverOpen, setIsPopoverOpen] = useState(false);
-  const [preview, setPreview] = useState<string | undefined | null>(
-    defaultPreview,
-  );
+  const [_, setIsPopoverOpen] = useState(false);
+  const [preview] = useState<string | undefined | null>(defaultPreview);
 
   const { t: c } = useTranslation(); // Use the useTranslate hook
   const t = (key: string, defaultValue: string) =>
@@ -85,22 +77,21 @@ const Uploader = ({
     maxSize,
   });
 
-  const handleRemove = () => {
-    setPreview(null);
-    setSelectedFile(null);
-    setFile(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-    setIsPopoverOpen(false);
-  };
+  // const handleRemove = () => {
+  //   setPreview(null);
+  //   setSelectedFile(null);
+  //   setFile(null);
+
+  //   setIsPopoverOpen(false);
+  // };
 
   const handleReplace = () => {
     setIsPopoverOpen(false);
-    // Trigger file input click
-    const fileInput = document.querySelector(
-      'input[type="file"]',
-    ) as HTMLInputElement;
-    if (fileInput) {
-      fileInput.click();
+    // Trigger file input click using the ref
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
     }
   };
 
@@ -116,54 +107,26 @@ const Uploader = ({
           className={className}
         />
       ) : (
-        <Popover isOpen={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
-          <PopoverTrigger>
-            <div
-              style={{
-                aspectRatio: aspect,
-              }}
-              {...getRootProps()}
-              className={cn(
-                'w-full h-full relative cursor-pointer ring-offset-2 ring-2 ring-slate-200 rounded-sm',
-              )}
-            >
-              <img
-                src={getImageUrl(preview)}
-                className="w-full h-full object-cover rounded-sm"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  if (!preview && !selectedFile) {
-                    handleReplace();
-                  } else {
-                    setIsPopoverOpen(true);
-                  }
-                }}
-              />
-              <input {...getInputProps()} />
-            </div>
-          </PopoverTrigger>
-          <PopoverContent>
-            <div className="px-1 py-2">
-              <h3 className="text-sm font-bold">
-                {t('imageOptionsTitle', 'Opciones de imagen')}
-              </h3>
-              <p className="text-sm mt-2 mb-4">
-                {t(
-                  'imageOptionsDescription',
-                  '¿Quieres eliminar o reemplazar la imagen actual?',
-                )}
-              </p>
-              <div className="flex gap-2">
-                <Button color="danger" size="sm" onClick={handleRemove}>
-                  {t('removeButton', 'Eliminar')}
-                </Button>
-                <Button color="primary" size="sm" onClick={handleReplace}>
-                  {t('replaceButton', 'Reemplazar')}
-                </Button>
-              </div>
-            </div>
-          </PopoverContent>
-        </Popover>
+        <div
+          style={{
+            aspectRatio: aspect,
+          }}
+          {...getRootProps()}
+          className={cn(
+            'w-full h-full relative cursor-pointer ring-offset-2 ring-2 ring-slate-200 rounded-sm',
+          )}
+        >
+          <img
+            src={getImageUrl(preview)}
+            className="w-full h-full object-cover rounded-sm"
+            onClick={(e) => {
+              e.stopPropagation();
+
+              handleReplace();
+            }}
+          />
+          <input {...getInputProps()} ref={fileInputRef} />
+        </div>
       )}
     </div>
   );

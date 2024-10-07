@@ -1,5 +1,5 @@
 import query from '@/lib/query';
-import { getImageUrl } from '@/lib/utils';
+import { getProfileInfo } from '@/lib/utils';
 import authService from '@/services/auth.service';
 import userService from '@/services/user.service';
 import useAuthStore from '@/state/auth';
@@ -56,10 +56,10 @@ function UserButton() {
       <Popover showArrow placement="bottom">
         <PopoverTrigger>
           <Avatar
-            name={`${user.firstName} ${user.lastName}`}
+            name={getProfileInfo(user).name}
             radius="full"
             size="md"
-            src={getImageUrl(user.avatar)}
+            src={getProfileInfo(user).image}
           />
         </PopoverTrigger>
         <PopoverContent className="p-1">
@@ -70,12 +70,16 @@ function UserButton() {
                   isBordered
                   radius="full"
                   size="md"
-                  src={getImageUrl(user.avatar)}
+                  src={getProfileInfo(user).image}
                 />
                 <div className="flex flex-col items-start justify-center">
-                  <h4 className="text-small font-semibold leading-none text-default-600">{`${user.firstName} ${user.lastName}`}</h4>
-                  {user.username && (
-                    <h5 className="text-small tracking-tight text-default-500">{`@${user.username}`}</h5>
+                  <h4 className="text-small font-semibold leading-none text-default-600">
+                    {getProfileInfo(user).name}
+                  </h4>
+                  {getProfileInfo(user).description && (
+                    <h5 className="text-small tracking-tight text-default-500">
+                      {`${getProfileInfo(user).description}`}
+                    </h5>
                   )}
                 </div>
               </div>

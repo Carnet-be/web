@@ -242,6 +242,7 @@
   },
 
   "dashboard": {
+    "logout": "Logout",
     "menu": {
       "management": "Management",
       "cars": "Cars",
@@ -305,6 +306,7 @@
       "button": "Go to home"
     },
     "noGarages": "No garages found",
+    "noCars": "No cars for this garage",
     "title": "Garages",
     "visit": "Visit the garage",
     "description": "Find the garage that you want to visit",
@@ -598,7 +600,8 @@
       "phoneRequired": "Phone number is required",
       "transmissionRequired": "Transmission is required",
       "kilometrageRequired": "Kilometrage is required",
-      "minImagesRequired": "At least 2 images are required"
+      "minImagesRequired": "At least 2 images are required",
+      "maxPriceMustBeGreaterThanMin": "Maximum price must be greater than minimum price"
     },
     "toast": {
       "carAddedSuccess": "Car added successfully",

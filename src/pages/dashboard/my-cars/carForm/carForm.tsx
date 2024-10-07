@@ -26,76 +26,89 @@ import Step5 from './step5';
 import Step6 from './step6';
 
 export const formCarSchema = (t: any) =>
-  z.object({
-    brandId: z.coerce.number({
-      message: t('carForm.validation.brandRequired'),
-    }),
-    modelId: z.coerce.number({
-      message: t('carForm.validation.modelRequired'),
-    }),
-    bodyId: z.coerce.number({
-      message: t('carForm.validation.bodyRequired'),
-    }),
-    description: z.string().optional(),
-    year: z.coerce
-      .number({
-        message: t('carForm.validation.yearRequired'),
-      })
-      .min(1900)
-      .max(new Date().getFullYear() + 1),
-    color: z.string().optional(),
-    fuel: z.enum(['diesel', 'gasoline', 'electric', 'hybrid']),
-    isNew: z.boolean().default(false),
-    price: z.coerce
-      .number()
-      .positive(t('carForm.validation.pricePositive'))
-      .optional(),
-    countryId: z.coerce.number({
-      message: t('carForm.validation.countryRequired'),
-    }),
-    cityId: z.coerce.number({
-      message: t('carForm.validation.cityRequired'),
-    }),
-    address: z.string().optional(),
-    phoneNumber: z.string({
-      message: t('carForm.validation.phoneRequired'),
-    }),
-    zipCode: z.string().optional(),
-    handling: z.coerce.number().min(0).max(10).optional(),
-    tires: z.coerce.number().min(0).max(10).optional(),
-    exterior: z.coerce.number().min(0).max(10).optional(),
-    interior: z.coerce.number().min(0).max(10).optional(),
-    transmission: z.enum(['manual', 'automatic', 'semi-automatic'], {
-      message: t('carForm.validation.transmissionRequired'),
-    }),
-    inRange: z.boolean().default(false),
-    doors: z.enum(['2', '3', '4', '5', '6', '7', '8']).optional(),
-    cv: z.coerce.number().positive().optional(),
-    cc: z.coerce.number().positive().optional(),
-    co2: z.coerce.number().nonnegative().optional(),
-    kilometrage: z.coerce.number({
-      message: t('carForm.validation.kilometrageRequired'),
-    }),
-    version: z.string().optional(),
-    images: z
-      .array(z.string().or(z.instanceof(File)))
-      .min(2, {
-        message: t('carForm.validation.minImagesRequired'),
-      })
-      .default([]),
-    isAuction: z.boolean().default(false),
-    minPrice: z.coerce.number().positive().optional(),
-    maxPrice: z.coerce.number().positive().optional(),
-    options: z.array(z.number()).optional(),
-  });
+  z
+    .object({
+      brandId: z.coerce.number({
+        message: t('carForm.validation.brandRequired'),
+      }),
+      modelId: z.coerce.number({
+        message: t('carForm.validation.modelRequired'),
+      }),
+      bodyId: z.coerce.number({
+        message: t('carForm.validation.bodyRequired'),
+      }),
+      description: z.string().optional(),
+      year: z.coerce
+        .number({
+          message: t('carForm.validation.yearRequired'),
+        })
+        .min(1900)
+        .max(new Date().getFullYear() + 1),
+      color: z.string().optional(),
+      fuel: z.enum(['diesel', 'gasoline', 'electric', 'hybrid']),
+      isNew: z.boolean().default(false),
+      price: z.coerce.number().optional(),
+      countryId: z.coerce.number({
+        message: t('carForm.validation.countryRequired'),
+      }),
+      cityId: z.coerce.number({
+        message: t('carForm.validation.cityRequired'),
+      }),
+      address: z.string().optional(),
+      phoneNumber: z.string({
+        message: t('carForm.validation.phoneRequired'),
+      }),
+      zipCode: z.string().optional(),
+      handling: z.coerce.number().min(0).max(10).optional(),
+      tires: z.coerce.number().min(0).max(10).optional(),
+      exterior: z.coerce.number().min(0).max(10).optional(),
+      interior: z.coerce.number().min(0).max(10).optional(),
+      transmission: z.enum(['manual', 'automatic', 'semi-automatic'], {
+        message: t('carForm.validation.transmissionRequired'),
+      }),
+      inRange: z.boolean().default(false),
+      doors: z.enum(['2', '3', '4', '5', '6', '7', '8']).optional(),
+      cv: z.coerce.number().positive().optional(),
+      cc: z.coerce.number().positive().optional(),
+      co2: z.coerce.number().nonnegative().optional(),
+      kilometrage: z.coerce.number({
+        message: t('carForm.validation.kilometrageRequired'),
+      }),
+      version: z.string().optional(),
+      images: z
+        .array(z.string().or(z.instanceof(File)))
+        .min(2, {
+          message: t('carForm.validation.minImagesRequired'),
+        })
+        .default([]),
+      isAuction: z.boolean().default(false),
+      minPrice: z.coerce.number().positive().optional(),
+      maxPrice: z.coerce.number().positive().optional(),
+      options: z.array(z.number()).optional(),
+    })
+    .refine(
+      (data) => {
+        if (data.inRange && data.minPrice) {
+          if (!data.maxPrice) return false;
+          return data.maxPrice > data.minPrice;
+        }
+        return true;
+      },
+      {
+        message: t('carForm.validation.maxPriceMustBeGreaterThanMin'),
+        path: ['maxPrice'],
+      },
+    );
 
 export default function CreateCar({
   car,
   data,
   onSuccess,
+  user,
 }: {
   car?: Car;
   onSuccess?: () => void;
+  user?: User;
   data: {
     brands: Brand[];
     models: Model[];
@@ -116,7 +129,7 @@ export default function CreateCar({
       countryId: car?.countryId,
       cityId: car?.cityId,
       address: car?.address,
-      phoneNumber: car?.phoneNumber,
+      phoneNumber: car?.phoneNumber ?? user?.phoneNumber,
       zipCode: car?.zipCode,
       handling: car?.handling,
       tires: car?.tires,
@@ -149,7 +162,6 @@ export default function CreateCar({
     },
   });
 
-  console.log(car);
   const { mutate, isPending: isCreatingCar } = useMutation({
     mutationFn: carService.createCar,
     onSuccess: () => {

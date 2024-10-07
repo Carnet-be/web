@@ -1,4 +1,5 @@
 import { useToast } from '@/components/ui/use-toast';
+import { TERMS_AND_CONDITIONS } from '@/config/data';
 import i18n from '@/i18n';
 import validator from '@/lib/validator';
 import AuthLayout from '@/sections/auth/authLayout.tsx';
@@ -34,11 +35,21 @@ export default function Register() {
           </p>
           <p className="text-center text-sm text-gray-500">
             {t('register.termsAndPrivacy.prefix')}{' '}
-            <NextUILink size="sm" as={Link} to="/terms" color="primary">
+            <NextUILink
+              size="sm"
+              as={Link}
+              to={TERMS_AND_CONDITIONS}
+              color="primary"
+            >
               {t('register.termsAndPrivacy.termsOfService')}
             </NextUILink>{' '}
             {t('register.termsAndPrivacy.and')}{' '}
-            <NextUILink size="sm" as={Link} to="/privacy" color="primary">
+            <NextUILink
+              size="sm"
+              as={Link}
+              to={TERMS_AND_CONDITIONS}
+              color="primary"
+            >
               {t('register.termsAndPrivacy.privacyPolicy')}
             </NextUILink>
             .
